@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <!-- SpringBOot 中集成了Logback日志框架 -->
+    <!-- %m:输出信息 %p:日志级别 %t:线程名 %d:日期 %c:全类名 %i:索引-->
+    <!-- appender是configuration的子节点，是负责写日志的组件的 -->
+
+
+
+    <!-- ********第一种：ConsoleAppender 把日志输出到控制台********* -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <!-- 控制台输出编码 -->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- *******第二种：RollingFileAppender输出到文件里******* -->
+    <!--<appender name="demoLogTwo">-->
+        <!--<File>log/demo.log</File>-->
+        <!--&lt;!&ndash; rollingPolicy:当发生滚动时，决定 RollingFileAppender 的行为，涉及文件移动和重命名。 &ndash;&gt;-->
+        <!--&lt;!&ndash; TimeBasedRollingPolicy： 最常用的滚动策略，它根据时间来制定滚动策略，既负责滚动也负责出发滚动 &ndash;&gt;-->
+        <!--<rollingPolicy>-->
+            <!--&lt;!&ndash; 活动文件的名字会根据fileNamePattern的值，每隔一段时间改变一次 &ndash;&gt;-->
+            <!--&lt;!&ndash; 文件名：log/demo.2017-12-05.0.log &ndash;&gt;-->
+            <!--<fileNamePattern>log/demo.%d.%i.log</fileNamePattern>-->
+            <!--&lt;!&ndash; 每产生一个日志文件，该日志文件的保存期限为30天 &ndash;&gt;-->
+            <!--<maxHistory>30</maxHistory>-->
+            <!--<timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+                <!--&lt;!&ndash; maxFileSize:这是活动文件的大小，默认值是10MB，测试时可改成1KB看效果 &ndash;&gt;-->
+                <!--<maxFileSize>1KB</maxFileSize>-->
+            <!--</timeBasedFileNamingAndTriggeringPolicy>-->
+        <!--</rollingPolicy>-->
+
+        <!--<encoder>-->
+            <!--&lt;!&ndash; 日志输出格式  &ndash;&gt;-->
+            <!--<pattern>%d %m %c </pattern>-->
+            <!--<charset>UTF-8</charset>-->
+        <!--</encoder>-->
+    <!--</appender>-->
+
+
+    <!-- 指定项目中某个包，当有日志操作行为时的日志记录级别 -->
+    <!-- com.green.lc.dao为根包，也就是只要是发生在这个根包下面的所有日志操作行为的权限都是DEBUG -->
+    <!-- 级别依次为【从高到低】：FATAL > ERROR > WARN > INFO > DEBUG > TRACE  -->
+    <logger name="com.green.lc.dao" level="DEBUG"/>
+
+
+    <!-- 日志输出级别 -->
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
