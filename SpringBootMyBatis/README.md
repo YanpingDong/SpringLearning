@@ -17,11 +17,16 @@ MariaDB和Mybatis依赖
 </dependency>
 ```
 
-创件数据库和相关表
+准备数据库环境
 
 ```sql
+1. 先用ROOT登录创建dyp用户
+CREATE USER dyp IDENTIFIED BY '1234567890';
+2. 用ROOT登录创建数据库
 CREATE database test;
-
+3. 把test数据库授权给dyp用户
+GRANT ALL ON test.* TO 'dyp'@'%' WITH GRANT OPTION;
+4. 用dyp登录创建下面两个表
 create table test.user
 (
     id bigint not null AUTO_INCREMENT comment '主键' primary key,
