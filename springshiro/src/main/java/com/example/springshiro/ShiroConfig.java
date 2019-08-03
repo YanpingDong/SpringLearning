@@ -25,6 +25,13 @@ public class ShiroConfig {
 
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
+        /*org.apache.shiro.web.filter.mgt.DefaultFilter中定义了所有默认的anon authc的过滤器
+         ShiroFilterFactoryBean.getObject-->ShiroFilterFactoryBean.createInstance-->ShiroFilterFactoryBean.createFilterChainManager-->DefaultFilterChainManager manager = new DefaultFilterChainManager()-->addDefaultFilters()
+        -->{
+        for (DefaultFilter defaultFilter : DefaultFilter.values()) {
+            addFilter(defaultFilter.name(), defaultFilter.newInstance(), init, false);
+        }
+    }*/
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setLoginUrl("/login");
@@ -54,6 +61,10 @@ public class ShiroConfig {
     @Bean
     public CustomRealm customRealm() {
         CustomRealm customRealm = new CustomRealm();
+        // 告诉realm,使用credentialsMatcher加密算法类来验证密文
+        customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+        customRealm.setCachingEnabled(false);
+
         return customRealm;
     }
 
@@ -82,5 +93,18 @@ public class ShiroConfig {
         return authorizationAttributeSourceAdvisor;
     }
 
+
+    //================================use encry
+    @Bean(name = "credentialsMatcher")
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        // 散列算法:这里使用MD5算法;
+        hashedCredentialsMatcher.setHashAlgorithmName("md5");
+        // 散列的次数，比如散列两次，相当于 md5(md5(""));
+        hashedCredentialsMatcher.setHashIterations(2);
+        // storedCredentialsHexEncoded默认是true，此时用的是密码加密用的是Hex编码；false时用Base64编码
+        hashedCredentialsMatcher.setStoredCredentialsHexEncoded(true);
+        return hashedCredentialsMatcher;
+    }
 
 }

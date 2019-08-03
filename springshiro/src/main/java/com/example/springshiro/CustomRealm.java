@@ -9,7 +9,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 
 import java.util.HashSet;
 import java.util.Set;
-
+import org.apache.shiro.web.filter.authc.AnonymousFilter;
 public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -31,11 +31,11 @@ public class CustomRealm extends AuthorizingRealm {
         String userName = (String) authenticationToken.getPrincipal();
         String userPwd = new String((char[]) authenticationToken.getCredentials());
         //根据用户名从数据库获取密码
-        String password = "123";
+        String password = "2415b95d3203ac901e287b76fcef640b";
         if (userName == null) {
             throw new AccountException("用户名不正确");
         } else if (!userPwd.equals(password)) {
-            throw new AccountException("密码不正确");
+            //throw new AccountException("密码不正确");
         }
         return new SimpleAuthenticationInfo(userName, password, getName());
     }
