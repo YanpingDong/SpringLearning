@@ -70,6 +70,13 @@ public class ShiroConfig {
 
 
     //===============the follow configuration enable shiro annotation
+
+    /**
+     *
+     * @return
+     * LLifecycleBeanPostProcessor implements DestructionAwareBeanPostProcessor
+     * DestructionAwareBeanPostProcessor extends BeanPostProcessor
+     */
     @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
