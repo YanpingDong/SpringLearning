@@ -1,5 +1,6 @@
-package com.example.springshiro;
+package com.example.springshiro.config;
 
+import com.example.springshiro.CustomRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
@@ -12,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Properties;
 
 
 /**
@@ -31,23 +34,42 @@ public class ShiroConfig {
         for (DefaultFilter defaultFilter : DefaultFilter.values()) {
             addFilter(defaultFilter.name(), defaultFilter.newInstance(), init, false);
         }
+
+        DefaultFilter {
+            anon(AnonymousFilter.class),
+            authc(FormAuthenticationFilter.class),
+            authcBasic(BasicHttpAuthenticationFilter.class),
+            logout(LogoutFilter.class),
+            noSessionCreation(NoSessionCreationFilter.class),
+            perms(PermissionsAuthorizationFilter.class),
+            port(PortFilter.class),
+            rest(HttpMethodPermissionFilter.class),
+            roles(RolesAuthorizationFilter.class),
+            ssl(SslFilter.class),
+            user(UserFilter.class);}
     }*/
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        shiroFilterFactoryBean.setLoginUrl("/login");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/notRole");
+
+
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
-        filterChainDefinitionMap.put("/webjars/**", "anon");
-        filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/", "anon");
-        filterChainDefinitionMap.put("/front/**", "anon");
-        filterChainDefinitionMap.put("/api/**", "anon");
-        filterChainDefinitionMap.put("/admin/**", "authc");
-        filterChainDefinitionMap.put("/user/**", "authc");
-        //主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截 剩余的都需要认证
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/fonts/**", "anon");
+        filterChainDefinitionMap.put("/img/**", "anon");
+        filterChainDefinitionMap.put("/js/**", "anon");
+        filterChainDefinitionMap.put("/html/**", "anon");
+        filterChainDefinitionMap.put("/getVerifyCode", "anon");
+        //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了
+        filterChainDefinitionMap.put("/logout", "logout");
+        //<!-- 过滤链定义，从上向下顺序执行，一般将/**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
+        //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         filterChainDefinitionMap.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+
+        shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        shiroFilterFactoryBean.setSuccessUrl("/index");
         return shiroFilterFactoryBean;
     }
 
@@ -62,7 +84,7 @@ public class ShiroConfig {
     public CustomRealm customRealm() {
         CustomRealm customRealm = new CustomRealm();
         // 告诉realm,使用credentialsMatcher加密算法类来验证密文
-        customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+//        customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         customRealm.setCachingEnabled(false);
 
         return customRealm;
@@ -101,7 +123,7 @@ public class ShiroConfig {
     }
 
 
-    //================================use encry
+    //================================use encryption==============================================
     @Bean(name = "credentialsMatcher")
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
@@ -113,5 +135,28 @@ public class ShiroConfig {
         hashedCredentialsMatcher.setStoredCredentialsHexEncoded(true);
         return hashedCredentialsMatcher;
     }
+
+    /**
+     * 解决： 无权限页面不跳转 shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized") 无效
+     * shiro的源代码ShiroFilterFactoryBean.Java定义的filter必须满足filter instanceof AuthorizationFilter，
+     * 只有perms，roles，ssl，rest，port才是属于AuthorizationFilter，而anon，authcBasic，auchc，user是AuthenticationFilter，
+     * 所以unauthorizedUrl设置后页面不跳转 Shiro注解模式下，登录失败与没有权限都是通过抛出异常。
+     * 并且默认并没有去处理或者捕获这些异常。在SpringMVC下需要配置捕获相应异常来通知用户信息
+     *
+     * @return
+     */
+//    @Bean(name = "simpleMappingExceptionResolver")
+//    public SimpleMappingExceptionResolver
+//    createSimpleMappingExceptionResolver() {
+//        SimpleMappingExceptionResolver r = new SimpleMappingExceptionResolver();
+//        Properties mappings = new Properties();
+//
+//        mappings.setProperty("UnauthorizedException", "/sys/login");
+//        r.setExceptionMappings(mappings);  // None by default
+//		//r.setDefaultErrorView("error");    // No default
+//        r.setExceptionAttribute("exception");     // Default is "exception"
+//        //r.setWarnLogCategory("example.MvcLogger");     // No default
+//        return r;
+//    }
 
 }

@@ -31,7 +31,8 @@ public class CustomRealm extends AuthorizingRealm {
         String userName = (String) authenticationToken.getPrincipal();
         String userPwd = new String((char[]) authenticationToken.getCredentials());
         //根据用户名从数据库获取密码
-        String password = "2415b95d3203ac901e287b76fcef640b";
+//        String password = "2415b95d3203ac901e287b76fcef640b";
+        String password = "123";
         if (userName == null) {
             throw new AccountException("用户名不正确");
         } else if (!userPwd.equals(password)) {
