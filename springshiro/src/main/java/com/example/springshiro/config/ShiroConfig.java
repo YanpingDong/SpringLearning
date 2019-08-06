@@ -145,18 +145,18 @@ public class ShiroConfig {
      *
      * @return
      */
-//    @Bean(name = "simpleMappingExceptionResolver")
-//    public SimpleMappingExceptionResolver
-//    createSimpleMappingExceptionResolver() {
-//        SimpleMappingExceptionResolver r = new SimpleMappingExceptionResolver();
-//        Properties mappings = new Properties();
-//
-//        mappings.setProperty("UnauthorizedException", "/sys/login");
-//        r.setExceptionMappings(mappings);  // None by default
-//		//r.setDefaultErrorView("error");    // No default
-//        r.setExceptionAttribute("exception");     // Default is "exception"
-//        //r.setWarnLogCategory("example.MvcLogger");     // No default
-//        return r;
-//    }
+    @Bean(name = "simpleMappingExceptionResolver")
+    public SimpleMappingExceptionResolver
+    createSimpleMappingExceptionResolver() {
+        SimpleMappingExceptionResolver r = new SimpleMappingExceptionResolver();
+        Properties mappings = new Properties();
+
+        mappings.setProperty("UnauthorizedException", "/sys/403");
+        r.setExceptionMappings(mappings);  // None by default
+		//r.setDefaultErrorView("error");    // No default
+        r.setExceptionAttribute("exception");     // Default is "exception"
+        //r.setWarnLogCategory("example.MvcLogger");     // No default
+        return r;
+    }
 
 }

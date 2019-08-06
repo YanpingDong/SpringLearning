@@ -13,11 +13,13 @@ import org.apache.shiro.web.filter.authc.AnonymousFilter;
 public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        System.out.println("-------权限认证方法--------");
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         Set<String> stringSet = new HashSet<>();
         stringSet.add("user:show");
         stringSet.add("user:admin");
+        stringSet.add("log:view");
         info.setStringPermissions(stringSet);
         return info;
     }
