@@ -74,21 +74,21 @@ public class ShiroConfig {
     }
 
     @Bean
-    public SecurityManager securityManager() {
+    public SecurityManager securityManager(CustomRealm customRealm) {
         DefaultWebSecurityManager defaultSecurityManager = new DefaultWebSecurityManager();
-        defaultSecurityManager.setRealm(customRealm());
+        defaultSecurityManager.setRealm(customRealm);
         return defaultSecurityManager;
     }
 
-    @Bean
-    public CustomRealm customRealm() {
-        CustomRealm customRealm = new CustomRealm();
-        // 告诉realm,使用credentialsMatcher加密算法类来验证密文
-//        customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
-        customRealm.setCachingEnabled(false);
-
-        return customRealm;
-    }
+//    @Bean
+//    public CustomRealm customRealm(CustomRealm customRealm) {
+//        CustomRealm customRealm = new CustomRealm();
+//        // 告诉realm,使用credentialsMatcher加密算法类来验证密文
+////        customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+//        customRealm.setCachingEnabled(false);
+//
+//        return customRealm;
+//    }
 
 
     //===============the follow configuration enable shiro annotation
@@ -108,7 +108,7 @@ public class ShiroConfig {
      * * * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证 * * * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)和AuthorizationAttributeSourceAdvisor)即可实现此功能 * * @return
      */
     @Bean
-    @DependsOn({"lifecycleBeanPostProcessor"})
+//    @DependsOn({"lifecycleBeanPostProcessor"})
     public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
         advisorAutoProxyCreator.setProxyTargetClass(true);
@@ -116,9 +116,9 @@ public class ShiroConfig {
     }
 
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager());
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
     }
 
@@ -142,7 +142,6 @@ public class ShiroConfig {
      * 只有perms，roles，ssl，rest，port才是属于AuthorizationFilter，而anon，authcBasic，auchc，user是AuthenticationFilter，
      * 所以unauthorizedUrl设置后页面不跳转 Shiro注解模式下，登录失败与没有权限都是通过抛出异常。
      * 并且默认并没有去处理或者捕获这些异常。在SpringMVC下需要配置捕获相应异常来通知用户信息
-     *
      * @return
      */
     @Bean(name = "simpleMappingExceptionResolver")

@@ -1,5 +1,7 @@
 package com.example.springshiro;
 
+import com.example.springshiro.entity.SysPermission;
+import com.example.springshiro.repository.UserRepository;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -8,19 +10,38 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.apache.shiro.web.filter.authc.AnonymousFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+/*
+* 这个使用component是因为实际工程中会引入DAO层对象，而DAO层对像一般都是由Spring框架做管理的
+* */
+@Component
 public class CustomRealm extends AuthorizingRealm {
+
+    @Autowired
+    UserRepository userRepository;
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         System.out.println("-------权限认证方法--------");
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        Set<String> stringSet = new HashSet<>();
-        stringSet.add("user:show");
-        stringSet.add("user:admin");
-        stringSet.add("log:view");
-        info.setStringPermissions(stringSet);
+        if ("admin".equalsIgnoreCase(username))
+        {
+            List<SysPermission> sysPermissions = userRepository.findUserRolePermissionByUserName(username);
+            Set<String> stringSet = new HashSet<>();
+
+            for(SysPermission sysPermission : sysPermissions)
+            {
+                stringSet.add(sysPermission.getPermission());
+            }
+            info.setStringPermissions(stringSet);
+        }
+
         return info;
     }
 

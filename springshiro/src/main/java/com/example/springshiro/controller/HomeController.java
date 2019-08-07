@@ -1,13 +1,16 @@
 package com.example.springshiro.controller;
 
+import com.example.springshiro.entity.SysLog;
+import com.example.springshiro.factory.LogFactory;
 import com.example.springshiro.model.LoginResult;
+import com.example.springshiro.service.LogService;
 import com.example.springshiro.service.LoginService;
 
 import com.example.springshiro.utils.RandomUtils;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 
-import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,8 +41,11 @@ public class HomeController {
     @Resource
     DefaultKaptcha defaultKaptcha;
 
-//    @Resource
-//    LogService logService;
+    @Resource
+    LogService logService;
+
+//    @Autowired
+
 
     private long verifyTTL = 60;//验证码过期时间60秒
 
@@ -105,71 +111,6 @@ public class HomeController {
         return "/sys/login";
     }
 
-//    @RequestMapping(value = "/login", method = RequestMethod.POST)
-//    public String login(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-//        System.out.println("login()");
-//        Map<String, Object> map = new HashMap<>();
-//        String userName = request.getParameter("userName");
-//        String encryptedPassword = request.getParameter("password");
-//        String key = request.getParameter("key");
-//
-//        String verifyCode = request.getParameter("verifyCode");
-//        String rightCode = (String) request.getSession().getAttribute("verifyCode");
-//        Long verifyCodeTTL = (Long) request.getSession().getAttribute("verifyCodeTTL");
-//
-////        String password = AesUtils.decrypt(encryptedPassword,key);
-//        String password=encryptedPassword;
-//        Long currentMillis = System.currentTimeMillis();
-//        if (rightCode == null || verifyCodeTTL == null) {
-//            map.put("msg", "请刷新图片，输入验证码！");
-//            map.put("userName", userName);
-//            map.put("password", password);
-//            map.put("success",false);
-//
-//            model.addAllAttributes(map);
-//            return "/sys/login";
-//        }
-//        Long expiredTime = (currentMillis - verifyCodeTTL) / 1000;
-//        if (expiredTime > this.verifyTTL) {
-//            map.put("msg", "验证码过期，请刷新图片重新输入！");
-//            map.put("userName", userName);
-//            map.put("password", password);
-//            map.put("success",false);
-//            model.addAllAttributes(map);
-//            return "/sys/login";
-//        }
-//
-//        if (!verifyCode.equalsIgnoreCase(rightCode)) {
-//            map.put("msg", "验证码错误，请刷新图片重新输入！");
-//            map.put("username", userName);
-////            map.put("password", password);
-//            map.put("success",false);
-//            map.put("url","/login");
-//            model.addAllAttributes(map);
-//            return "/sys/login";
-//        }
-//
-//        LoginResult loginResult = loginService.login(userName, password);
-//        if (loginResult.isLogin()) {
-//            map.put("userName", userName);
-//       ;
-//            map.put("success",true);
-//            map.put("url","/sys/index");
-//            model.addAllAttributes(map);
-//
-//           return "/sys/index";
-//
-//        } else {
-//            map.put("msg", loginResult.getResult());
-//            map.put("userName", userName);
-//            map.put("password", password);
-//            map.put("success",false);
-//            map.put("url","/sys/login");
-//            model.addAllAttributes(map);
-//
-//            return "/sys/login";
-//        }
-//    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
@@ -190,55 +131,54 @@ public class HomeController {
         if (rightCode == null || verifyCodeTTL == null) {
             map.put("msg", "请刷新图片，输入验证码！");
             map.put("userName", userName);
-//            map.put("password", password);
+            map.put("password", password);
             map.put("success",false);
-            map.put("url","/user/login");
+            map.put("url","/login");
             return map;
         }
         Long expiredTime = (currentMillis - verifyCodeTTL) / 1000;
         if (expiredTime > this.verifyTTL) {
             map.put("msg", "验证码过期，请刷新图片重新输入！");
             map.put("userName", userName);
-//            map.put("password", password);
+            map.put("password", password);
             map.put("success",false);
-            map.put("url","/user/login");
+            map.put("url","/login");
             return map;
         }
 
         if (!verifyCode.equalsIgnoreCase(rightCode)) {
             map.put("msg", "验证码错误，请刷新图片重新输入！");
             map.put("userName", userName);
-//            map.put("password", password);
+            map.put("password", password);
             map.put("success",false);
-            map.put("url","/user/login");
+            map.put("url","/login");
             return map;
-//            return "/user/login";
         }
 
         LoginResult loginResult = loginService.login(userName, password);
         if (loginResult.isLogin()) {
             map.put("userName", userName);
-//            SysLog sysLog = LogFactory.createSysLog("登录","登录成功");
-//            logService.writeLog(sysLog);
+            SysLog sysLog = LogFactory.createSysLog("登录","登录成功");
+            logService.writeLog(sysLog);
             map.put("success",true);
             map.put("url","/index");
             return map;
-//            return "/index";
+
         } else {
             map.put("msg", loginResult.getResult());
             map.put("userName", userName);
-//            map.put("password", password);
+            map.put("password", password);
             map.put("success",false);
-            map.put("url","/user/login");
+            map.put("url","/login");
             return map;
-//            return "/user/login";
+
         }
     }
 
     @RequestMapping("/logout")
     public String logOut(HttpSession session) {
-//        SysLog sysLog = LogFactory.createSysLog("logout","登出");
-//        logService.writeLog(sysLog);
+        SysLog sysLog = LogFactory.createSysLog("logout","登出");
+        logService.writeLog(sysLog);
 
         loginService.logout();
         return "/sys/login";

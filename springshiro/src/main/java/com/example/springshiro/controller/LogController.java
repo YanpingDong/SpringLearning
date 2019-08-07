@@ -60,10 +60,7 @@ public class LogController {
         String sortName=request.getParameter("sortName")==null ? "roleId": request.getParameter("sortName");
         String sortOrder=request.getParameter("sortOrder")==null ? "asc": request.getParameter("sortOrder");
 
-//        Sort sortLocal = new Sort(sortOrder.equalsIgnoreCase("asc") ? Sort.Direction.ASC: Sort.Direction.DESC,sortName);
-//        Pageable pageable = PageRequest.of(pageNumber,pageSize,sortLocal);
-//
-//        Page<SysLog> sysLogPage = logService.findAll(searchText,pageable);
+
         List<SysLog> sysLogPage =  logService.findAll(searchText);
         map.put("total",sysLogPage.size());
         map.put("rows",sysLogPage);
