@@ -17,7 +17,7 @@ INSERT INTO `syspermission` (`permissionId`,`available`,`permissionname`,`parent
 VALUES (1,1,'系统管理',0,'0','system:view','menu','#',1);
 
 INSERT INTO `syspermission` (`permissionId`,`available`,`permissionname`,`parentid`,`parentids`,`permission`,`resourcetype`,`url`,level)
-VALUES (2,1,'用户管理',1,'1','user:view','menu','user/userList',2);
+VALUES (2,1,'用户管理',1,'1','user:view','menu','user/rList',2);
 INSERT INTO `syspermission` (`permissionId`,`available`,`permissionname`,`parentid`,`parentids`,`permission`,`resourcetype`,`url`,level)
 VALUES (3,1,'用户添加',2,'1/2','user:add','button','user/userAdd',3);
 INSERT INTO `syspermission` (`permissionId`,`available`,`permissionname`,`parentid`,`parentids`,`permission`,`resourcetype`,`url`,level)
@@ -26,19 +26,21 @@ INSERT INTO `syspermission` (`permissionId`,`available`,`permissionname`,`parent
 VALUES (5,1,'用户删除',2,'1/2','user:del','button','user/userDel',3);
 
 INSERT INTO `syspermission` (`permissionId`,`available`,`permissionname`,`parentid`,`parentids`,`permission`,`resourcetype`,`url`,level)
-VALUES (6,1,'角色管理',1,'1','role:view','menu','role/roleList',2);
+VALUES (6,1,'角色管理',1,'1','role:view','menu','user/rList',2);
 INSERT INTO `syspermission` (`permissionId`,`available`,`permissionname`,`parentid`,`parentids`,`permission`,`resourcetype`,`url`,level)
-VALUES (7,1,'角色添加',6,'1/6','role:add','button','role/roleAdd',3);
+VALUES (7,1,'角色添加',6,'1/6','role:add','button','user/roleAdd',3);
 INSERT INTO `syspermission` (`permissionId`,`available`,`permissionname`,`parentid`,`parentids`,`permission`,`resourcetype`,`url`,level)
-VALUES (8,1,'角色修改',6,'1/6','role:edit','button','role/roleEdit',3);
+VALUES (8,1,'角色修改',6,'1/6','role:edit','button','user/roleEdit',3);
 INSERT INTO `syspermission` (`permissionId`,`available`,`permissionname`,`parentid`,`parentids`,`permission`,`resourcetype`,`url`,level)
-VALUES (9,1,'角色删除',6,'1/6','role:del','button','role/roleDel',3);
+VALUES (9,1,'角色删除',6,'1/6','role:del','button','user/roleDel',3);
 INSERT INTO `syspermission` (`permissionId`,`available`,`permissionname`,`parentid`,`parentids`,`permission`,`resourcetype`,`url`,level)
-VALUES (10,1,'角色授权',6,'1/6','role:authorize','button','role/authorize',3);
+VALUES (10,1,'角色授权',6,'1/6','role:authorize','button','user/authorize',3);
 
-#客户管理菜单
+#日志管理菜单
 INSERT INTO `syspermission` (`permissionId`,`available`,`permissionname`,`parentid`,`parentids`,`permission`,`resourcetype`,`url`,level)
-VALUES (11,1,'日志管理',1,'1','log:view','menu','#',1);
+VALUES (11,1,'日志管理',0,'0','log:view','menu','#',1);
+INSERT INTO `syspermission` (`permissionId`,`available`,`permissionname`,`parentid`,`parentids`,`permission`,`resourcetype`,`url`,level)
+VALUES (12,1,'日志管理',11,'11','log:view','menu','/log/list',2);
 
 
 INSERT INTO `sysrolepermission` (`permissionid`,`roleid`) VALUES (1,1);

@@ -73,6 +73,11 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
+    /**
+     *
+     * @param customRealm 因为realm里一般都涉及DAO的实体，而DAO实体又由Spring管理，所以Realm也交给Spring进行注入
+     * @return
+     */
     @Bean
     public SecurityManager securityManager(CustomRealm customRealm) {
         DefaultWebSecurityManager defaultSecurityManager = new DefaultWebSecurityManager();
@@ -80,15 +85,6 @@ public class ShiroConfig {
         return defaultSecurityManager;
     }
 
-//    @Bean
-//    public CustomRealm customRealm(CustomRealm customRealm) {
-//        CustomRealm customRealm = new CustomRealm();
-//        // 告诉realm,使用credentialsMatcher加密算法类来验证密文
-////        customRealm.setCredentialsMatcher(hashedCredentialsMatcher());
-//        customRealm.setCachingEnabled(false);
-//
-//        return customRealm;
-//    }
 
 
     //===============the follow configuration enable shiro annotation
@@ -108,7 +104,6 @@ public class ShiroConfig {
      * * * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证 * * * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)和AuthorizationAttributeSourceAdvisor)即可实现此功能 * * @return
      */
     @Bean
-//    @DependsOn({"lifecycleBeanPostProcessor"})
     public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
         advisorAutoProxyCreator.setProxyTargetClass(true);

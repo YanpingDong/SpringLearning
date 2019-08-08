@@ -30,17 +30,14 @@ public class CustomRealm extends AuthorizingRealm {
         System.out.println("-------权限认证方法--------");
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        if ("admin".equalsIgnoreCase(username))
-        {
-            List<SysPermission> sysPermissions = userRepository.findUserRolePermissionByUserName(username);
-            Set<String> stringSet = new HashSet<>();
+        List<SysPermission> sysPermissions = userRepository.findUserRolePermissionByUserName(username);
+        Set<String> stringSet = new HashSet<>();
 
-            for(SysPermission sysPermission : sysPermissions)
-            {
-                stringSet.add(sysPermission.getPermission());
-            }
-            info.setStringPermissions(stringSet);
+        for(SysPermission sysPermission : sysPermissions)
+        {
+            stringSet.add(sysPermission.getPermission());
         }
+        info.setStringPermissions(stringSet);
 
         return info;
     }

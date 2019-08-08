@@ -3,6 +3,7 @@ package com.example.springshiro.entity;
 import java.io.Serializable;
 import java.util.List;
 
+
 /**
  * @Author: xu.dm
  * @Date: 2018/8/8 22:04

@@ -144,15 +144,13 @@
                     console.log(result);
                     if(result.success)
                     {
-                        window.location.href=result.url;
+                        window.location.href=result.url + "?userName=" + $userName;
                     }
                     else
                     {
                         $('h4[name="msg"]').html(result.msg);
                         alert(result.msg);
                     }
-//                    window.location.replace(result.url);
-//                    $('#container').load(result.url);
                 },
                 error: function (result) {
                         console.log(result);

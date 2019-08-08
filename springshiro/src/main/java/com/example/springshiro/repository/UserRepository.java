@@ -333,7 +333,7 @@ public class UserRepository {
         sysPermission6.setParentIds("1");
         sysPermission6.setPermission("role:view");
         sysPermission6.setResourceType("menu");
-        sysPermission6.setUrl("user/roleList");
+        sysPermission6.setUrl("user/rList");
         sysPermission6.setLevel(2);
 
         SysPermission sysPermission7 = new SysPermission();
@@ -372,7 +372,7 @@ public class UserRepository {
         SysPermission sysPermission10 = new SysPermission();
         sysPermission10.setPermissionId(10);
         sysPermission10.setAvailable(true);
-        sysPermission10.setPermissionName("角色删除");
+        sysPermission10.setPermissionName("角色授权");
         sysPermission10.setParentId(6l);
         sysPermission10.setParentIds("1/6");
         sysPermission10.setPermission("role:authorize");
@@ -380,18 +380,39 @@ public class UserRepository {
         sysPermission10.setUrl("user/authorize");
         sysPermission10.setLevel(3);
 
-        //log:view
+        SysPermission sysPermission13 = new SysPermission();
+        sysPermission13.setPermissionId(13);
+        sysPermission13.setAvailable(true);
+        sysPermission13.setPermissionName("角色授权");
+        sysPermission13.setParentId(6l);
+        sysPermission13.setParentIds("1/6");
+        sysPermission13.setPermission("role:authorize");
+        sysPermission13.setResourceType("button");
+        sysPermission13.setUrl("user/plist");
+        sysPermission13.setLevel(3);
 
+        //log:view
         SysPermission sysPermission11 = new SysPermission();
-        sysPermission10.setPermissionId(11);
-        sysPermission10.setAvailable(true);
-        sysPermission10.setPermissionName("日志查看");
-        sysPermission10.setParentId(1l);
-        sysPermission10.setParentIds("1");
-        sysPermission10.setPermission("log:view");
-        sysPermission10.setResourceType("button");
-        sysPermission10.setUrl("log/getLogList");
-        sysPermission10.setLevel(3);
+        sysPermission11.setPermissionId(11);
+        sysPermission11.setAvailable(true);
+        sysPermission11.setPermissionName("日志管理");
+        sysPermission11.setParentId(0l);
+        sysPermission11.setParentIds("0");
+        sysPermission11.setPermission("log:view");
+        sysPermission11.setResourceType("menu");
+        sysPermission11.setUrl("#");
+        sysPermission11.setLevel(1);
+
+        SysPermission sysPermission12 = new SysPermission();
+        sysPermission12.setPermissionId(12);
+        sysPermission12.setAvailable(true);
+        sysPermission12.setPermissionName("日志查看");
+        sysPermission12.setParentId(11l);
+        sysPermission12.setParentIds("11");
+        sysPermission12.setPermission("log:view");
+        sysPermission12.setResourceType("menu");
+        sysPermission12.setUrl("/log/list");
+        sysPermission12.setLevel(2);
 
         List<SysPermission> sysPermissions = new ArrayList<>();
 
@@ -407,14 +428,13 @@ public class UserRepository {
             sysPermissions.add(sysPermission8);
             sysPermissions.add(sysPermission9);
             sysPermissions.add(sysPermission10);
+            sysPermissions.add(sysPermission11);
+            sysPermissions.add(sysPermission12);
         }
         else
         {
-            sysPermissions.add(sysPermission1);
-            sysPermissions.add(sysPermission2);
-            sysPermissions.add(sysPermission3);
-            sysPermissions.add(sysPermission4);
-            sysPermissions.add(sysPermission5);
+            sysPermissions.add(sysPermission11);
+            sysPermissions.add(sysPermission12);
         }
         return sysPermissions;
     };
