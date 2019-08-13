@@ -607,3 +607,70 @@ public PrincipalCollection resolvePrincipals() {
 拿到principal即用户名后会去做Authorize操作,访问流程如下所示
 
 ![](pic/assertAuthorizedPath.png)
+
+# 使用shiro设计前后端分离
+
+从上面的鉴权和验证过程我们知道，一旦Shiro完成鉴权操作，会把相关的信息（是否鉴权成功，用户名等）存入Web Session对像里，所以我们一旦完成登录只需把后台反回的信息的JSESSIONID存下来，下次访问相关API的时候带上即可。
+
+示例中加入了HttpClient类。
+
+doPostLogin用来模拟表格登录。从log信息拿到JSESSIONID。如下所示
+
+```
+[main] DEBUG org.apache.http.headers - http-outgoing-0 << HTTP/1.1 200 
+[main] DEBUG org.apache.http.headers - http-outgoing-0 << Set-Cookie: rememberMe=deleteMe; Path=/; Max-Age=0; Expires=Mon, 12-Aug-2019 09:57:18 GMT
+[main] DEBUG org.apache.http.headers - http-outgoing-0 << Set-Cookie: JSESSIONID=F1B5991198745FD70C444A856D5CB40D; Path=/; HttpOnly
+[main] DEBUG org.apache.http.headers - http-outgoing-0 << Set-Cookie: rememberMe=deleteMe; Path=/; Max-Age=0; Expires=Mon, 12-Aug-2019 09:57:18 GMT
+[main] DEBUG org.apache.http.headers - http-outgoing-0 << Content-Type: application/json;charset=UTF-8
+[main] DEBUG org.apache.http.headers - http-outgoing-0 << Transfer-Encoding: chunked
+
+```
+
+然后在doGetRequset将JSESSIONID加入请求头中即可，相关代码如下。如果权限足则会转向setUnauthorizedUrl指定的页面
+
+```java
+BasicHeader basicHeader = new BasicHeader("Cookie", "JSESSIONID=1423C3F5C3B2EB0F4847C55663533218");
+BasicHeader basicHeader1 = new BasicHeader("Accept-Encoding", "gzip,deflate");
+BasicHeader basicHeader2 = new BasicHeader("Accept", "text/html");
+// 创建Get请求
+HttpGet httpGet = new HttpGet(uri);
+httpGet.setHeader(basicHeader);
+httpGet.setHeader(basicHeader1);
+httpGet.setHeader(basicHeader2);
+
+```
+
+但如果是通过浏览器来处理，我们使用Ajax来访问就不需要手动设置JSESSIONID,浏览器会替我们处理,比如删除操作。所以用Shiro来做前后端分离使用Session后
+
+```js
+$('#btn_delete').click(function () {
+var selectedLine = $table.bootstrapTable('getSelections');
+if (selectedLine.length < 1) {
+    alert("请选中一行数据");
+}
+else {
+    var idList = selectedLine[0].roleId;
+    for (var i = 1; i < selectedLine.length; i++) {
+        idList += ','+ selectedLine[i].roleId;
+    }
+    var deleteUrl = "/user/roleDelete";
+    $.ajax({
+        type:"post",
+        url:deleteUrl,
+        data:{roleIdList:idList},
+        dataType:"json",
+        success:function (result) {
+            $('#container').load(result.url);
+            $('.modal-backdrop').remove();//移除遮罩
+            $("body").removeClass('modal-open'); //移除模态
+        },
+        error:function (result) {
+          alert(result.responseText);
+        }
+    });
+
+```
+
+以下是请求的头信息
+
+![](pic/browerAjaxRequestHeader.png)

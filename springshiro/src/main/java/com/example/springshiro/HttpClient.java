@@ -119,21 +119,21 @@ public class HttpClient {
             // 设置uri信息,并将参数集合放入uri;
             // 注:这里也支持一个键值对一个键值对地往里面放setParameter(String key, String value)
             uri = new URIBuilder().setScheme("http").setHost("localhost")
-                    .setPort(8080).setPath("/index")
-                    .setParameters(params).build();
+                    .setPort(8080).setPath("/user/rlist")
+                    .build();
         } catch (URISyntaxException e1) {
             e1.printStackTrace();
         }
         HashMap<String, String> headers = new HashMap<String, String>();
 
-        BasicHeader basicHeader = new BasicHeader("Cookie", "JSESSIONID=1423C3F5C3B2EB0F4847C55663533218");
+        BasicHeader basicHeader = new BasicHeader("Cookie", "JSESSIONID=383329EA09676716221C14F1A3D70F8B");
         BasicHeader basicHeader1 = new BasicHeader("Accept-Encoding", "gzip,deflate");
-        BasicHeader basicHeader2 = new BasicHeader("Accept", "text/html");
+//        BasicHeader basicHeader2 = new BasicHeader("Accept", "text/html");
         // 创建Get请求
         HttpGet httpGet = new HttpGet(uri);
         httpGet.setHeader(basicHeader);
         httpGet.setHeader(basicHeader1);
-        httpGet.setHeader(basicHeader2);
+//        httpGet.setHeader(basicHeader2);
 
 
         // 响应模型
