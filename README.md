@@ -421,4 +421,189 @@ public static Object get(Object key) {
 }
 
 ```
+# 如何判断是否有权限
 
+登录鉴权完成后，后面的操作只会检查权限是否满足，没有配置缓存的会每次都去调用你写的realm.doGetAuthorizationInfo方法。
+
+下面流程就是判断是否做过鉴权：
+![](pic/JudgeAuthenticationPath.png)
+
+我们细看一下createSubject这个方法,这个方法会尝试从Session中拿到登录用户名和是否已经登录
+```java
+public Subject createSubject(SubjectContext context) {
+        //SHIRO-646
+        //Check if the existing subject is NOT a WebSubject. If it isn't, then call super.createSubject instead.
+        //Creating a WebSubject from a non-web Subject will cause the ServletRequest and ServletResponse to be null, which wil fail when creating a session.
+        boolean isNotBasedOnWebSubject = context.getSubject() != null && !(context.getSubject() instanceof WebSubject);
+        if (!(context instanceof WebSubjectContext) || isNotBasedOnWebSubject) {
+            return super.createSubject(context);
+        }
+        WebSubjectContext wsc = (WebSubjectContext) context;
+        SecurityManager securityManager = wsc.resolveSecurityManager();
+        Session session = wsc.resolveSession();
+        boolean sessionEnabled = wsc.isSessionCreationEnabled();
+        //从session拿到登录用户名
+        PrincipalCollection principals = wsc.resolvePrincipals();
+        //从session中拿到之前鉴权过程成功后存入的标志位。这个在后面用来判断是否通过了监权
+        boolean authenticated = wsc.resolveAuthenticated();
+        String host = wsc.resolveHost();
+        ServletRequest request = wsc.resolveServletRequest();
+        ServletResponse response = wsc.resolveServletResponse();
+
+        return new WebDelegatingSubject(principals, authenticated, host, session, sessionEnabled,
+                request, response, securityManager);
+    }
+```
+
+拿到创建WebDelegationgSubject后会把其加入到线程ThreadLocal变量中（前面流程有讲），然后会在能过下面过程进行Shiro验证
+
+![](pic/authorizePath.png)
+
+重点看preHandle:178
+
+```java
+protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+
+        if (this.appliedPaths == null || this.appliedPaths.isEmpty()) {
+            if (log.isTraceEnabled()) {
+                log.trace("appliedPaths property is null or empty.  This Filter will passthrough immediately.");
+            }
+            return true;
+        }
+    
+        for (String path : this.appliedPaths.keySet()) {
+            // If the path does match, then pass on to the subclass implementation for specific checks
+            //(first match 'wins'):
+            //依据path来选择使用的过滤器，登录用的是login相关的，而现在用的是/**的
+            if (pathsMatch(path, request)) {
+                log.trace("Current requestURI matches pattern '{}'.  Determining filter chain execution...", path);
+                Object config = this.appliedPaths.get(path);
+                return isFilterChainContinued(request, response, path, config);
+            }
+        }
+
+        //no path matched, allow the request to go through:
+        return true;
+    }
+
+private boolean isFilterChainContinued(ServletRequest request, ServletResponse response,
+                                           String path, Object pathConfig) throws Exception {
+
+        if (isEnabled(request, response, path, pathConfig)) { //isEnabled check added in 1.2
+            if (log.isTraceEnabled()) {
+                log.trace("Filter '{}' is enabled for the current request under path '{}' with config [{}].  " +
+                        "Delegating to subclass implementation for 'onPreHandle' check.",
+                        new Object[]{getName(), path, pathConfig});
+            }
+            //The filter is enabled for this specific request, so delegate to subclass implementations
+            //so they can decide if the request should continue through the chain or not:
+            return onPreHandle(request, response, pathConfig);
+        }
+
+        if (log.isTraceEnabled()) {
+            log.trace("Filter '{}' is disabled for the current request under path '{}' with config [{}].  " +
+                    "The next element in the FilterChain will be called immediately.",
+                    new Object[]{getName(), path, pathConfig});
+        }
+        //This filter is disabled for this specific request,
+        //return 'true' immediately to indicate that the filter will not process the request
+        //and let the request/response to continue through the filter chain:
+        return true;
+    }
+
+public boolean onPreHandle(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
+        return isAccessAllowed(request, response, mappedValue) || onAccessDenied(request, response, mappedValue);
+    }
+```
+
+从上调用过程可以看出来最后会调用isAccessAllowed，这里面就会用到AUTHENTICATED_SESSION_KEY，如果为True则过滤通过
+
+![](pic/shiroSessionContent.png)
+
+整个过程如下所示。可以看出过了Filter链后会进入正适的服务接口，但由于是用AOP做的（通过注解@RequiresPermissions("log:view")来控制接口的权限）所以会有反射调用过程。不过从调用关系中可以发现，最终进入了我们写的realm的doGetAuthorizationInfo方法去判断是否有权限（CustomRealm）
+
+![](pic/assertAuthorizedPath.png)
+
+```java
+public void assertAuthorized(Annotation a) throws AuthorizationException {
+        if (!(a instanceof RequiresPermissions)) return;
+
+        RequiresPermissions rpAnnotation = (RequiresPermissions) a;
+        String[] perms = getAnnotationValue(a);
+        Subject subject = getSubject();
+
+        if (perms.length == 1) {
+            //为步会进行权限判断
+            subject.checkPermission(perms[0]);
+            return;
+        }
+        if (Logical.AND.equals(rpAnnotation.logical())) {
+            getSubject().checkPermissions(perms);
+            return;
+        }
+        if (Logical.OR.equals(rpAnnotation.logical())) {
+            // Avoid processing exceptions unnecessarily - "delay" throwing the exception by calling hasRole first
+            boolean hasAtLeastOnePermission = false;
+            for (String permission : perms) if (getSubject().isPermitted(permission)) hasAtLeastOnePermission = true;
+            // Cause the exception if none of the role match, note that the exception message will be a bit misleading
+            if (!hasAtLeastOnePermission) getSubject().checkPermission(perms[0]);
+            
+        }
+    }
+
+
+public boolean isPermitted(PrincipalCollection principals, Permission permission) {      
+      //拿到authorization信息
+      AuthorizationInfo info = getAuthorizationInfo(principals);
+      //判断进用的用户是否有权对该接口做操作
+      return isPermitted(permission, info);
+  }
+//visibility changed from private to protected per SHIRO-332
+protected boolean isPermitted(Permission permission, AuthorizationInfo info) {
+    Collection<Permission> perms = getPermissions(info);
+    if (perms != null && !perms.isEmpty()) {
+        for (Permission perm : perms) {
+            if (perm.implies(permission)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+```
+
+登录完成后会在session上存principals_session_key,说白了就是登录用户名。然后在后面验证是有权的时候会通过下面的代码拿到
+```java
+public PrincipalCollection resolvePrincipals() {
+        PrincipalCollection principals = getPrincipals();
+
+        if (isEmpty(principals)) {
+            //check to see if they were just authenticated:
+            AuthenticationInfo info = getAuthenticationInfo();
+            if (info != null) {
+                principals = info.getPrincipals();
+            }
+        }
+
+        if (isEmpty(principals)) {
+            Subject subject = getSubject();
+            if (subject != null) {
+                principals = subject.getPrincipals();
+            }
+        }
+
+        if (isEmpty(principals)) {
+            //try the session:一般会走到这步，从缓存获取
+            Session session = resolveSession();
+            if (session != null) {
+                principals = (PrincipalCollection) session.getAttribute(PRINCIPALS_SESSION_KEY);
+            }
+        }
+
+        return principals;
+    }
+```
+
+拿到principal即用户名后会去做Authorize操作,访问流程如下所示
+
+![](pic/assertAuthorizedPath.png)
