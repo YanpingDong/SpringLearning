@@ -265,3 +265,160 @@ public abstract class AbstractSessionDAO implements SessionDAO{
 
 从上我们可以看出来，我们一般会通过继承CachingSessionDAO来实现自己的DAO对象，
 SessionsSecurityManager
+
+
+# Subject对像绑定到线程
+
+ApplicationFilterChain.internalDoFilter()-->OncePerRequestFilter.doFileter()-->AbstractShiroFilter.doFilterInternal()-->DelegatingSubject.execute()-->SubjectCallable.call()-->threadState.bind()--》ThreadContext.bind(this.subject)
+
+
+```java
+AbstractShiroFilter{
+final ServletRequest request = prepareServletRequest(servletRequest, servletResponse, chain);
+            final ServletResponse response = prepareServletResponse(request, servletResponse, chain);
+            //创建DelegatingSubject对像
+            final Subject subject = createSubject(request, response);
+
+            //noinspection unchecked  subject.execute方法会先去当前线程ThreadLocal下绑定Subject对像
+            subject.execute(new Callable() {
+                public Object call() throws Exception {
+                    updateSessionLastAccessTime(request, response);
+                    executeChain(request, response, chain);
+                    return null;
+                }
+            });
+}
+
+#DelegatingSubject.execute方法详情
+public <V> V execute(Callable<V> callable) throws ExecutionException {
+        //包装成SubjectCallable
+        Callable<V> associated = associateWith(callable);
+        try {
+            return associated.call();
+        } catch (Throwable t) {
+            throw new ExecutionException(t);
+        }
+    }
+
+public <V> Callable<V> associateWith(Callable<V> callable) {
+        return new SubjectCallable<V>(this, callable);
+    }
+
+//associated.call()
+public V call() throws Exception {
+        try {
+            threadState.bind();
+            return doCall(this.callable);
+        } finally {
+            threadState.restore();
+        }
+    }
+ //threadState.bind();
+ public void bind() {
+        SecurityManager securityManager = this.securityManager;
+        if ( securityManager == null ) {
+            //try just in case the constructor didn't find one at the time:
+            securityManager = ThreadContext.getSecurityManager();
+        }
+        this.originalResources = ThreadContext.getResources();
+        ThreadContext.remove();
+
+        ThreadContext.bind(this.subject);
+        if (securityManager != null) {
+            ThreadContext.bind(securityManager);
+        }
+    }
+
+//ThreadContext.bind(this.subject); 
+public static void bind(Subject subject) {
+        if (subject != null) {
+            put(SUBJECT_KEY, subject);
+        }
+    } 
+
+//put(SUBJECT_KEY, subject);
+private static final ThreadLocal<Map<Object, Object>> resources = new InheritableThreadLocalMap<Map<Object, Object>>();
+ public static void put(Object key, Object value) {
+        if (key == null) {
+            throw new IllegalArgumentException("key cannot be null");
+        }
+
+        if (value == null) {
+            remove(key);
+            return;
+        }
+        //确保ThreadLocal变量 resources的初始化
+        ensureResourcesInitialized();
+        //把subject绑定到当前线程ThreadLocal变量中，以备后面使用SecurityUtils.getSubject();拿到该对像
+        resources.get().put(key, value);
+
+        if (log.isTraceEnabled()) {
+            String msg = "Bound value of type [" + value.getClass().getName() + "] for key [" +
+                    key + "] to thread " + "[" + Thread.currentThread().getName() + "]";
+            log.trace(msg);
+        }
+    }
+```
+放入后如下图所示
+![](pic/bindShiroThreadLocalPara.png)
+
+```java
+//后面过滤器获取Subject对像是通过SecurityUtils.getSubject-->ThreadContext.getSubject-->ThreadContext.get-->然后通过subject.login进行鉴权
+SecurityUtils
+{
+public static Subject getSubject() {
+        Subject subject = ThreadContext.getSubject();
+        if (subject == null) {
+            subject = (new Subject.Builder()).buildSubject();
+            ThreadContext.bind(subject);
+        }
+        return subject;
+    }
+}
+
+
+ThreqdContext
+{
+   public static final String SUBJECT_KEY = ThreadContext.class.getName() + "_SUBJECT_KEY";
+   public static Subject getSubject() {
+        return (Subject) get(SUBJECT_KEY);
+    }
+
+public static Object get(Object key) {
+        if (log.isTraceEnabled()) {
+            String msg = "get() - in thread [" + Thread.currentThread().getName() + "]";
+            log.trace(msg);
+        }
+
+        Object value = getValue(key);
+        if ((value != null) && log.isTraceEnabled()) {
+            String msg = "Retrieved value of type [" + value.getClass().getName() + "] for key [" +
+                    key + "] " + "bound to thread [" + Thread.currentThread().getName() + "]";
+            log.trace(msg);
+        }
+        return value;
+    }
+    //开始的时候是通过该方法放到当前线程的ThreadLocal变量中的
+    public static void put(Object key, Object value) {
+        if (key == null) {
+            throw new IllegalArgumentException("key cannot be null");
+        }
+
+        if (value == null) {
+            remove(key);
+            return;
+        }
+
+        ensureResourcesInitialized();
+        resources.get().put(key, value);
+
+        if (log.isTraceEnabled()) {
+            String msg = "Bound value of type [" + value.getClass().getName() + "] for key [" +
+                    key + "] to thread " + "[" + Thread.currentThread().getName() + "]";
+            log.trace(msg);
+        }
+    }
+}
+
+```
+

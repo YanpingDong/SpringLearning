@@ -193,32 +193,32 @@ public class HomeController {
 //        String password = AesUtils.decrypt(encryptedPassword,key);
         String password = encryptedPassword;
         Long currentMillis = System.currentTimeMillis();
-        if (rightCode == null || verifyCodeTTL == null) {
-            map.put("msg", "请刷新图片，输入验证码！");
-            map.put("userName", userName);
-            map.put("password", password);
-            map.put("success",false);
-            map.put("url","/login");
-            return map;
-        }
-        Long expiredTime = (currentMillis - verifyCodeTTL) / 1000;
-        if (expiredTime > this.verifyTTL) {
-            map.put("msg", "验证码过期，请刷新图片重新输入！");
-            map.put("userName", userName);
-            map.put("password", password);
-            map.put("success",false);
-            map.put("url","/login");
-            return map;
-        }
-
-        if (!verifyCode.equalsIgnoreCase(rightCode)) {
-            map.put("msg", "验证码错误，请刷新图片重新输入！");
-            map.put("userName", userName);
-            map.put("password", password);
-            map.put("success",false);
-            map.put("url","/login");
-            return map;
-        }
+//        if (rightCode == null || verifyCodeTTL == null) {
+//            map.put("msg", "请刷新图片，输入验证码！");
+//            map.put("userName", userName);
+//            map.put("password", password);
+//            map.put("success",false);
+//            map.put("url","/login");
+//            return map;
+//        }
+//        Long expiredTime = (currentMillis - verifyCodeTTL) / 1000;
+//        if (expiredTime > this.verifyTTL) {
+//            map.put("msg", "验证码过期，请刷新图片重新输入！");
+//            map.put("userName", userName);
+//            map.put("password", password);
+//            map.put("success",false);
+//            map.put("url","/login");
+//            return map;
+//        }
+//
+//        if (!verifyCode.equalsIgnoreCase(rightCode)) {
+//            map.put("msg", "验证码错误，请刷新图片重新输入！");
+//            map.put("userName", userName);
+//            map.put("password", password);
+//            map.put("success",false);
+//            map.put("url","/login");
+//            return map;
+//        }
 
         LoginResult loginResult = loginService.login(userName, password);
         if (loginResult.isLogin()) {
