@@ -640,7 +640,7 @@ httpGet.setHeader(basicHeader2);
 
 ```
 
-但如果是通过浏览器来处理，我们使用Ajax来访问就不需要手动设置JSESSIONID,浏览器会替我们处理,比如删除操作。所以用Shiro来做前后端分离使用Session后
+但如果是通过浏览器来处理，我们使用Ajax来访问就不需要手动设置JSESSIONID,浏览器会主动来维护这个状态并发给后台,这个 cookie 的名称为 JSESSIONID，但也可以通过 http://api.example.com/user;jsessionid=xxxx这样的方式传递给服务器，服务器就能识别出对应的 session。比如删除操作,细节如下：
 
 ```js
 $('#btn_delete').click(function () {
@@ -674,3 +674,12 @@ else {
 以下是请求的头信息
 
 ![](pic/browerAjaxRequestHeader.png)
+
+# 使用session的问题
+
+1. 现在的状况是 APP 的每个请求都用这个方式传递，不然服务器就认为该请求未登录，所以会被安全框架拦截，从而拿不到正常的数据。而服务器每次都要维护这么多的 session，会占用内存。
+   
+2. 以后做集群也不方便（用 Spring Session 缓存到 Rides 中也是可以做集群的，基于 WEB 应用），那有没有更好的解决方案呢？
+
+
+别一种替代方案是基于 token，也可以用 OAuth2。但简单安全的一个标准就是 JSON Web Token 简称 JWT，用它来代替这个基于 cookie 的认证方式。
