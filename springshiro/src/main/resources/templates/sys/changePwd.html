@@ -100,14 +100,21 @@
         var $frm =  $('form[id="formAdd"]');
         $frm.ajaxForm(function (data) {
             console.log(data);
+            console.log("dyp test");
+            console.log(data.success);
             $('span[name="result"]').html(data.result);
-            if(data.success)
+            if(data.success=="true")
             {
+                console.log("op success");
+
                 alert(data.result);
+                 alert(data.success);
                 window.location.replace(data.url);
             }
             else
             {
+                console.log("error heppen");
+                 $('#container').load(url);
                 alert(data.result);
             }
         });

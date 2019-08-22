@@ -320,6 +320,7 @@ public class UserController {
         {
             map.put("success","false");
             map.put("result","用户错误");
+            map.put("url","/logout");
             return map;
         }
 
@@ -329,6 +330,7 @@ public class UserController {
         {
             map.put("success","false");
             map.put("result","当前用户密码不正确");
+            map.put("url","/user/edit/1");
             return map;
         }
 
@@ -350,20 +352,20 @@ public class UserController {
         Map<String,Boolean> map = new HashMap<>();
         if(password==null)
         {
-            map.put("valid",false);
+            map.put("valid",true);
             return map;
         }
 
         String userName = loginService.getCurrentUserName();
         if(userName==null || userName.isEmpty())
         {
-            map.put("valid",false);
+            map.put("valid",true);
             return map;
         }
         User user = userService.findByUserName(userName);
         if(user==null)
         {
-            map.put("valid",false);
+            map.put("valid",true);
             return map;
         }
 
@@ -371,7 +373,7 @@ public class UserController {
         String encryptPwd = password;
         if(!encryptPwd.equals(user.getPassword()))
         {
-            map.put("valid",false);
+            map.put("valid",true);
             return map;
         }
 

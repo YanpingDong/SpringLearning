@@ -169,6 +169,7 @@ public class HomeController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String toLogin(Map<String, Object> map, HttpServletRequest request) {
+        System.out.println("longin get");
         loginService.logout();
         String key = create16String();
 
@@ -242,6 +243,7 @@ public class HomeController {
 
     @RequestMapping("/logout")
     public String logOut(HttpSession session) {
+        System.out.println("logout");
         SysLog sysLog = LogFactory.createSysLog("logout","登出");
         logService.writeLog(sysLog);
 
