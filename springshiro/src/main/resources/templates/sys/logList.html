@@ -56,10 +56,24 @@
 <script th:inline="javascript">
 
     var $table = $("#logTable");
+
+    function actionFormatter(value, row, index) {
+                var id = value;
+                var result = "";
+                result += "<a href='javascript:;' class='btn btn-xs green' onclick=\"EditViewById('" + row.userName + "', view='view')\" title='查看'><span class='glyphicon glyphicon-search'></span></a>";
+                result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditViewById('" + id + "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
+                result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + id + "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
+                return result;
+            };
+
+    function EditViewById(name){
+           console.log("encryptedPwd:" + name);
+        };
+
     $(function () {
         $table.bootstrapTable({
             url:"/log/getLogList",        //请求后台的URL（*）
-            <!--method: 'get',                      //请求方式（*）-->
+            method: 'get',                      //请求方式（*）
             <!--contentType : "application/x-www-form-urlencoded;charset=UTF-8", //post方式必须设置,get方式设置application/json-->
             contentType : "application/json;charset=UTF-8",
             dataType: 'json',
@@ -126,6 +140,13 @@
                     field: 'insertTime',
                     title: '操作时间',
                     sortable: true
+                },{
+                    field: 'operation',
+                    title: '操作',
+                    width: 120,
+                    align: 'center',
+                    valign: 'middle',
+                    formatter: actionFormatter,
                 }
             ],
             queryParamsType: '',
@@ -164,14 +185,13 @@
 
         });
 
-
         $('#btnQuery').click(function () {
             console.log("start refresh")
             $table.bootstrapTable('refresh');
         });
-
-
     })
+
+
 </script>
 </body>
 </html>
