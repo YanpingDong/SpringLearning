@@ -168,7 +168,7 @@ public class UserController {
      * 用户删除;
      * @return
      */
-    @RequestMapping("/delete")
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     @ResponseBody
     @RequiresPermissions("user:del")//权限管理;
     public Object userDel(@RequestParam String userIdList){

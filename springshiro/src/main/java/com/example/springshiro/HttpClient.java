@@ -73,7 +73,7 @@ public class HttpClient {
             //        表单方式
             List<BasicNameValuePair> pairList = new ArrayList<BasicNameValuePair>();
             pairList.add(new BasicNameValuePair("userName", "admin"));
-            pairList.add(new BasicNameValuePair("password", "123"));
+            pairList.add(new BasicNameValuePair("password", "123456"));
             httpPost.setEntity(new UrlEncodedFormEntity(pairList, "utf-8"));
             // 由客户端执行(发送)Post请求
             response = httpClient.execute(httpPost);
