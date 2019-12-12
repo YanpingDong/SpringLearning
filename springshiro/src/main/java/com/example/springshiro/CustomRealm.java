@@ -34,7 +34,7 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         System.out.println("-------权限认证方法--------");
-        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        String username = (String)principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         List<SysPermission> sysPermissions = userRepository.findUserRolePermissionByUserName(username);
         Set<String> stringSet = new HashSet<>();

@@ -130,7 +130,7 @@ public class HomeController {
 
      * @throws Exception
      */
-    @RequestMapping("/getVerifyCode")
+    @RequestMapping(value = "/getVerifyCode", method = RequestMethod.GET)
     public void defaultKaptcha(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         byte[] bytesCaptchaImg = null;
