@@ -146,4 +146,4 @@ $ curl -X PUT  -d '{"name":"tom","sex":"female","age":18}' localhost:8080/mvc/pe
 {"timestamp":"2020-02-06T07:27:47.482+0000","status":415,"error":"Unsupported Media Type","message":"Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported","path":"/mvc/people/info/1"}
 ```
 
-[本文示例代码](source/SpringMVC)
+[本文示例代码](source/RequestMappingDemo)
