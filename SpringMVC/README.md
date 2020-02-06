@@ -2,7 +2,7 @@
 
 本章主要讲如何快速的使用spring boot快速搭建一个Web MVC服务。
 
-最快的方案是使用https://start.spring.io网站，然后按要求填写一些基本说明，并在search for dependencies中输入Web关键字,如下图所示
+最快的方案是使用`https://start.spring.io`网站，然后按要求填写一些基本说明，并在search for dependencies中输入Web关键字,如下图所示
 
 ![](pic/startspringio.png)
 
@@ -145,4 +145,5 @@ $ curl -X POST -d '{"name":"tom","sex":"fe localhost:8080/mvc/people/info/1?num=
 $ curl -X PUT  -d '{"name":"tom","sex":"female","age":18}' localhost:8080/mvc/people/info/1?num=2
 {"timestamp":"2020-02-06T07:27:47.482+0000","status":415,"error":"Unsupported Media Type","message":"Content type 'application/x-www-form-urlencoded;charset=UTF-8' not supported","path":"/mvc/people/info/1"}
 ```
+
 [本文示例代码](source/SpringMVC)
