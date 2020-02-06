@@ -2,12 +2,12 @@
 
 　　记录Spring框架下如何架构微服务。比如：MVC,Configuration Server,circuit breaks, intelligent routing,micro-proxy,control bus, ont-time tokens,leadership election, distributed sessions, cluster state等
 
-　　并总结一些开发中的心得体会，比如：打log的想法是；异常处理想法;IDEA社区版使用心得等。
+　　并总结一些开发中的心得体会，比如：打log的想法；异常处理想法;IDEA社区版使用心得等。
 
 
-# Spring MVC
+# [SpringMVC](SpringMVC/README.md)
 
-　　本章主要讲如何快速的使用spring boot快速搭建一个Web MVC服务。
+　　如何快速搭建SpringBoot MVC；一些常见的用法总结；
 
 
 # IDEA的方便性
@@ -22,7 +22,7 @@
 
 
 
-# IDEA中MavenJava
+## IDEA中MavenJava
 
 在使用IntelliJ IDEA中Maven编译过程中可能会报diamond operator is not supported in -source 1.5之类的错误，出现这样的原因是Maven插件的默认配置有问题。可以下pom.xml中加入如下配置解决
 
@@ -42,7 +42,7 @@
 
 ![](pic/idea_global_javac_setting.png)
 
-# springshiro session获取方式
+# SpringShiro session获取方式
 
 获取Session的方法定义在SessionManager接口中细节见如下代码
 

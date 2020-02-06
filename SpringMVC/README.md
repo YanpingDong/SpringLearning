@@ -1,14 +1,12 @@
-# Spring MVC
-
-本章主要讲如何快速的使用spring boot快速搭建一个Web MVC服务。
+# 初始项目
 
 最快的方案是使用`https://start.spring.io`网站，然后按要求填写一些基本说明，并在search for dependencies中输入Web关键字,如下图所示
 
 ![](pic/startspringio.png)
 
-## RequestMapping初探
+# RequestMapping初探
 
-### 如果不设置method
+## 如果不设置method
 
 如果不设置method参数，只要路径匹配，可以接收所有方法（GET PUT POST DELETE）的请求
 
@@ -147,3 +145,4 @@ $ curl -X PUT  -d '{"name":"tom","sex":"female","age":18}' localhost:8080/mvc/pe
 ```
 
 [本文示例代码](source/RequestMappingDemo)
+
