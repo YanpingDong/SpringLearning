@@ -140,11 +140,16 @@
                 data: {userName: $userName, password: encryptedPwd, verifyCode: $verifyCode, key: $key},
 //                data: {userName: $userName, password: encryptedPwd, verifyCode: $verifyCode},
                 dataType: "json",
+                complete: function( xhr,data ){
+                    console.log(xhr.getResponseHeader('Cookie'));
+                    console.log(xhr.getResponseHeader('Content-Type'));
+                    console.log(xhr.getResponseHeader('expiers'));
+                },
                 success: function (result) {
                     console.log(result);
                     if(result.success)
                     {
-                        window.location.href=result.url + "?userName=" + $userName;
+                        //window.location.href=result.url + "?userName=" + $userName;
                     }
                     else
                     {

@@ -51,13 +51,13 @@ public class HttpClient {
     public static void main(String[] args)
     {
         HttpClient hc = new HttpClient();
-//        try {
-//            hc.doPostLogin();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            hc.doPostLogin();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        hc.doGetRequset();
+//        hc.doGetRequset();
     }
     public void doPostLogin() throws JSONException {
 

@@ -640,7 +640,7 @@ httpGet.setHeader(basicHeader2);
 
 ```
 
-但如果是通过浏览器来处理，我们使用Ajax来访问就不需要手动设置JSESSIONID,浏览器会主动来维护这个状态并发给后台,这个 cookie 的名称为 JSESSIONID，但也可以通过 http://api.example.com/user;jsessionid=xxxx这样的方式传递给服务器，服务器就能识别出对应的 session。比如删除操作,细节如下：
+但如果是通过浏览器来处理，我们使用Ajax来访问就不需要手动设置JSESSIONID,浏览器会主动来维护这个状态并发给后台,这个 cookie 的名称为 JSESSIONID，但也可以通过 `http://api.example.com/user;jsessionid=xxxx` 这样的方式传递给服务器，服务器就能识别出对应的 session。比如删除操作,细节如下：
 
 ```js
 $('#btn_delete').click(function () {
@@ -683,3 +683,12 @@ else {
 
 
 别一种替代方案是基于 token，也可以用 OAuth2。但简单安全的一个标准就是 JSON Web Token 简称 JWT，用它来代替这个基于 cookie 的认证方式。
+
+# session如何传递
+
+首先，session机制是一种服务器端的机制，服务器使用一种类似于散列表的结构（也可能就是使用散列表）来保存信息。一下可以理解成使用网页和后台的交互过程，当然也可以衍生到APP。只要和后台协商好传递方式即可，也可以沿用下面的方式。
+
+当浏览器请求一个需要session的服务页面时，服务器首先检查这个客户端的请求里是否已包含了一个session标识（session id），如果已包含则说明以前已经为此客户端创建过session，服务器就按照session id把这个session检索出来使用（检索不到，会新建一个）。如果客户端请求不包含session id，则为此客户端创建一个session并且生成一个与此session相关联的session id，session id的值应该是一个既不会重复，又不容易被找到规律以仿造的字符串，这个session id将被在本次响应中返回给客户端保存。交给浏览器的方式有以下三种。
+
+1. 采用cookie中写入session id，这样在交互过程中浏览器可以自动的按照规则取出session id,并在下次请求的时候把这个标识发挥给服务器。一般这个cookie的名字都是类似于SEEESIONID比如本文的JSESSIONID。但cookie可以被人为的禁止，则必须有其他机制以便在cookie被禁止时仍然能够把session id传递回服务器。 经常被使用的一种技术叫做URL重写，就是把session id直接附加在URL路径的后面。还有一种技术叫做表单隐藏字段。就是服务器会自动修改表单，添加一个隐藏字段，以便在表单提交时能够把session id传递回服务器。
+       
