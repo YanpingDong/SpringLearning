@@ -690,5 +690,19 @@ else {
 
 当浏览器请求一个需要session的服务页面时，服务器首先检查这个客户端的请求里是否已包含了一个session标识（session id），如果已包含则说明以前已经为此客户端创建过session，服务器就按照session id把这个session检索出来使用（检索不到，会新建一个）。如果客户端请求不包含session id，则为此客户端创建一个session并且生成一个与此session相关联的session id，session id的值应该是一个既不会重复，又不容易被找到规律以仿造的字符串，这个session id将被在本次响应中返回给客户端保存。交给浏览器的方式有以下三种。
 
-1. 采用cookie中写入session id，这样在交互过程中浏览器可以自动的按照规则取出session id,并在下次请求的时候把这个标识发挥给服务器。一般这个cookie的名字都是类似于SEEESIONID比如本文的JSESSIONID。但cookie可以被人为的禁止，则必须有其他机制以便在cookie被禁止时仍然能够把session id传递回服务器。 经常被使用的一种技术叫做URL重写，就是把session id直接附加在URL路径的后面。还有一种技术叫做表单隐藏字段。就是服务器会自动修改表单，添加一个隐藏字段，以便在表单提交时能够把session id传递回服务器。
+1. 采用cookie中写入session id，这样在交互过程中浏览器可以自动的按照规则取出session id,并在下次请求的时候把这个标识发送给服务器。一般这个cookie的名字都是类似于SEEESIONID比如：本文的JSESSIONID(Jsessionid只是tomcat的对sessionid的叫法)。
+
+2. 但cookie可以被人为的禁止，则必须有其他机制以便在cookie被禁止时仍然能让客户端取得session id。经常被使用的一种技术叫做URL重写，就是把session id直接附加在URL路径的后面。附加方式有两种:一种是作为URL路径的附加信息，表现形式为`http://host/path;jsessionid=xxx`
+另一种是作为查询字符串附加在URL后面，表现形式为:`http://host/path?jsessionid=xxx`
+
+3. 还有一种技术叫做表单隐藏字段。就是服务器会自动修改表单，添加一个隐藏字段，以便在表单提交时能够把session id传递回服务器。
+
+```html
+<form name="testform" action="/xxx">
+<input type="hidden" name="jsessionid" value="ByOK3vjFD75aPnrF7C2HmdnV6QZcEbzWoWiBYEnLerjQ99zWpBng!-145788764">
+<input type="text">
+</form>
+```
+
+4. 也可以附加在返回的响应字段里，比如在成功后返回的数据结构中添加一个session id字段：{"sessionId":"xxxxxx","otherInfo":""}
        
