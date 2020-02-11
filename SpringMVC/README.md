@@ -146,3 +146,37 @@ $ curl -X PUT  -d '{"name":"tom","sex":"female","age":18}' localhost:8080/mvc/pe
 
 [本文示例代码](source/RequestMappingDemo)
 
+# Thymeleaf
+
+Thymeleaf与SpringMVC的视图技术，及SpringBoot的自动化配置集成非常完美，几乎没有任何成本，你只用关注Thymeleaf的语法即可。
+
+特点：
+
+- 它可以让美工在浏览器查看页面的静态效果，也可以让程序员在服务器查看带数据的动态页面效果。这是由于它支持 html 原型，然后在 html 标签里增加额外的属性来达到模板+数据的展示方式。浏览器解释 html 时会忽略未定义的标签属性，所以 thymeleaf 的模板可以静态地运行。当和Spring整合后，thymeleaf模板引擎会依据数据动态的替换thymeleaf标注部分，比如替换数据、循环操作等。
+
+- 与SpringBoot完美整合，SpringBoot提供了Thymeleaf的默认配置，并且为Thymeleaf设置了视图解析器，我们可以像以前操作jsp一样来操作Thymeleaf。代码几乎没有任何区别，就是在模板语法上有区别。
+
+## SpringBoot与Thymeleaf整合
+
+如果是Maven项目，引入如下依赖就可以了。
+
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+```
+
+引入后，在`org.springframework.boot.autoconfigure.thymeleaf.ThymeleafProperties`中可以看到默认了模板存放位置、模板后缀。
+
+```java
+public class ThymeleafProperties {
+    private static final Charset DEFAULT_ENCODING;
+    public static final String DEFAULT_PREFIX = "classpath:/templates/";
+    public static final String DEFAULT_SUFFIX = ".html";
+    private boolean checkTemplate = true;
+    private boolean checkTemplateLocation = true;
+    private String prefix = "classpath:/templates/";
+    private String suffix = ".html";
+    private String mode = "HTML";
+```
