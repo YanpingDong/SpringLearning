@@ -406,16 +406,11 @@ stat对象包含以下属性：
 遍历也可以嵌套
 
 ```html
-<li class="treeview"  th:each="submenues: ${menues}" >
-                    <a href="#"><i class="fa fa-link"></i> <span th:text="${submenues.key}"></span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                         </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li th:each="submenue: ${submenues.value}"><a href="javascript:void(0)" class="myLeftMenu" th:href="@{${submenue.url}}" th:text="${submenue.name}"></a></li>
-                    </ul>
-                </li>
+<li  th:each="submenues: ${menues}" >
+    <ul>
+        <li th:each="submenue: ${submenues.value}"><a href="javascript:void(0)" class="myLeftMenu" th:href="@{${submenue.url}}" th:text="${submenue.name}"></a></li>
+    </ul>
+</li>
 ```
 
 ## 逻辑判断
