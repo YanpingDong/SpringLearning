@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<br>
+
+
+
+<h1>
+    你好：<span th:text="${user.name}">请跟我来</span>
+    <p>friend: <span th:text="${user.friend.name}">Rose</span>.</p>
+</h1>
+
+
+<p>Thymeleaf variable</p>
+<h2 th:object="${user}">
+    <p>Name: <span th:text="*{name}">Jack</span>.</p>
+    <p>Age: <span th:text="*{age}">21</span>.</p>
+    <p>friend: <span th:text="*{friend.name}">Rose</span>.</p>
+</h2>
+
+<p>普通字符串与表达式拼接的情况：</p>
+<span th:text="'欢迎您:' + ${user.name} + '!'"></span></br>
+
+<p>字符串字面值需要用''，拼接起来非常麻烦，Thymeleaf对此进行了简化，使用一对|即可</p>
+<span th:text="|欢迎您:${user.name}|"></span>
+
+<p>算术运算</p>
+<span th:text="${user.age}"></span>
+<span th:text="${user.age}%2 == 0"></span>
+
+
+<p>三元运算</p>
+<span th:text="${user.sex} ? '男':'女'"></span>
+
+</br>
+
+<div>
+    <ul th:each="user,stat : ${users}">
+        <li th:text="${user.name}">Onions</li>
+        <li th:text="${user.age}">2.41</li>
+        <li th:text="${stat.index}">2.41</li>
+    </ul>
+</div>
+
+</br>
+<span th:if="${user.age} < 24">fresh man</span>
+
+
+
+<div th:switch="${user.role}">
+    <p th:case="'admin'">用户是管理员</p>
+    <p th:case="'manager'">用户是经理</p>
+    <p th:case="*">用户是别的玩意</p>
+</div>
+
+<script th:inline="javascript">
+    const user = /*[[${user}]]*/ {};
+    const age = /*[[${user.age}]]*/ 20;
+    console.log(user);
+    console.log(age)
+</script>
+
+</body>
+</html>

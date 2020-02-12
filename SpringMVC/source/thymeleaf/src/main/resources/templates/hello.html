@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1 th:text="${msg}">this info will be replace by msg, if run with springboot</h1>
+
+
+    <!--字符串字面值-->
+    <p>
+        你正在观看 <span th:text="'thymeleaf'">template</span> 的字符串常量值.
+    </p>
+
+    <!--数字字面值-->
+    <p>今年是 <span th:text="2018">1900</span>.</p>
+    <p>两年后将会是 <span th:text="2018 + 2">1902</span>.</p>
+
+
+    <!--布尔字面值-->
+    <div th:if="true">
+        你填的是true
+    </div>
+
+</body>
+</html>
