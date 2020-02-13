@@ -6,8 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 import java.util.Map;
 
-// Value is model name that will show on Swagger-ui as Model name,by default,
-// the class name is used
+// Value is model name that will show on Swagger-ui as Model name,
+// by default, the class name is used
 @ApiModel(description = "user detail entity", value = "User")
 public class User {
     @ApiModelProperty(required = true, value = "user name", example = "testName")
@@ -17,8 +17,7 @@ public class User {
     private int sex;
 
     @ApiModelProperty(required = false, accessMode = ApiModelProperty.AccessMode.READ_WRITE ,
-            notes="User,name String, sex int",example = "{\"name\":\"sampleName\",\"sex\":1}",
-            reference="UserRe")
+            notes="User,name String, sex int",example = "{\"name\":\"sampleName\",\"sex\":1}")
     private User father;
 
     @ApiModelProperty(required = false, notes="java.util.List<user>", dataType = "java.util.List<user>", example = "[{\"name\":\"sampleName\",\"sex\":1}]")

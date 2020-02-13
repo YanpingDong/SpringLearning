@@ -78,7 +78,7 @@ public class Swagger2Config {
 
 1. 避免使用Map类型数据，在Sawgger-Ui展示的时候Map中的Key类型会丢失，能看到的是`<*>`。参看下面示例errorSet的Key显示
 
-2. 不要自引用，识别不到，在Swagger-ui里会是`{}`。参看下面示例father显示
+2. 不要自引用，识别不到，在Swagger-ui里会是`{}`。参看下面示例father显示。如果自引用逻辑上解析程序面临无法判断退出条件的死循环。
 
 如果有不可避免的原因使用上面方式表达模型，给出example是一个很好的解决方案
 
