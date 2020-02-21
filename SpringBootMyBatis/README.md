@@ -91,6 +91,7 @@ MySQL有四个日期类型：date,time, datetime, timestamp
 datetime所能存储的时间范围为：’1000-01-01 00:00:00.000000’ 到 ‘9999-12-31 23:59:59.999999’。
 
 ### mybatis数据类型映射
+
 类型名称 | JDBC Type  | Java Type
 -------|------|-------
 DATE  | DATE | java.sql.Date
@@ -126,3 +127,36 @@ char类型字段的最大长度是255，且255个字节可全部用于存储数�
 ```
 VARCHAR节省了存储空间，所以对性能也有帮助。但是，由于行是变长的，在UPDATE时可能使行变得比原来更长，这就导致需要做额外的工作。如果一个行占用的空间增长，并且在页内没有更多的空间可以存储，在这种情况下，不同的存储引擎的处理方式是不一样的。例如，MyISAM会将行拆成不同的片段存储，InnoDB则需要分裂页来使行可以放进页内。其他一些存储引擎也许从不在原数据位置更新数据。
 ```
+
+### mybatis数据类型映射
+
+类型名称 | JDBC Type  | Java Type
+-------|------|-------
+VARCHAR  | VARCHAR | java.lang.String
+TIME |	CHAR | java.lang.String
+
+
+# MySql数据类型与Java数据类型对照表
+
+类型名称 | JDBC Type(数据库类型)  | Java Type
+-------|------|-------
+VARCHAR 	| 	VARCHAR |	java.lang.String 	
+CHAR 	| 	CHAR |	java.lang.String 	
+BLOB 	| 	BLOB |	java.lang.byte[] 	
+TEXT 	| 	VARCHAR |	java.lang.String 	
+INTEGER 	| 	INTEGER UNSIGNED |	java.lang.Long 	
+TINYINT 	| 	TINYINT UNSIGNED |	java.lang.Integer 	
+SMALLINT 	| 	SMALLINT UNSIGNED 	|java.lang.Integer 
+MEDIUMINT 	| 	MEDIUMINT UNSIGNED 	|java.lang.Integer 	
+BIT 	| 	BIT |	java.lang.Boolean 	
+BIGINT 	| 	BIGINT UNSIGNED |	java.math.BigInteger
+FLOAT 	| 	FLOAT |	java.lang.Float 
+DOUBLE 	| 	DOUBLE |	java.lang.Double 	
+DECIMAL 	| 	DECIMAL |	java.math.BigDecimal  
+BOOLEAN 	| 	同TINYINT 	|  	 
+ID 	| 	PK (INTEGER UNSIGNED) |	java.lang.Long  
+DATE 	| 	DATE |	java.sql.Date 	 
+TIME 	| 	TIME |	java.sql.Time 	 
+DATETIME 	| 	DATETIME |	java.sql.Timestamp 
+TIMESTAMP 	| 	TIMESTAMP |	java.sql.Timestamp 	 
+YEAR 	| 	YEAR |	java.sql.Date
