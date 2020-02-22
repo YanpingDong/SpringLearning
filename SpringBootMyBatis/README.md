@@ -103,9 +103,9 @@ TIMESTAMP |	TIMESTAMP| 	java.util.Date / java.sql.Timestamp
 ```
 mybaits里面没有了DATETIME的参数，会报No enum constant org.apche.type.jdbcType.DATETIME错
 
-使用java.util.Date作为接收的目的是在用swagger对外暴露接口模型的时候以string的方式显示并且有默认值，比如："date": "2020-02-22T04:17:22.033Z"。
+使用java.util.Date作为接收的目的是在用swagger对外暴露接口模型的时候以string的方式显示并且有默认值，而且不会去掉%H %M %S，比如："date": "2020-02-22T04:17:22.033Z"。
 
-如果用java.sql.Date: swagger的显示是"date": "string"。
+如果用java.sql.Date: swagger的显示是"date": "string"(可以使用@ApiModelProperty(name = "date", example="2020-02-20T04:17:22.033Z")来展示)。并且会自动去掉%H %M %S的数据，不论你数据库设置的是否是DATETIME还是DATE。
 
 如果用import java.sql.Timestamp： swagger的显示如下
 "date": {
@@ -120,8 +120,6 @@ mybaits里面没有了DATETIME的参数，会报No enum constant org.apche.type.
     "timezoneOffset": 0,
     "year": 0
   }
-
-
 ```
 
 ## varchar和char的区别
