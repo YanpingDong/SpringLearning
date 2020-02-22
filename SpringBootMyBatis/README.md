@@ -94,10 +94,35 @@ datetime所能存储的时间范围为：’1000-01-01 00:00:00.000000’ 到 �
 
 类型名称 | JDBC Type  | Java Type
 -------|------|-------
-DATE  | DATE | java.sql.Date
+DATE  | DATE | java.util.Date / java.sql.Date
 TIME |	TIME | java.sql.Time 
-DATETIME |	DATETIME |	java.sql.Timestamp
-TIMESTAMP |	TIMESTAMP| 	java.sql.Timestamp
+DATETIME |	TIMESTAMP |	java.util.Date / java.sql.Timestamp
+TIMESTAMP |	TIMESTAMP| 	java.util.Date / java.sql.Timestamp
+
+
+```
+mybaits里面没有了DATETIME的参数，会报No enum constant org.apche.type.jdbcType.DATETIME错
+
+使用java.util.Date作为接收的目的是在用swagger对外暴露接口模型的时候以string的方式显示并且有默认值，比如："date": "2020-02-22T04:17:22.033Z"。
+
+如果用java.sql.Date: swagger的显示是"date": "string"。
+
+如果用import java.sql.Timestamp： swagger的显示如下
+"date": {
+    "date": 0,
+    "day": 0,
+    "hours": 0,
+    "minutes": 0,
+    "month": 0,
+    "nanos": 0,
+    "seconds": 0,
+    "time": 0,
+    "timezoneOffset": 0,
+    "year": 0
+  }
+
+
+```
 
 ## varchar和char的区别
 
@@ -155,10 +180,10 @@ DOUBLE 	| 	DOUBLE |	java.lang.Double
 DECIMAL 	| 	DECIMAL |	java.math.BigDecimal  
 BOOLEAN 	| 	同TINYINT 	|  	 
 ID 	| 	PK (INTEGER UNSIGNED) |	java.lang.Long  
-DATE 	| 	DATE |	java.sql.Date 	 
-TIME 	| 	TIME |	java.sql.Time 	 
-DATETIME 	| 	DATETIME |	java.sql.Timestamp 
-TIMESTAMP 	| 	TIMESTAMP |	java.sql.Timestamp 	 
+DATE  | DATE | java.util.Date / java.sql.Date
+TIME |	TIME | java.sql.Time 
+DATETIME |	TIMESTAMP |	java.util.Date / java.sql.Timestamp
+TIMESTAMP |	TIMESTAMP| 	java.util.Date / java.sql.Timestamp
 YEAR 	| 	YEAR |	java.sql.Date
 
 
