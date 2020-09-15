@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,7 +96,7 @@ public class RoleController {
     @RequestMapping(value="/roleAdd",method = RequestMethod.POST)
     @ResponseBody
     @RequiresPermissions("role:add")
-    public String save(@Valid SysRole sysRole, BindingResult bindingResult)
+    public String save(SysRole sysRole, BindingResult bindingResult)
     {
         if(bindingResult.hasErrors())
         {

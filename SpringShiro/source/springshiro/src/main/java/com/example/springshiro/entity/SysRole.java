@@ -9,7 +9,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,8 +25,6 @@ public class SysRole implements Serializable {
 
     private Integer roleId; // 编号
 
-
-    @NotBlank(message ="名称不能为空")
     private String role; // 角色标识程序中判断使用,如"admin",这个是唯一的:
     private String description; // 角色描述,UI界面显示使用
     private Boolean available = Boolean.FALSE; // 是否可用,如果不可用将不会添加给用户，
