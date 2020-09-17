@@ -1,4 +1,4 @@
-package com.example.springshiro.utils;
+package com.dyp.dashboard.util;
 
 import java.util.Random;
 
