@@ -1,0 +1,50 @@
+#=========================port===============================================
+server:
+  port: 8080
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  config-location: classpath:mybatis/config/mybatis-config.xml
+
+#====Decided the configuration file through mvn packaged -P/-- params=============
+spring:
+  datasource:
+    username: dyp
+    password: 123456
+    url: jdbc:mariadb://localhost:3306/test2
+    driver-class-name: org.mariadb.jdbc.Driver
+  liquibase:
+    change-log: classpath:liquibase/master.xml
+    #    contexts: local,test,prod
+    contexts: local
+    enabled: true
+#  mvc:
+#    view:
+#      prefix: classpath:templates/
+#      suffix: .html
+#  autoconfigure:
+#    exclude: org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration
+#  thymeleaf:
+#    mode: HTML
+#    encodeing: UTF-8
+#    content-type: text/html
+#    prefix: classpath:templates/
+#    suffix: .html
+
+#====================log configuration===============================================
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    org:
+      springframework: INFO
+    com:
+      tra: DEBUG
+
+#文件上传路径
+uploadFolder: /home/learlee/Downloads/multipart
+
+#单个文件最大
+multipart:
+  maxFileSize: 3000MB
+  #设置总上传数据总大小
+  maxRequestSize: 10000MB

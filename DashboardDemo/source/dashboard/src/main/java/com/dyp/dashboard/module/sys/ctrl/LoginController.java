@@ -62,6 +62,7 @@ public class LoginController {
     {
         return RandomUtils.generateString(16);
     }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String toLogin(Map<String, Object> map, HttpServletRequest request) {
         System.out.println("longin get");

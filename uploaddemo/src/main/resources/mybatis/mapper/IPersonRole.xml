@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 唯一命名空间，必须定义为：所在包名+接口文件名 -->
+<mapper namespace="com.tra.repository.IPersonRole">
+
+    <!--多对一关系-->
+    <resultMap type="com.tra.entity.Person" id="PersonMap">
+
+        <id column="pid" property="pid"/>
+        <result column="pname" property="pname"/>
+        <collection property="roles" javaType="java.util.Set" ofType="com.tra.entity.Role">
+            <id column="rid" property="rid"/>
+            <result column="rname" property="rname"/>
+        </collection>
+
+    </resultMap>
+
+    <select id="getPersonAndRoleByUid" resultMap="PersonMap">
+        select r.rid, r.rname, p.pid, p.pname from role_person rp,role r,person p  where rp.role_id=r.rid and p.pid=#{uid} and rp.person_id=#{uid}
+    </select>
+
+    <insert id="insertPersonRole" parameterType="java.util.List">
+        INSERT INTO role_person (role_id ,person_id) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.pId},#{item.rId})
+        </foreach>
+    </insert>
+
+    <insert id="insertPerson" parameterType="com.tra.entity.Person">
+        INSERT INTO person(pid,pname) VALUES (#{pid,jdbcType=INTEGER},#{pname,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="queryPersonById" parameterType="int" resultType="com.tra.entity.Person" >
+        select pid,pname from person where id=#{id}
+    </select>
+
+    <delete id="deletePersonById" parameterType="int">
+        delete from person where pid=#{id}
+    </delete>
+
+
+</mapper>

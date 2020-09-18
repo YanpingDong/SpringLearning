@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: local
+
+#=====================API-docs scan base package==================================
+api:
+  doc:
+    scan:
+      base:
+        package: com.dyp.dashboard.module
+    version: v0.0.1

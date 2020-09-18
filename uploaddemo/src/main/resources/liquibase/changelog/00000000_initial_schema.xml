@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+
+    <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql,oracle"/>
+
+
+    <changeSet author="dyp" id="1">
+        <createTable tableName="test">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="2" author="dyp">
+        <insert tableName="test">
+            <column name="id" value="1"/>
+            <column name="name" value="test"/>
+        </insert>
+    </changeSet>
+
+    <!--数据库类型参考-->
+    <!--<changeSet author="dyp" id="2">-->
+        <!--<createTable tableName="oauth_access_token">-->
+            <!--<column autoIncrement="true" name="id" type="BIGINT">-->
+                <!--<constraints primaryKey="true"/>-->
+            <!--</column>-->
+            <!--<column name="authentication" type="BLOB"/>-->
+            <!--<column name="authentication_id" type="VARCHAR(255)"/>-->
+            <!--<column name="refresh_token" type="TEXT"/>-->
+            <!--<column name="token" type="BLOB"/>-->
+        <!--</createTable>-->
+
+    <!--添加主键参考-->
+    <!--</changeSet>-->
+    <!--<changeSet author="dyp" id="23">-->
+        <!--<addPrimaryKey columnNames="username" constraintName="PRIMARY" tableName="user_login_ip_info"/>-->
+    <!--</changeSet>-->
+
+    <!--创创index参考-->
+    <!--<changeSet author="dyp" id="31">-->
+        <!--<createIndex indexName="IDX2cbnggudeanotnbfqs7bp38wi" tableName="tvfavorites">-->
+            <!--<column name="username"/>-->
+            <!--<column name="timestamp"/>-->
+        <!--</createIndex>-->
+    <!--</changeSet>-->
+
+    <!--增加列参考-->
+    <!--<changeSet author="dyp" id="40">-->
+        <!--<addColumn tableName="user_profile">-->
+            <!--<column name="client_id" type="varchar(200)">-->
+                <!--<constraints nullable="false"/>-->
+            <!--</column>-->
+        <!--</addColumn>-->
+    <!--</changeSet>-->
+
+    <!--删除列参考-->
+    <!--<changeSet author="dyp" id="41">-->
+        <!--<dropColumn tableName="user_profile" columnName="identity"/>-->
+    <!--</changeSet>-->
+
+</databaseChangeLog>
