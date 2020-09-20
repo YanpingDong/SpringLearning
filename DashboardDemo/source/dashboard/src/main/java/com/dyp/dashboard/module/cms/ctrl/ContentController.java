@@ -2,12 +2,14 @@ package com.dyp.dashboard.module.cms.ctrl;
 
 import com.dyp.dashboard.module.cms.entity.CmsArticleData;
 import com.dyp.dashboard.module.cms.repository.CmsArticleDataMapper;
+import com.dyp.dashboard.util.IDGenerator;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +46,7 @@ public class ContentController {
     @ResponseBody
     public ModelMap creatGame(HttpServletResponse response,
                               @RequestBody CmsArticleData data) {
-        String id = "123123";
+        String id = IDGenerator.generatorID();
         data.setId(id);
         cmsArticleDataDao.insert(data);
         ModelMap modelMap = new ModelMap();
@@ -57,5 +59,25 @@ public class ContentController {
         System.out.println("longin get");
 //        loginService.logout();
         return "/cms/compose";
+    }
+
+    @RequestMapping({"/detail"})
+    public String detail(HttpServletRequest request, Model model) {
+
+
+        CmsArticleData cmsArticleData = cmsArticleDataDao.selectById("756645093577117696");
+        model.addAttribute("info", cmsArticleData.getContent());
+        return "/cms/detail";
+    }
+
+    @RequestMapping({"/detail/{id}"})
+    @ResponseBody
+    public String detaila(HttpServletRequest request,@PathVariable("id")String id, Model model) {
+
+
+        CmsArticleData cmsArticleData = cmsArticleDataDao.selectById(id);
+        model.addAttribute("info", cmsArticleData.getContent());
+//        return "/cms/detail";
+        return cmsArticleData.getContent();
     }
 }
