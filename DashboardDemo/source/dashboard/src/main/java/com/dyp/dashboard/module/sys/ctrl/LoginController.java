@@ -128,7 +128,7 @@ public class LoginController {
         subMenues1.add(loglistMenue);
 
 
-        if("admin".equalsIgnoreCase(userName))
+        if("admin".equalsIgnoreCase("admin"))
         {
             menues.put("系统管理",subMenues);
             menues.put("日志管理",subMenues1);
