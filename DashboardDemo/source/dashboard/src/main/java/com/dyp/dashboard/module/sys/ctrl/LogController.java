@@ -16,32 +16,68 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/log")
 public class LogController {
+    private class AjaxData {
+
+        private List<List<String>> data;
+        public void setData(List<List<String>> data) {
+            this.data = data;
+        }
+        public List<List<String>> getData() {
+            return data;
+        }
+
+    }
+    @RequestMapping(value = "/getLogList1")
+    @ResponseBody
+    public AjaxData getLogList1(HttpServletRequest request)
+    {
+        AjaxData  ajaxData = new AjaxData();
+        List<List<String>> data = new ArrayList<>();
+        List<String> column1 = new ArrayList<>();
+        column1.add("Finn Camacho");
+        column1.add("Developer");
+        column1.add("Finn ");
+        column1.add("9383");
+        column1.add("2009/09/09");
+        column1.add("$139,575");
+        data.add(column1);
+        List<String> column2= new ArrayList<>();
+        column2.add("Finn Camacho");
+        column2.add("test");
+        column2.add("tokoy ");
+        column2.add("9183");
+        column2.add("2009/09/03");
+        column2.add("$139,57");
+        data.add(column2);
+        ajaxData.setData(data);
+        return ajaxData;
+    }
     @RequestMapping(value = "/getLogList")
     @ResponseBody
     public Object getLogList(HttpServletRequest request)
     {
         int pageSize = 10;
-        try {
-            pageSize =  Integer.parseInt(request.getParameter("pageSize"));
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+//        try {
+//            pageSize =  Integer.parseInt(request.getParameter("pageSize"));
+//        }catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
 
-        int pageNumber=0 ;
-        try {
-            pageNumber =  Integer.parseInt(request.getParameter("pageNumber"))-1;
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+//        int pageNumber=0 ;
+//        try {
+//            pageNumber =  Integer.parseInt(request.getParameter("pageNumber"))-1;
+//        }catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
 
         Map<String, Object> map = new HashMap<>();
 
-        String searchText=request.getParameter("searchText")==null ? "": request.getParameter("searchText");
-
-        String sortName=request.getParameter("sortName")==null ? "roleId": request.getParameter("sortName");
-        String sortOrder=request.getParameter("sortOrder")==null ? "asc": request.getParameter("sortOrder");
+//        String searchText=request.getParameter("searchText")==null ? "": request.getParameter("searchText");
+//
+//        String sortName=request.getParameter("sortName")==null ? "roleId": request.getParameter("sortName");
+//        String sortOrder=request.getParameter("sortOrder")==null ? "asc": request.getParameter("sortOrder");
 
 
 //        List<SysLog> sysLogPage =  logService.findAll(searchText);
