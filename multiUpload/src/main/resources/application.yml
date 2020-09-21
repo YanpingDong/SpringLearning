@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/dashboard?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+  jpa:
+    show-sql: true
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .ftl
+    static-path-pattern: /static/**
+
+#=====================API-docs scan base package==================================
+api:
+  doc:
+    scan:
+      base:
+        package: com.supereal.bigfile.controller
+    version: v0.0.1
