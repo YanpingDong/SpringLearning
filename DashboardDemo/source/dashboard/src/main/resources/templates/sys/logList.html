@@ -48,26 +48,26 @@
               <!-- /.card-header -->
 
               <table id="example" class="display" width="100%">
-                <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Extn.</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
-                </tr>
-                </thead>
-                <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Extn.</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
-                </tr>
-                </tfoot>
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                  <th>Name</th>-->
+<!--                  <th>Position</th>-->
+<!--                  <th>Office</th>-->
+<!--                  <th>Extn.</th>-->
+<!--                  <th>Start date</th>-->
+<!--                  <th>Salary</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tfoot>-->
+<!--                <tr>-->
+<!--                  <th>Name</th>-->
+<!--                  <th>Position</th>-->
+<!--                  <th>Office</th>-->
+<!--                  <th>Extn.</th>-->
+<!--                  <th>Start date</th>-->
+<!--                  <th>Salary</th>-->
+<!--                </tr>-->
+<!--                </tfoot>-->
               </table>
               <!-- /.card-body -->
             </div>
@@ -1039,7 +1039,16 @@ var dataSet = [
 ];
   $(function () {
   $('#example').DataTable( {
-        "ajax": "/log/getLogList1"
+
+        "ajax": "/log/getLogList1",
+        columns: [
+            { title: "Name" },
+            { title: "Position" },
+            { title: "Office" },
+            { title: "Extn." },
+            { title: "Start date" },
+            { title: "Salary" }
+        ]
     } );
   $('#example0').DataTable( {
         data: dataSet,
