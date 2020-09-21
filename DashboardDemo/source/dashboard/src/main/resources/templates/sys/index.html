@@ -107,7 +107,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item"  th:each="submenue: ${submenues.value}">
-                <a href="../../index.html" class="nav-link">
+                <a th:href="@{${submenue.url}}" class="nav-link myLeftMenu">
                   <i class="far fa-circle nav-icon"></i>
                   <p th:text="${submenue.name}"></p>
                 </a>
@@ -125,7 +125,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <div class="container-fluid">
+      <div id="container" class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1>Legacy User Menu</h1>
@@ -195,6 +195,7 @@
 <script src="../../js/adminlte.min.js" th:src="@{/js/adminlte.min.js}"></script>
 
 <!-- AdminLTE for demo purposes -->
-<!--<script src="../../js/sysIndex.js"></script>-->
+<script src="../../js/sysIndex.js" th:src="@{/js/sysIndex.js}"></script>
+
 </body>
 </html>
