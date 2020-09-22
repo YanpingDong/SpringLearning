@@ -46,29 +46,30 @@
                 <h3 class="card-title">DataTable with minimal features & hover style</h3>
               </div>
               <!-- /.card-header -->
-
-              <table id="example" class="display" width="100%">
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                  <th>Name</th>-->
-<!--                  <th>Position</th>-->
-<!--                  <th>Office</th>-->
-<!--                  <th>Extn.</th>-->
-<!--                  <th>Start date</th>-->
-<!--                  <th>Salary</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tfoot>-->
-<!--                <tr>-->
-<!--                  <th>Name</th>-->
-<!--                  <th>Position</th>-->
-<!--                  <th>Office</th>-->
-<!--                  <th>Extn.</th>-->
-<!--                  <th>Start date</th>-->
-<!--                  <th>Salary</th>-->
-<!--                </tr>-->
-<!--                </tfoot>-->
-              </table>
+              <div class="card-body">
+                <table id="example" class="table table-bordered table-hover" width="100%">
+                  <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Office</th>
+                    <th>Extn.</th>
+                    <th>Start date</th>
+                    <th>Salary</th>
+                  </tr>
+                  </thead>
+                  <tfoot>
+                  <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Office</th>
+                    <th>Extn.</th>
+                    <th>Start date</th>
+                    <th>Salary</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
               <!-- /.card-body -->
             </div>
 
@@ -77,8 +78,9 @@
                 <h3 class="card-title">DataTable with minimal features & hover style</h3>
               </div>
               <!-- /.card-header -->
-
+              <div class="card-body">
               <table id="example0" class="display" width="100%"></table>
+              </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -1039,16 +1041,14 @@ var dataSet = [
 ];
   $(function () {
   $('#example').DataTable( {
-
-        "ajax": "/log/getLogList1",
-        columns: [
-            { title: "Name" },
-            { title: "Position" },
-            { title: "Office" },
-            { title: "Extn." },
-            { title: "Start date" },
-            { title: "Salary" }
-        ]
+      "ajax": "/log/getLogList1",
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true
     } );
   $('#example0').DataTable( {
         data: dataSet,
