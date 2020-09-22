@@ -1,11 +1,9 @@
 SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
-
 DROP TABLE IF EXISTS cms_article_data;
 
 /* Create Tables */
-
 CREATE TABLE cms_article_data
 (
 	id varchar(80) NOT NULL COMMENT '编号',
@@ -20,6 +18,6 @@ CREATE TABLE cms_article_data
 	PRIMARY KEY (id)
 ) COMMENT = '文章详表';
 
-/* Create Indexes */
 
+/* Create Indexes */
 CREATE INDEX cms_article_create_by ON cms_article_data (create_by ASC);
