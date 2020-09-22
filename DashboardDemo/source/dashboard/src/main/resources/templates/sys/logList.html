@@ -8,14 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Font Awesome -->
-<!--  <link rel="stylesheet" href="../../fontawesome-free/css/all.min.css" th:href="@{/fontawesome-free/css/all.min.css}">-->
+  <link rel="stylesheet" href="../../fontawesome-free/css/all.min.css" th:href="@{/fontawesome-free/css/all.min.css}">
   <!-- Ionicons -->
-<!--  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">-->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="../../datatables-bs4/css/dataTables.bootstrap4.min.css" th:href="@{/datatables-bs4/css/dataTables.bootstrap4.min.css}">
   <link rel="stylesheet" href="../../datatables-responsive/css/responsive.bootstrap4.min.css" th:href="@{/datatables-responsive/css/responsive.bootstrap4.min.css}">
   <!-- Theme style -->
-<!--  <link rel="stylesheet" href="../../css/adminlte.min.css" th:href="@{/css/adminlte.min.css}">-->
+  <link rel="stylesheet" href="../../css/adminlte.min.css" th:href="@{/css/adminlte.min.css}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -48,26 +48,6 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example" class="table table-bordered table-hover" width="100%">
-<!--                  <thead>-->
-<!--                  <tr>-->
-<!--                    <th>Name</th>-->
-<!--                    <th>Position</th>-->
-<!--                    <th>Office</th>-->
-<!--                    <th>Extn.</th>-->
-<!--                    <th>Start date</th>-->
-<!--                    <th>Salary</th>-->
-<!--                  </tr>-->
-<!--                  </thead>-->
-<!--                  <tfoot>-->
-<!--                  <tr>-->
-<!--                    <th>Name</th>-->
-<!--                    <th>Position</th>-->
-<!--                    <th>Office</th>-->
-<!--                    <th>Extn.</th>-->
-<!--                    <th>Start date</th>-->
-<!--                    <th>Salary</th>-->
-<!--                  </tr>-->
-<!--                  </tfoot>-->
                 </table>
               </div>
               <!-- /.card-body -->
@@ -165,8 +145,9 @@ function display_alert(info)
     alert(info);
   }
 
-function show_add_user_page()
+function show_add_user_page(info)
 {
+  alert(info);
   var url = "/user/add";
   $('#container').load(url);
 }
@@ -190,9 +171,9 @@ $(function () {
             {
               title:"Operation",
               data: function (obj) {
-                 return '<button type="button" class="btn btn-default btn-xs" onclick=show_add_user_page("'+ obj[0] +'")>添加</button>'+
-                 ' <button type="button" class="btn btn-default btn-xs" onclick=display_alert("'+ obj[1] +'")>删除</button>'+
-                 ' <button type="button" class="btn btn-default btn-xs" onclick=display_alert("'+ obj[2] +'")>修改</button>';
+                 return '<a class="btn btn-info btn-sm" href="#" onclick=show_add_user_page("'+ obj[0] +'")> <i class="fas fa-pencil-alt"> </i> Edit </a>'+
+                 '<a class="btn btn-primary btn-sm" href="#" onclick=show_add_user_page("'+ obj[1] +'")> <i class="fas fa-folder"> </i> 修改 </a>' +
+                 '<a class="btn btn-danger btn-sm" href="#" onclick=show_add_user_page("'+ obj[2] +'")> <i class="fas fa-trash"> </i> Delete </a>';
               }
             }
         ]

@@ -16,9 +16,6 @@
         });
 
 
-
-
-
         $.ajax({
                   type: "GET",
                   url: "/log/getLogList1",

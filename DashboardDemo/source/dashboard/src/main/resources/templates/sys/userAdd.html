@@ -7,13 +7,13 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../fontawesome-free/css/all.min.css" th:href="@{/fontawesome-free/css/all.min.css}">
+<!--  <link rel="stylesheet" href="../../fontawesome-free/css/all.min.css" th:href="@{/fontawesome-free/css/all.min.css}">-->
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!--  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">-->
   <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="../../icheck-bootstrap/icheck-bootstrap.min.css" th:href="@{/icheck-bootstrap/icheck-bootstrap.min.css}">
+<!--  <link rel="stylesheet" href="../../icheck-bootstrap/icheck-bootstrap.min.css" th:href="@{/icheck-bootstrap/icheck-bootstrap.min.css}">-->
   <!-- Theme style -->
-  <link rel="stylesheet" href="../../css/adminlte.min.css" th:href="@{/css/adminlte.min.css}">
+<!--  <link rel="stylesheet" href="../../css/adminlte.min.css" th:href="@{/css/adminlte.min.css}">-->
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -30,7 +30,7 @@
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a id="back_to_user" name="user">User</a></li>
               <li class="breadcrumb-item active">General Form</li>
             </ol>
           </div>
@@ -623,11 +623,11 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="../../jquery/jquery.min.js" th:src="@{/jquery/jquery.min.js}"></script>
+<!--<script src="../../jquery/jquery.min.js" th:src="@{/jquery/jquery.min.js}"></script>-->
 <!-- Bootstrap 4 -->
-<script src="../../bootstrap/js/bootstrap.bundle.min.js" th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!--<script src="../../bootstrap/js/bootstrap.bundle.min.js" th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>-->
 <!-- AdminLTE App -->
-<script src="../../js/adminlte.min.js" th:src="@{/js/adminlte.min.js}"></script>
+<!--<script src="../../js/adminlte.min.js" th:src="@{/js/adminlte.min.js}"></script>-->
 
 
 <!-- bs-custom-file-input -->
@@ -635,7 +635,14 @@
 <!-- AdminLTE for demo purposes -->
 <!--<script src="../../dist/js/demo.js"></script>-->
 <script type="text/javascript">
+
+
 $(document).ready(function () {
+  $("a[name='user']").click(function(){
+    var url = "/log/list";
+    $('#container').load(url);
+  });
+
   bsCustomFileInput.init();
 });
 </script>

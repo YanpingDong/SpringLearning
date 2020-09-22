@@ -1,12 +1,17 @@
 package com.dyp.dashboard.module.sys.ctrl;
 
 import com.dyp.dashboard.module.sys.entity.SysLog;
+import com.dyp.dashboard.util.IOUtils;
+import com.dyp.dashboard.util.JsonUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +21,17 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "/log")
 public class LogController {
+
+    @Value("classpath:data.json")
+    Resource roleData;
+
+    @RequestMapping(value="/data")
+    @ResponseBody
+    public String data() throws IOException {
+        String json = IOUtils.convertStreamToString(roleData.getInputStream());
+        HashMap<String, Object> corpTemplates = (HashMap<String, Object>) JsonUtils.json2map(json);
+        return json;
+    }
     private class AjaxData {
 
         private List<List<String>> data;
@@ -109,5 +125,11 @@ public class LogController {
     public String list()
     {
         return "/sys/logList";
+    }
+
+    @RequestMapping(value="/tree")
+    public String table()
+    {
+        return "/sys/testTreeTable";
     }
 }
