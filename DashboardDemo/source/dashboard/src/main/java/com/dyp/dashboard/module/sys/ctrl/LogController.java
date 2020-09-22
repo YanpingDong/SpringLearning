@@ -130,6 +130,6 @@ public class LogController {
     @RequestMapping(value="/tree")
     public String table()
     {
-        return "/sys/testTreeTable";
+        return "/sys/menueList";
     }
 }
