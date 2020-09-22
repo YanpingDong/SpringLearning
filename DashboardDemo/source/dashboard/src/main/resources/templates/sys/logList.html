@@ -160,7 +160,17 @@ var dataSet = [
     [ "Martena Mccray", "Post-Sales support", "Edinburgh", "8240", "2011/03/09", "$324,050" ],
     [ "Unity Butler", "Marketing Designer", "San Francisco", "5384", "2009/12/09", "$85,675" ]
 ];
-  $(function () {
+function display_alert(info)
+  {
+    alert(info);
+  }
+
+function show_add_user_page()
+{
+  var url = "/user/add";
+  $('#container').load(url);
+}
+$(function () {
   $('#example').DataTable( {
       "ajax": "/log/getLogList1",
       "paging": true,
@@ -180,11 +190,14 @@ var dataSet = [
             {
               title:"Operation",
               data: function (obj) {
-                 return '<button type="button" class="btn btn-default btn-xs" onclick="$(\'#roleid\').val(' + obj.ID + ');$(\'#myModal2\').modal(\'show\');">配置权限</button>';
+                 return '<button type="button" class="btn btn-default btn-xs" onclick=show_add_user_page("'+ obj[0] +'")>添加</button>'+
+                 ' <button type="button" class="btn btn-default btn-xs" onclick=display_alert("'+ obj[1] +'")>删除</button>'+
+                 ' <button type="button" class="btn btn-default btn-xs" onclick=display_alert("'+ obj[2] +'")>修改</button>';
               }
             }
         ]
     } );
+
   $('#example0').DataTable( {
         data: dataSet,
         columns: [
@@ -197,12 +210,12 @@ var dataSet = [
             {
               title:"Operation",
               data: function (obj) {
-                 return '<button type="button" class="btn btn-default btn-xs" onclick="$(\'#roleid\').val(' + obj.ID + ');$(\'#myModal2\').modal(\'show\');">配置权限</button>';
+                 return '<button type="button" class="btn btn-default btn-xs" onclick=obj.Name>添加</button> <button type="button" class="btn btn-default btn-xs" onclick="$(Name)">删除</button> <button type="button" class="btn btn-default btn-xs" onclick="$(Name)">修改</button>';
               }
             }
         ]
     } );
-  });
+});
 </script>
 </body>
 </html>

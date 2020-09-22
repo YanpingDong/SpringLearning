@@ -36,7 +36,7 @@ public class LogController {
         List<String> column1 = new ArrayList<>();
         column1.add("Finn");
         column1.add("Developer");
-        column1.add("Finn ");
+        column1.add("Finn");
         column1.add("9383");
         column1.add("2009/09/09");
         column1.add("$139,575");
@@ -44,7 +44,7 @@ public class LogController {
         List<String> column2= new ArrayList<>();
         column2.add("Camacho");
         column2.add("Test");
-        column2.add("Tokoy ");
+        column2.add("Tokoy");
         column2.add("9183");
         column2.add("2009/09/03");
         column2.add("$139,57");
