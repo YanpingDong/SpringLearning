@@ -12,7 +12,10 @@ spring:
     password: 123456
     url: jdbc:mysql://localhost:3306/dashboard?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+  cache:
+    time-to-live: 3600 #缓存过期时间
+    cache-enable: false #是否启用缓存
+    redis-shiro:  true #是否启用redis缓存shiro， cache-enable为true的时候起作用
 #====================log configuration===============================================
 #logging:
 #  config: classpath:logback-spring.xml

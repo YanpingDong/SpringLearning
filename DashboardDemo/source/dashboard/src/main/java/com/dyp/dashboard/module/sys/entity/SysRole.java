@@ -15,21 +15,23 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * @Author: xu.dm
+ * @Date: 2018/8/8 21:57
+ * @Description:
+ */
+
 @Data
-public class User implements Serializable {
+public class SysRole implements Serializable {
+    private static final long serialVersionUID = 8908550596207293603L;
 
-    private static final long serialVersionUID = 5887833463461262508L;
-    private Integer userId;
-    private String userName; //登录用户名，账号
-    private String name;//名称（昵称或者真实姓名，根据实际情况定义）
-    private String password;
-    private String salt;//加密密码的盐
-    private String credentialsSalt;
-    private byte state;//用户状态,0:创建未认证（比如没有激活，没有输入验证码等等）--等待验证的用户 , 1:正常状态,2：用户被锁定.
+    private Integer roleId; // 编号
+    private String role; // 角色标识程序中判断使用,如"admin",这个是唯一的:
+    private String description; // 角色描述,UI界面显示使用
+    private Boolean available = Boolean.FALSE; // 是否可用,如果不可用将不会添加给用户，
+    private List<SysRolePermission> permissions;
 
-    private List<SysUserRole> roleList;// 一个用户具有多个角色
-
-    private List<SysPermission> permissionList;//用户的权限
+    //=========================the flowing is db unrelated==========================
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -41,6 +43,6 @@ public class User implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate expiredDate;//过期日期
-    private String email;
-    private String tel;
+
+
 }

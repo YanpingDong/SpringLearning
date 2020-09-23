@@ -45,9 +45,10 @@ CREATE TABLE sys_permission
 
 CREATE TABLE sys_role_permission
 (
+    id int NOT NULL AUTO_INCREMENT COMMENT 'id',
     permission_id int NOT NULL  COMMENT '权限id，fk',
     role_id int NOT NULL COMMENT '角色Id，fk',
-    PRIMARY KEY (permission_id,role_id)
+    PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '系统角色表';
 
 CREATE TABLE sys_image (
