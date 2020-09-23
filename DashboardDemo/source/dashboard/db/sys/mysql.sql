@@ -60,7 +60,6 @@ CREATE TABLE sys_image (
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='图片数据信息表';
 
-
 /* Insert Data */
 /* write sys_user */
 INSERT INTO `sys_user` (`user_id`,`user_name`,`name`,`password`,`salt`,`state`,create_time)

@@ -19,5 +19,5 @@ Step3： 在pom.xml所在的目录下运行`mvn antrun:run -Pinit-db`
 ```
 实际使用的是Maven的Profile功能。本来Profile功能是依据不同的环境使用不同的配置文件，但这儿使用“init-db”为Key创建一个特殊的环境，在切换到该环境的时候自动创建系统使用的数据库。
 
-
+如果是docker启动，请添加--max-allowed-packet启动参数： docker run -d -p 3306:3306 --name mysql57  -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7 --max-allowed-packet=67108864
 ```
