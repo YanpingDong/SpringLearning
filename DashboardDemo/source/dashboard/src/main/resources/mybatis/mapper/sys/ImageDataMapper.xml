@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 唯一命名空间，必须定义为：所在包名+接口文件名 -->
+<mapper namespace="com.dyp.dashboard.module.sys.repository.ImageDataMapper">
+    <cache eviction="FIFO" size="512" flushInterval="60000" readOnly="false"></cache>
+
+    <resultMap type="com.dyp.dashboard.module.sys.entity.ImageData" id="imageDataMap">
+        <id property="id"           column="id"   jdbcType="VARCHAR" />
+        <result property="type"  column="type"   jdbcType="VARCHAR" />
+        <result property="name"  column="name"   jdbcType="VARCHAR" />
+        <result property="createDate"  column="create_date"   jdbcType="TIMESTAMP" />
+        <result property="data" column="data"  jdbcType="BLOB" typeHandler="org.apache.ibatis.type.BlobTypeHandler" />
+    </resultMap>
+
+    <insert id="insert" parameterType="com.dyp.dashboard.module.sys.entity.ImageData">
+        INSERT INTO image(id, type, name, create_date, data)
+        VALUES(#{id}, #{type}, #{name}, #{createDate}, #{data})
+    </insert>
+
+    <select id="selectById" resultMap="imageDataMap">
+        SELECT  *
+        FROM image
+        WHERE id = #{id, jdbcType=VARCHAR}
+    </select>
+</mapper>

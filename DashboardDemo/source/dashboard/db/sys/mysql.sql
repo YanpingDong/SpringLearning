@@ -2,6 +2,7 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
 DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS image;
 
 /* Create Tables */
 CREATE TABLE user
@@ -14,5 +15,14 @@ CREATE TABLE user
     state varchar(64) COMMENT '更新者',
     create_time datetime COMMENT '创建时间',
     PRIMARY KEY (user_id)
-) COMMENT = '用户信息表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '用户信息表';
 
+
+CREATE TABLE image (
+    id varchar(70) NOT NULL COMMENT '图片Id',
+    name varchar(70) NOT NULL COMMENT '图片名称',
+    type varchar(32) NOT NULL COMMENT '图片数据类型',
+    create_date datetime NOT NULL COMMENT '创建时间',
+    data mediumblob NOT NULL COMMENT '图片数据',
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='图片数据信息表';

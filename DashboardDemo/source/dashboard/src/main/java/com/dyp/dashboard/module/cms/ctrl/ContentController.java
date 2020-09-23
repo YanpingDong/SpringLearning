@@ -65,7 +65,7 @@ public class ContentController {
     public String detail(HttpServletRequest request, Model model) {
 
 
-        CmsArticleData cmsArticleData = cmsArticleDataDao.selectById("756645093577117696");
+        CmsArticleData cmsArticleData = cmsArticleDataDao.selectById("758363786428461056");
         model.addAttribute("info", cmsArticleData.getContent());
         return "/cms/detail";
     }

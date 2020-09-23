@@ -1,6 +1,31 @@
 $(function () {
     //Add text editor
-    $('#compose-textarea').summernote()
+    $('#compose-textarea').summernote(
+        {
+            lang: 'zh-CN',
+            callbacks:{
+                onImageUpload: function(files){
+                    //上传图片到服务器
+                    var formData = new FormData();
+                    formData.append('image',files[0]);
+                    $.ajax({
+                    url : '/image',//后台文件上传接口
+                    type : 'POST',
+                    data : formData,
+                    processData : false,
+                    contentType : false,
+                    success : function(imageId) {
+                        var path='/image/'+imageId
+                        $('#compose-textarea').summernote('insertImage',path);
+                    },
+                    error:function(){
+                        alert("上传失败");
+                    }
+                    });
+                }
+            }
+        }
+    )
 
     $('button[name="draft"]').click(function (e) {
         var summernote = $('#compose-textarea').summernote('code');
