@@ -8,14 +8,16 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.crypto.Data;
-import java.io.*;
-import java.net.URLEncoder;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 
 @RestController
@@ -25,11 +27,14 @@ public class ImageController {
     @Autowired
     ImageDataMapper imageDataDao;
 
+    @ApiOperation(value = "upload image and return id", httpMethod = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success, type is String \n, example : vx.x.x-rcxx ", response = void.class),
+            @ApiResponse(code = 404, message = "Not Found", response = Error.class) })
     @PostMapping("")
     @ResponseBody
-    public String uploadImage(MultipartFile image,
-                             HttpServletRequest request)  {
-        System.out.println("hahaha");
+    public ModelMap uploadImage(MultipartFile image,
+                                HttpServletRequest request)  {
         String imageId = IDGenerator.generatorID();
         try {
             InputStream is = image.getInputStream();
@@ -51,15 +56,16 @@ public class ImageController {
             e.printStackTrace();
         }
 
-        return imageId;
+        ModelMap modelMap = new ModelMap();
+        modelMap.addAttribute("id", imageId);
+        return modelMap;
     }
 
-    //下载
-    @ApiOperation(value = "get downPhotoById info", notes = "get version info, type is String \n, example : vx.x.x-rcxx", httpMethod = "GET")
+    @ApiOperation(value = "downlaod image by id", httpMethod = "GET")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success, type is String \n, example : vx.x.x-rcxx ", response = void.class),
             @ApiResponse(code = 404, message = "Not Found", response = Error.class) })
-    @RequestMapping(value = "/{imageId}")
+    @GetMapping(value = "/{imageId}")
     public void downPhotoByStudentId(
             @ApiParam(value = "The user/account to update subscriptions for", required = true, defaultValue = "dyptest")
             @PathVariable(value = "imageId") String imageId,
@@ -69,7 +75,7 @@ public class ImageController {
         String name = entity.getName();
         response.reset();
 //        response.setHeader("Content-Disposition", "attachment; filename=\"" + name + "\"");
-        //        response.setContentType("application/octet-stream;charset=UTF-8");
+//        response.setContentType("application/octet-stream;charset=UTF-8");
         response.addHeader("Content-Length", "" + data.length);
         response.addHeader("Content-Type", "" +entity.getType());
 

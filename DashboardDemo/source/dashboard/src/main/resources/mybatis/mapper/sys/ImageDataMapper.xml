@@ -13,13 +13,13 @@
     </resultMap>
 
     <insert id="insert" parameterType="com.dyp.dashboard.module.sys.entity.ImageData">
-        INSERT INTO image(id, type, name, create_date, data)
+        INSERT INTO sys_image(id, type, name, create_date, data)
         VALUES(#{id}, #{type}, #{name}, #{createDate}, #{data})
     </insert>
 
     <select id="selectById" resultMap="imageDataMap">
         SELECT  *
-        FROM image
+        FROM sys_image
         WHERE id = #{id, jdbcType=VARCHAR}
     </select>
 </mapper>

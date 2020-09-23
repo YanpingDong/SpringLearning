@@ -14,8 +14,8 @@ $(function () {
                     data : formData,
                     processData : false,
                     contentType : false,
-                    success : function(imageId) {
-                        var path='/image/'+imageId
+                    success : function(data) {
+                        var path='/image/'+data.id
                         $('#compose-textarea').summernote('insertImage',path);
                     },
                     error:function(){
