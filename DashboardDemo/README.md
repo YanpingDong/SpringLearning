@@ -12,7 +12,7 @@ AdminLTE-3.0.5 下载后里面就已经包含了Bootstrap，所以不需要单�
 
 # 初始化数据库
 
-Step1： 在MySQL数据库中创建名为dashboard的库
+Step1： 在MySQL数据库中创建名为dashboard的库`CREATE DATABASE dashboard`
 Step2： 在dashboard.properties中修改数据库相关的配置，比如用户名和密码
 Step3： 在pom.xml所在的目录下运行`mvn antrun:run -Pinit-db`
 
