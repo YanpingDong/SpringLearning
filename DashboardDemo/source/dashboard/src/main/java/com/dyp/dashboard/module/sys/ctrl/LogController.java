@@ -3,6 +3,7 @@ package com.dyp.dashboard.module.sys.ctrl;
 import com.dyp.dashboard.module.sys.entity.SysLog;
 import com.dyp.dashboard.util.IOUtils;
 import com.dyp.dashboard.util.JsonUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,43 @@ public class LogController {
         String json = IOUtils.convertStreamToString(roleData.getInputStream());
         HashMap<String, Object> corpTemplates = (HashMap<String, Object>) JsonUtils.json2map(json);
         return json;
+    }
+    private class AjaxData {
+
+        private List<List<String>> data;
+        public void setData(List<List<String>> data) {
+            this.data = data;
+        }
+        public List<List<String>> getData() {
+            return data;
+        }
+
+    }
+
+    @RequestMapping(value = "/getLogList1")
+    @ResponseBody
+    public AjaxData getLogList1(HttpServletRequest request)
+    {
+        AjaxData  ajaxData = new AjaxData();
+        List<List<String>> data = new ArrayList<>();
+        List<String> column1 = new ArrayList<>();
+        column1.add("Finn");
+        column1.add("Developer");
+        column1.add("Finn");
+        column1.add("9383");
+        column1.add("2009/09/09");
+        column1.add("$139,575");
+        data.add(column1);
+        List<String> column2= new ArrayList<>();
+        column2.add("Camacho");
+        column2.add("Test");
+        column2.add("Tokoy");
+        column2.add("9183");
+        column2.add("2009/09/03");
+        column2.add("$139,57");
+        data.add(column2);
+        ajaxData.setData(data);
+        return ajaxData;
     }
 
     @RequestMapping(value = "/getLogList")
