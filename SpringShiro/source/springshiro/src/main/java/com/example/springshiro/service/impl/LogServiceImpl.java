@@ -14,11 +14,6 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Author: xu.dm
- * @Date: 2018/10/11 18:42
- * @Description:
- */
 @Service
 public class LogServiceImpl implements LogService {
 

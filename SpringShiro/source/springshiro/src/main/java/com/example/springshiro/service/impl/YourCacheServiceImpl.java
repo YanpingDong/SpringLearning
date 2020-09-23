@@ -10,18 +10,13 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author: xu.dm
- * @Date: 2018/10/21 17:58
  * @Description: can be Redis/Ehcache and so on.  这个类并没有实际意思只是为了跑通业务流程，且保证流程关键过程不缺失。要不然只能
  * 注掉业备流程相关代码。
  */
 @Service
 public class YourCacheServiceImpl implements CacheService {
 
-
     //=============================common============================
-
-
     //有点危险，如果输入pattern不合理可能造成redis服务卡顿，比如直接输入*号
     @Override
     public Set<String> getKey(String pattern) {

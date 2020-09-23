@@ -17,12 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * @Author: xu.dm
- * @Date: 2018/8/11 16:47
- * @Description:
- * 缓存设计ps：
- */
 @Service
 public class UserServiceImpl implements UserService {
     //key命名规则：前缀+":"+"实体ID或者实体name（userName）"+":业务（可选）"

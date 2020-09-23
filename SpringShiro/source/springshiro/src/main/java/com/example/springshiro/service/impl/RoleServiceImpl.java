@@ -13,11 +13,6 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @Author: xu.dm
- * @Date: 2018/9/5 22:16
- * @Description:
- */
 @Service
 public class RoleServiceImpl implements RoleService {
     @Resource

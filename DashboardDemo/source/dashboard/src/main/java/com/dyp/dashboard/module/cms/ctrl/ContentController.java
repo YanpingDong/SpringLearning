@@ -58,7 +58,7 @@ public class ContentController {
     public String toLogin(Map<String, Object> map, HttpServletRequest request) {
         System.out.println("longin get");
 //        loginService.logout();
-        return "/cms/compose";
+        return "/cms/editor";
     }
 
     @RequestMapping({"/detail"})

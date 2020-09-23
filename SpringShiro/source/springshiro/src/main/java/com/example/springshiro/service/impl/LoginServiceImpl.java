@@ -11,11 +11,6 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
-/**
- * @Author: xu.dm
- * @Date: 2018/8/12 22:06
- * @Description:
- */
 @Service
 public class LoginServiceImpl implements LoginService {
     @Override
