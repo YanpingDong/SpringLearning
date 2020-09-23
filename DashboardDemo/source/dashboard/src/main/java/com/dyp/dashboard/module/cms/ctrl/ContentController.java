@@ -54,18 +54,14 @@ public class ContentController {
         return modelMap;
     }
 
-    @RequestMapping(value = "/compose", method = RequestMethod.GET)
-    public String toLogin(Map<String, Object> map, HttpServletRequest request) {
-        System.out.println("longin get");
-//        loginService.logout();
+    @RequestMapping(value = "/editor", method = RequestMethod.GET)
+    public String toEditor(Map<String, Object> map, HttpServletRequest request) {
         return "/cms/editor";
     }
 
     @RequestMapping({"/detail"})
     public String detail(HttpServletRequest request, Model model) {
-
-
-        CmsArticleData cmsArticleData = cmsArticleDataDao.selectById("758363786428461056");
+        CmsArticleData cmsArticleData = cmsArticleDataDao.selectById("758447645058990080");
         model.addAttribute("info", cmsArticleData.getContent());
         return "/cms/detail";
     }

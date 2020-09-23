@@ -127,15 +127,25 @@ public class LoginController {
         loglistMenue.setUrl("/log/list");
         subMenues1.add(loglistMenue);
 
+        //editor
+
+        List<menue> subMenues2 = new ArrayList<>();
+        menue editorlistMenue = new menue();
+        editorlistMenue.setName("新闻编辑");
+        editorlistMenue.setUrl("/cms/editor");
+        subMenues2.add(editorlistMenue);
+
 
         if("admin".equalsIgnoreCase("admin"))
         {
             menues.put("系统管理",subMenues);
             menues.put("日志管理",subMenues1);
+            menues.put("新闻管理",subMenues2);
         }
         else
         {
             menues.put("日志管理",subMenues1);
+            menues.put("新闻管理",subMenues2);
         }
 
         model.addAttribute("menues", menues);
