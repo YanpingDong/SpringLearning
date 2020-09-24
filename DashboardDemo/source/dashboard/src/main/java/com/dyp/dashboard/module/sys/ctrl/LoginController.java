@@ -29,7 +29,6 @@ public class LoginController {
     DefaultKaptcha defaultKaptcha;
     /**
      * 2、生成验证码
-
      * @throws Exception
      */
     @RequestMapping(value = "/getVerifyCode", method = RequestMethod.GET)
@@ -61,10 +60,6 @@ public class LoginController {
         responseOutputStream.write(bytesCaptchaImg);
         responseOutputStream.flush();
         responseOutputStream.close();
-    }
-    private String create16String()
-    {
-        return RandomUtils.generateString(16);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -150,5 +145,20 @@ public class LoginController {
 
         model.addAttribute("menues", menues);
         return "/sys/index";
+    }
+
+    @RequestMapping(value = "/home/prompt", method = RequestMethod.GET)
+    public String toHome(Map<String, Object> map, HttpServletRequest request) {
+        System.out.println("longin get");
+//        loginService.logout();
+        String key = create16String();
+
+        map.put("key",key);
+        return "/sys/homeList";
+    }
+
+    private String create16String()
+    {
+        return RandomUtils.generateString(16);
     }
 }

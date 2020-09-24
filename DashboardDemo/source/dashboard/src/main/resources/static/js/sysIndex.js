@@ -1,5 +1,5 @@
     $(function () {
-       // $('#container').load("/html/welcome.html");
+        $('#container').load("/home/prompt");
         $('ul.sidebar-menu li').click(function () {
             var li = $('ul.sidebar-menu li.active');
             li.removeClass('active');
@@ -14,7 +14,6 @@
             $('#container').load(url);
 
         });
-
 
         $.ajax({
                   type: "GET",
