@@ -15,4 +15,5 @@ public class PermissionResponse {
     private int status;
     private String name;
     private String permissionValue;
+    private String url;
 }
