@@ -43,7 +43,7 @@
       <div class="container-fluid">
         <div class="row">
           <!-- left column -->
-          <div class="col-md-8">
+          <div class="col-md-6">
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
@@ -54,22 +54,25 @@
               <form role="form">
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="currentPassword">* 当前密码</label>
+                    <label for="currentPassword"><span style="color: red">*</span> 当前密码 </label>
                     <input type="password" class="form-control" id="currentPassword" placeholder="Password">
                   </div>
                   <div class="form-group">
-                    <label for="newPassword">* 新密码</label>
+                    <label for="newPassword"><span style="color: red">*</span> 新密码</label>
                     <input type="password" class="form-control" id="newPassword" placeholder="Password">
                   </div>
                   <div class="form-group">
-                    <label for="confirmPassword">* 确认密码</label>
+                    <label for="confirmPassword"><span style="color: red">*</span> 确认密码</label>
                     <input type="password" class="form-control" id="confirmPassword" placeholder="Password">
                   </div>
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">保存</button> <button type="button" class="btn btn-primary">返回</button>
+                  <div class="float-right">
+                    <button type="submit" class="btn btn-primary" style="margin-right:15px;">保存</button> <button type="button" class="btn btn-primary" style="margin-right:15px;">返回</button>
+                  </div>
+
                 </div>
               </form>
             </div>
@@ -87,8 +90,7 @@
     <div class="float-right d-none d-sm-block">
       <b>Version</b> 3.0.5
     </div>
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong> All rights
-    reserved.
+    <strong>Copyright &copy; 2014-2019 <a href="#">DYP</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->
@@ -110,9 +112,8 @@
 <!-- bs-custom-file-input -->
 <script src="../../bs-custom-file-input/bs-custom-file-input.min.js" th:src="@{/bs-custom-file-input/bs-custom-file-input.min.js}"></script>
 <!-- AdminLTE for demo purposes -->
-<!--<script src="../../dist/js/demo.js"></script>-->
+<!--<script src="../../dist/js/editor.js"></script>-->
 <script type="text/javascript">
-
 
 $(document).ready(function () {
   $("a[name='home']").click(function(){

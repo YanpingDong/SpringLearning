@@ -1,5 +1,6 @@
     $(function () {
         $('#container').load("/home/prompt");
+
         $('ul.sidebar-menu li').click(function () {
             var li = $('ul.sidebar-menu li.active');
             li.removeClass('active');
@@ -8,11 +9,9 @@
 
         $('.myLeftMenu').click(function (e) {
 //            var url = $(this).attr('data');
-            e.preventDefault();
+            e.preventDefault();//防止通过<a>的链接打开URL。
             var url=$(this).attr('href');
-            console.log(url);
             $('#container').load(url);
-
         });
 
         $.ajax({

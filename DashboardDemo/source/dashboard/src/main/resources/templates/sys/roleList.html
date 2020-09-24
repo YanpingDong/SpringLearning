@@ -8,17 +8,16 @@
     <!--     <link rel="stylesheet" href="./bootstrap-4.5.2-dist/css/bootstrap.min.css" >-->
     <!-- Theme style -->
     <link rel="stylesheet" href="../../css/adminlte.min.css" th:href="@{/css/adminlte.min.css}">
-
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../fontawesome-free/css/all.min.css" th:href="@{/fontawesome-free/css/all.min.css}">
     <!--    <link rel="stylesheet" href="../../bootstrap-3.4.1-dist/css/bootstrap.min.css" >-->
     <link rel="stylesheet" href="../../bootstrap-table-1.17.1/dist/bootstrap-table.min.css">
     <link rel="stylesheet" href="../../jquery-treegrid-0.3.0/css/jquery.treegrid.css">
 </head>
 <body>
 <div class="container">
-    <h1>权限管理</h1>
-    <table id="table"></table>
-    <br/>
-    <button onclick="test()">选择</button>
+    <h1>角色管理</h1>
+    <table id="table" class="table table-bordered table-striped"></table>
 </div>
 </body>
 <!--  <script src="../../popper-1.14.7/popper.min.js" th:src="@{/popper-1.14.7/popper.min.js}"></script>-->
@@ -120,9 +119,9 @@
     // 格式化按钮
     function operateFormatter(value, row, index) {
         return [
-            '<button type="button" class="RoleOfadd btn-small  btn-primary" style="margin-right:15px;"><i class="fa fa-plus" ></i>&nbsp;新增</button>',
-            '<button type="button" class="RoleOfedit btn-small   btn-primary" style="margin-right:15px;"><i class="fa fa-pencil-square-o" ></i>&nbsp;修改</button>',
-            '<button type="button" class="RoleOfdelete btn-small   btn-primary" style="margin-right:15px;"><i class="fa fa-trash-o" ></i>&nbsp;删除</button>'
+            '<button type="button" class="btn btn-info btn-sm" style="margin-right:15px;"><i class="fa fa-plus" ></i>&nbsp;新增</button>',
+            '<button type="button" class="btn btn-primary btn-sm" style="margin-right:15px;"><i class="fas fa-pencil-alt"> </i>&nbsp;修改</button>',
+            '<button type="button" class="btn btn-danger btn-sm" style="margin-right:15px;"><i class="fas fa-trash"></i>&nbsp;删除</button>'
         ].join('');
 
     }

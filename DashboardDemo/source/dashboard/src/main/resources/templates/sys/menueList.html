@@ -1,38 +1,37 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Hello, BootstrapTable!</title>
-<!--     <link rel="stylesheet" href="./bootstrap-4.5.2-dist/css/bootstrap.min.css" >-->
-    <!-- Theme style -->
-    <link rel="stylesheet" href="../../css/adminlte.min.css" th:href="@{/css/adminlte.min.css}">
-
-    <!--    <link rel="stylesheet" href="../../bootstrap-3.4.1-dist/css/bootstrap.min.css" >-->
-    <link rel="stylesheet" href="../../bootstrap-table-1.17.1/dist/bootstrap-table.min.css">
-    <link rel="stylesheet" href="../../jquery-treegrid-0.3.0/css/jquery.treegrid.css">
-  </head>
-  <body>
-    <div class="container">
-      <h1>菜单管理</h1>
-      <table id="table"></table>
-      <br/>
-      <button onclick="test()">选择</button>
-    </div>
-  </body>
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Hello, BootstrapTable!</title>
+  <!--     <link rel="stylesheet" href="./bootstrap-4.5.2-dist/css/bootstrap.min.css" >-->
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../css/adminlte.min.css" th:href="@{/css/adminlte.min.css}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../fontawesome-free/css/all.min.css" th:href="@{/fontawesome-free/css/all.min.css}">
+  <!--    <link rel="stylesheet" href="../../bootstrap-3.4.1-dist/css/bootstrap.min.css" >-->
+  <link rel="stylesheet" href="../../bootstrap-table-1.17.1/dist/bootstrap-table.min.css">
+  <link rel="stylesheet" href="../../jquery-treegrid-0.3.0/css/jquery.treegrid.css">
+</head>
+<body>
+<div class="container">
+  <h1>菜单管理</h1>
+  <table id="table" class="table table-bordered table-striped"></table>
+</div>
+</body>
 <!--  <script src="../../popper-1.14.7/popper.min.js" th:src="@{/popper-1.14.7/popper.min.js}"></script>-->
-  <!-- jQuery -->
-  <script src="../../jquery/jquery.min.js" th:src="@{/jquery/jquery.min.js}"></script>
-  <!-- Bootstrap 4 -->
-  <script src="../../bootstrap/js/bootstrap.bundle.min.js" th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- jQuery -->
+<script src="../../jquery/jquery.min.js" th:src="@{/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script src="../../bootstrap/js/bootstrap.bundle.min.js" th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <!--  <script src="../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>-->
 
-  <script src="../../bootstrap-table-1.17.1/dist/bootstrap-table.min.js" th:src="@{/bootstrap-table-1.17.1/dist/bootstrap-table.min.js}"></script>
-  <script src="../../bootstrap-table-1.17.1/dist/extensions/treegrid/bootstrap-table-treegrid.js" th:src="@{/bootstrap-table-1.17.1/dist/extensions/treegrid/bootstrap-table-treegrid.js}"></script>
-  <script src="./../jquery-treegrid-0.3.0/js/jquery.treegrid.min.js" th:src="@{/jquery-treegrid-0.3.0/js/jquery.treegrid.min.js}"></script>
-  
-  <script type="text/javascript">
+<script src="../../bootstrap-table-1.17.1/dist/bootstrap-table.min.js" th:src="@{/bootstrap-table-1.17.1/dist/bootstrap-table.min.js}"></script>
+<script src="../../bootstrap-table-1.17.1/dist/extensions/treegrid/bootstrap-table-treegrid.js" th:src="@{/bootstrap-table-1.17.1/dist/extensions/treegrid/bootstrap-table-treegrid.js}"></script>
+<script src="./../jquery-treegrid-0.3.0/js/jquery.treegrid.min.js" th:src="@{/jquery-treegrid-0.3.0/js/jquery.treegrid.min.js}"></script>
+
+<script type="text/javascript">
     var $table = $('#table');
     var data = JSON.parse(
         '[{"id":1,"pid":0,"status":1,"name":"用户管理","permissionValue":"open:user:manage"},' +
@@ -48,12 +47,12 @@
         '{"id":11,"pid":10,"status":1,"name":"新增日志","permissionValue":"open:log:add"},' +
         '{"id":12,"pid":10,"status":1,"name":"修改日志","permissionValue":"open:log:edit"},' +
         '{"id":13,"pid":10,"status":0,"name":"删除日志","permissionValue":"open:log:del"}]');
- 
+
     $(function() {
- 
+
         //控制台输出一下数据
         console.log(data);
- 
+
         $table.bootstrapTable({
             data:data,
             idField: 'id',
@@ -72,13 +71,13 @@
                 { field: 'permissionValue', title: '权限值'  },
                 { field: 'operate', title: '操作', align: 'center', events : operateEvents, formatter: 'operateFormatter' },
             ],
- 
+
             // bootstrap-table-treegrid.js 插件配置 -- start
             //在哪一列展开树形
             treeShowField: 'name',
             //指定父id列
             parentIdField: 'pid',
- 
+
             onResetView: function(data) {
                 //console.log('load');
                 $table.treegrid({
@@ -91,23 +90,23 @@
 
                     }
                 });
- 
+
                 //只展开树形的第一级节点
                 $table.treegrid('getRootNodes').treegrid('expand');
- 
+
             },
             onCheck:function(row){
                 var datas = $table.bootstrapTable('getData');
                 // 勾选子类
                 selectChilds(datas,row,"id","pid",true);
- 
+
                 // 勾选父类
                 selectParentChecked(datas,row,"id","pid")
- 
+
                 // 刷新数据
 <!--                $table.bootstrapTable('load', datas);-->
             },
- 
+
             onUncheck:function(row){
                 var datas = $table.bootstrapTable('getData');
                 selectChilds(datas,row,"id","pid",false);
@@ -116,15 +115,15 @@
             // bootstrap-table-treetreegrid.js 插件配置 -- end
         });
     });
- 
+
     // 格式化按钮
     function operateFormatter(value, row, index) {
         return [
-            '<button type="button" class="RoleOfadd btn-small  btn-primary" style="margin-right:15px;"><i class="fa fa-plus" ></i>&nbsp;新增</button>',
-            '<button type="button" class="RoleOfedit btn-small   btn-primary" style="margin-right:15px;"><i class="fa fa-pencil-square-o" ></i>&nbsp;修改</button>',
-            '<button type="button" class="RoleOfdelete btn-small   btn-primary" style="margin-right:15px;"><i class="fa fa-trash-o" ></i>&nbsp;删除</button>'
+            '<button type="button" class="btn btn-info btn-sm" style="margin-right:15px;"><i class="fa fa-plus" ></i>&nbsp;新增</button>',
+            '<button type="button" class="btn btn-primary btn-sm" style="margin-right:15px;"><i class="fas fa-pencil-alt"> </i>&nbsp;修改</button>',
+            '<button type="button" class="btn btn-danger btn-sm" style="margin-right:15px;"><i class="fas fa-trash"></i>&nbsp;删除</button>'
         ].join('');
- 
+
     }
     // 格式化类型
     function typeFormatter(value, row, index) {
@@ -141,7 +140,7 @@
             return '<span class="label label-default">锁定</span>';
         }
     }
- 
+
     //初始化操作按钮的方法
     window.operateEvents = {
         'click .RoleOfadd': function (e, value, row, index) {
@@ -169,7 +168,7 @@
             };
         }
     }
- 
+
     function selectParentChecked(datas,row,id,pid){
         for(var i in datas){
             if(datas[i][id] == row[pid]){
@@ -178,17 +177,17 @@
             };
         }
     }
- 
+
     function test() {
-      
+
         var selRows = $table.bootstrapTable("getSelections");
         console.log(selRows);
-      
+
         if(selRows.length == 0){
             alert("请至少选择一行");
             return;
         }
- 
+
         var postData = "";
         $.each(selRows,function(i) {
             postData +=  this.idField;
@@ -197,9 +196,9 @@
             }
         });
         alert("你选中行的 id 为："+postData);
- 
+
     }
- 
+
     function add(id) {
         alert("add 方法 , id = " + id);
     }
@@ -209,8 +208,8 @@
     function update(id) {
         alert("update 方法 , id = " + id);
     }
- 
+
 </script>
-    
+
 
 </html>

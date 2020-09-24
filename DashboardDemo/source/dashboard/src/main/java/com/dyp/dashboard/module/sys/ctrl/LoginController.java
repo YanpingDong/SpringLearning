@@ -108,13 +108,17 @@ public class LoginController {
         rlistMenue.setName("角色管理");
         rlistMenue.setUrl("/user/rlist");
 
+        menue mlistMenue = new menue();
+        mlistMenue.setName("菜单管理");
+        mlistMenue.setUrl("/menue/mlist");
+
         menue pwdChgMenue = new menue();
         pwdChgMenue.setName("修改密码");
         pwdChgMenue.setUrl("/user/toChangePassword");
         subMenues.add(ulistMenue);
         subMenues.add(rlistMenue);
         subMenues.add(pwdChgMenue);
-
+        subMenues.add(mlistMenue);
 
         List<menue> subMenues1 = new ArrayList<>();
         menue loglistMenue = new menue();

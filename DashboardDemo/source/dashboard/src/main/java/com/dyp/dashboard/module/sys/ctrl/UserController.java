@@ -1,6 +1,7 @@
 package com.dyp.dashboard.module.sys.ctrl;
 
 import com.dyp.dashboard.factory.LogFactory;
+import com.dyp.dashboard.model.ListTableData;
 import com.dyp.dashboard.module.sys.entity.SysUserRole;
 import com.dyp.dashboard.module.sys.entity.User;
 import com.dyp.dashboard.module.sys.model.Pageable;
@@ -46,6 +47,36 @@ public class UserController {
     @RequestMapping("/ulist")
     public String userList(){
         return "/sys/userList";
+    }
+
+    @RequestMapping(value = "/getUserList1")
+    @ResponseBody
+    public ListTableData getUserList1(HttpServletRequest request)
+    {
+        ListTableData  ajaxData = new ListTableData();
+        List<List<String>> data = new ArrayList<>();
+        List<String> column1 = new ArrayList<>();
+        column1.add("admin");
+        column1.add("管理员");
+        column1.add("");
+        column1.add("");
+        column1.add(LocalDateTime.now().toString());
+        column1.add(LocalDateTime.now().toString());
+        column1.add("锁定");
+
+
+        data.add(column1);
+        List<String> column2= new ArrayList<>();
+        column2.add("other");
+        column2.add("管理员");
+        column2.add("13772199865");
+        column2.add("lear521@163.com");
+        column2.add(LocalDateTime.now().toString());
+        column2.add(LocalDateTime.now().toString());
+        column2.add("正常");
+        data.add(column2);
+        ajaxData.setData(data);
+        return ajaxData;
     }
 
     @RequestMapping(value="/getUserList")

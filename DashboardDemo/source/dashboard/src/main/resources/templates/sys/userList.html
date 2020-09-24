@@ -29,7 +29,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DataTables</h1>
+                        <h1>用户管理</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a id="back_to_home" href="#" name="home">主页</a></li>
+                            <li class="breadcrumb-item active">用户管理</li>
+                        </ol>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
@@ -41,9 +47,6 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">DataTable with minimal features & hover style</h3>
-                            </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example" class="table table-bordered table-hover" width="100%">
@@ -51,6 +54,7 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+                        <!-- /.card -->
                     </div>
                     <!-- /.col -->
                 </div>
@@ -65,7 +69,7 @@
         <div class="float-right d-none d-sm-block">
             <b>Version</b> 3.0.5
         </div>
-        <strong>Copyright &copy; 2019-2020 <a href="#">DYP</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2014-2019 <a href="#">DYP</a>.</strong> All rights reserved.
     </footer>
 
     <!-- Control Sidebar -->
@@ -95,39 +99,36 @@ function display_alert(info)
 
 function show_add_user_page(info)
 {
-  alert(info);
+alert(info);
   var url = "/user/add";
   $('#container').load(url);
 }
 $(function () {
   $('#example').DataTable( {
-      "ajax": "/log/getLogList1",
+      "ajax": "/user/getUserList1",
       "paging": true,
-      "lengthChange": false,
-      "searching": false,
+      "lengthChange": true,
       "ordering": true,
       "info": true,
       "autoWidth": false,
       "responsive": true,
-      columns:
-      [
-        { title: "Name" },
-        { title: "Position" },
-        { title: "Office" },
-        { title: "Extn." },
-        { title: "Start date" },
-        { title: "Salary" },
-        {
-          title:"Operation",
-          data: function (obj)
-          {
-             return '<a class="btn btn-info btn-sm" href="#" onclick=show_add_user_page("'+ obj[0] +'")> <i class="fas fa-pencil-alt"> </i> Edit </a>'+
-             '<a class="btn btn-primary btn-sm" href="#" onclick=show_add_user_page("'+ obj[1] +'")> <i class="fas fa-folder"> </i> Update </a>' +
-             '<a class="btn btn-danger btn-sm" href="#" onclick=show_add_user_page("'+ obj[2] +'")> <i class="fas fa-trash"> </i> Delete </a>';
-          }
-        }
-      ]
-  });
+      columns: [
+            { title: "用户名" },
+            { title: "昵称" },
+            { title: "电话" },
+            { title: "邮箱" },
+            { title: "创建时间" },
+            { title: "过期时间" },
+            { title: "状态" },
+            {
+              title:"Operation",
+              data: function (obj) {
+                 return '<button type="button" class="btn btn-primary btn-sm" style="margin-right:15px; href="#" onclick=show_add_user_page("'+ obj[5] +'")> <i class="fas fa-pencil-alt"> </i> 修改 </button>'+
+                 '<button type="button" class="btn btn-danger btn-sm" style="margin-right:15px; href="#" onclick=show_add_user_page("'+ obj[5] +'")> <i class="fas fa-trash"> </i> 删除 </button>';
+              }
+            }
+        ]
+    });
 });
 </script>
 </body>
