@@ -269,7 +269,7 @@ public class UserRepository {
         sysPermission1.setPermissionId(1);
         sysPermission1.setAvailable(true);
         sysPermission1.setPermissionName("系统管理");
-        sysPermission1.setParentId(0l);
+        sysPermission1.setParentId(0);
         sysPermission1.setParentIds("0");
         sysPermission1.setPermission("system:view");
         sysPermission1.setResourceType("menu");
@@ -280,7 +280,7 @@ public class UserRepository {
         sysPermission2.setPermissionId(2);
         sysPermission2.setAvailable(true);
         sysPermission2.setPermissionName("用户管理");
-        sysPermission2.setParentId(1l);
+        sysPermission2.setParentId(1);
         sysPermission2.setParentIds("1");
         sysPermission2.setPermission("user:view");
         sysPermission2.setResourceType("menu");
@@ -291,7 +291,7 @@ public class UserRepository {
         sysPermission3.setPermissionId(3);
         sysPermission3.setAvailable(true);
         sysPermission3.setPermissionName("用户添加");
-        sysPermission3.setParentId(2l);
+        sysPermission3.setParentId(2);
         sysPermission3.setParentIds("1/2");
         sysPermission3.setPermission("user:add");
         sysPermission3.setResourceType("button");
@@ -303,7 +303,7 @@ public class UserRepository {
         sysPermission4.setPermissionId(4);
         sysPermission4.setAvailable(true);
         sysPermission4.setPermissionName("用户修改");
-        sysPermission4.setParentId(2l);
+        sysPermission4.setParentId(2);
         sysPermission4.setParentIds("1/2");
         sysPermission4.setPermission("user:edit");
         sysPermission4.setResourceType("button");
@@ -314,7 +314,7 @@ public class UserRepository {
         sysPermission5.setPermissionId(5);
         sysPermission5.setAvailable(true);
         sysPermission5.setPermissionName("用户删除");
-        sysPermission5.setParentId(2l);
+        sysPermission5.setParentId(2);
         sysPermission5.setParentIds("1/2");
         sysPermission5.setPermission("user:del");
         sysPermission5.setResourceType("button");
@@ -325,7 +325,7 @@ public class UserRepository {
         sysPermission6.setPermissionId(6);
         sysPermission6.setAvailable(true);
         sysPermission6.setPermissionName("角色管理");
-        sysPermission6.setParentId(2l);
+        sysPermission6.setParentId(2);
         sysPermission6.setParentIds("1");
         sysPermission6.setPermission("role:view");
         sysPermission6.setResourceType("menu");
@@ -336,7 +336,7 @@ public class UserRepository {
         sysPermission7.setPermissionId(7);
         sysPermission7.setAvailable(true);
         sysPermission7.setPermissionName("角色添加");
-        sysPermission7.setParentId(6l);
+        sysPermission7.setParentId(6);
         sysPermission7.setParentIds("1/6");
         sysPermission7.setPermission("role:add");
         sysPermission7.setResourceType("button");
@@ -347,7 +347,7 @@ public class UserRepository {
         sysPermission8.setPermissionId(8);
         sysPermission8.setAvailable(true);
         sysPermission8.setPermissionName("角色修改");
-        sysPermission8.setParentId(6l);
+        sysPermission8.setParentId(6);
         sysPermission8.setParentIds("1/6");
         sysPermission8.setPermission("role:edit");
         sysPermission8.setResourceType("button");
@@ -358,7 +358,7 @@ public class UserRepository {
         sysPermission9.setPermissionId(9);
         sysPermission9.setAvailable(true);
         sysPermission9.setPermissionName("角色删除");
-        sysPermission9.setParentId(6l);
+        sysPermission9.setParentId(6);
         sysPermission9.setParentIds("1/6");
         sysPermission9.setPermission("role:del");
         sysPermission9.setResourceType("button");
@@ -369,7 +369,7 @@ public class UserRepository {
         sysPermission10.setPermissionId(10);
         sysPermission10.setAvailable(true);
         sysPermission10.setPermissionName("角色授权");
-        sysPermission10.setParentId(6l);
+        sysPermission10.setParentId(6);
         sysPermission10.setParentIds("1/6");
         sysPermission10.setPermission("role:authorize");
         sysPermission10.setResourceType("button");
@@ -380,7 +380,7 @@ public class UserRepository {
         sysPermission13.setPermissionId(13);
         sysPermission13.setAvailable(true);
         sysPermission13.setPermissionName("角色授权");
-        sysPermission13.setParentId(6l);
+        sysPermission13.setParentId(6);
         sysPermission13.setParentIds("1/6");
         sysPermission13.setPermission("role:authorize");
         sysPermission13.setResourceType("button");
@@ -392,7 +392,7 @@ public class UserRepository {
         sysPermission11.setPermissionId(11);
         sysPermission11.setAvailable(true);
         sysPermission11.setPermissionName("日志管理");
-        sysPermission11.setParentId(0l);
+        sysPermission11.setParentId(0);
         sysPermission11.setParentIds("0");
         sysPermission11.setPermission("log:view");
         sysPermission11.setResourceType("menu");
@@ -403,7 +403,7 @@ public class UserRepository {
         sysPermission12.setPermissionId(12);
         sysPermission12.setAvailable(true);
         sysPermission12.setPermissionName("日志查看");
-        sysPermission12.setParentId(11l);
+        sysPermission12.setParentId(11);
         sysPermission12.setParentIds("11");
         sysPermission12.setPermission("log:view");
         sysPermission12.setResourceType("menu");

@@ -109,8 +109,8 @@ public class LoginController {
         rlistMenue.setUrl("/user/rlist");
 
         menue mlistMenue = new menue();
-        mlistMenue.setName("菜单管理");
-        mlistMenue.setUrl("/menue/mlist");
+        mlistMenue.setName("权限管理");
+        mlistMenue.setUrl("/permission/plist");
 
         menue pwdChgMenue = new menue();
         pwdChgMenue.setName("修改密码");

@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS sys_image;
 DROP TABLE IF EXISTS sys_role;
 DROP TABLE IF EXISTS sys_permission;
 DROP TABLE IF EXISTS sys_role_permission;
+DROP TABLE IF EXISTS sys_user_role;
 
 /* Create Tables */
 CREATE TABLE sys_user
@@ -47,6 +48,14 @@ CREATE TABLE sys_role_permission
 (
     id int NOT NULL AUTO_INCREMENT COMMENT 'id',
     permission_id int NOT NULL  COMMENT '权限id，fk',
+    role_id int NOT NULL COMMENT '角色Id，fk',
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '系统角色表';
+
+CREATE TABLE sys_user_role
+(
+    id int NOT NULL AUTO_INCREMENT COMMENT 'id',
+    user_id int NOT NULL  COMMENT '权限id，fk',
     role_id int NOT NULL COMMENT '角色Id，fk',
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '系统角色表';
@@ -122,3 +131,7 @@ INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (2,2);
 INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (7,2);
 INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (8,2);
 INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (9,2);
+
+INSERT INTO `sys_user_role` (`role_id`,`user_id`) VALUES (1,1);
+INSERT INTO `sys_user_role` (`role_id`,`user_id`) VALUES (2,2);
+INSERT INTO `sys_user_role` (`role_id`,`user_id`) VALUES (3,2);

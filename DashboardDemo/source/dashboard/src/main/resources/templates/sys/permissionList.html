@@ -16,7 +16,7 @@
 </head>
 <body>
 <div class="container">
-  <h1>菜单管理</h1>
+  <h1>权限管理</h1>
   <table id="table" class="table table-bordered table-striped"></table>
 </div>
 </body>
@@ -33,28 +33,23 @@
 
 <script type="text/javascript">
     var $table = $('#table');
-    var data = JSON.parse(
-        '[{"id":1,"pid":0,"status":1,"name":"用户管理","permissionValue":"open:user:manage"},' +
-        '{"id":2,"pid":0,"status":1,"name":"系统管理","permissionValue":"open:system:manage"},' +
-        '{"id":3,"pid":1,"status":1,"name":"新增用户","permissionValue":"open:user:add"},' +
-        '{"id":4,"pid":1,"status":1,"name":"修改用户","permissionValue":"open:user:edit"},' +
-        '{"id":5,"pid":1,"status":0,"name":"删除用户","permissionValue":"open:user:del"},' +
-        '{"id":6,"pid":2,"status":1,"name":"系统配置管理","permissionValue":"open:systemconfig:manage"},' +
-        '{"id":7,"pid":6,"status":1,"name":"新增配置","permissionValue":"open:systemconfig:add"},' +
-        '{"id":8,"pid":6,"status":1,"name":"修改配置","permissionValue":"open:systemconfig:edit"},' +
-        '{"id":9,"pid":6,"status":0,"name":"删除配置","permissionValue":"open:systemconfig:del"},' +
-        '{"id":10,"pid":2,"status":1,"name":"系统日志管理","permissionValue":"open:log:manage"},' +
-        '{"id":11,"pid":10,"status":1,"name":"新增日志","permissionValue":"open:log:add"},' +
-        '{"id":12,"pid":10,"status":1,"name":"修改日志","permissionValue":"open:log:edit"},' +
-        '{"id":13,"pid":10,"status":0,"name":"删除日志","permissionValue":"open:log:del"}]');
+    function getTree() {
+      var tree = null;
+      $.ajax({
+        type: "get",
+        url: "/permission/all",
+        async: false,
+        dataType: 'json',
+        success: function (data) {
+            tree = data;
+        }
+      });
+      return tree;
+    }
 
     $(function() {
-
-        //控制台输出一下数据
-        console.log(data);
-
         $table.bootstrapTable({
-            data:data,
+            data:getTree(),
             idField: 'id',
             dataType:'jsonp',
             columns: [
@@ -77,9 +72,7 @@
             treeShowField: 'name',
             //指定父id列
             parentIdField: 'pid',
-
             onResetView: function(data) {
-                //console.log('load');
                 $table.treegrid({
                     initialState: 'collapsed',// 所有节点都折叠
                     // initialState: 'expanded',// 所有节点都展开，默认展开
@@ -119,9 +112,9 @@
     // 格式化按钮
     function operateFormatter(value, row, index) {
         return [
-            '<button type="button" class="btn btn-info btn-sm" style="margin-right:15px;"><i class="fa fa-plus" ></i>&nbsp;新增</button>',
-            '<button type="button" class="btn btn-primary btn-sm" style="margin-right:15px;"><i class="fas fa-pencil-alt"> </i>&nbsp;修改</button>',
-            '<button type="button" class="btn btn-danger btn-sm" style="margin-right:15px;"><i class="fas fa-trash"></i>&nbsp;删除</button>'
+            '<button type="button" class="RoleOfadd btn btn-info btn-sm" style="margin-right:15px;"><i class="fa fa-plus" ></i>&nbsp;新增</button>',
+            '<button type="button" class="RoleOfedit btn btn-primary btn-sm" style="margin-right:15px;"><i class="fas fa-pencil-alt"> </i>&nbsp;修改</button>',
+            '<button type="button" class="RoleOfdelete btn btn-danger btn-sm" style="margin-right:15px;"><i class="fas fa-trash"></i>&nbsp;删除</button>'
         ].join('');
 
     }
