@@ -56,10 +56,12 @@
                   <div class="form-group">
                     <label for="currentPassword"><span style="color: red">*</span> 当前密码 </label>
                     <input type="password" class="form-control" id="currentPassword" placeholder="Password">
+                    <label for="currentPassword" class="control-label">（输入类型是汉字、字母、数字、下划线或它们的组合，最少3位，最长16位）</label>
                   </div>
                   <div class="form-group">
                     <label for="newPassword"><span style="color: red">*</span> 新密码</label>
                     <input type="password" class="form-control" id="newPassword" placeholder="Password">
+                    <label for="newPassword" class="control-label">（输入类型是汉字、字母、数字、下划线或它们的组合，最少3位，最长16位）</label>
                   </div>
                   <div class="form-group">
                     <label for="confirmPassword"><span style="color: red">*</span> 确认密码</label>
@@ -102,14 +104,11 @@
 <!-- AdminLTE for demo purposes -->
 <!--<script src="../../dist/js/editor.js"></script>-->
 <script type="text/javascript">
-
 $(document).ready(function () {
   $("a[name='home']").click(function(){
     var url = "/home/prompt";
     $('#container').load(url);
   });
-
-  bsCustomFileInput.init();
 });
 </script>
 </body>

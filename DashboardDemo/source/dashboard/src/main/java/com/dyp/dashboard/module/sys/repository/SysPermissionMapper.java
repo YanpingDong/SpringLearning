@@ -8,4 +8,6 @@ public interface SysPermissionMapper {
     int insert(SysPermission record);
     SysPermission selectById(int id);
     List<SysPermission> selectAll();
+    int deleteById(int id);
+    int updateById(SysPermission record);
 }

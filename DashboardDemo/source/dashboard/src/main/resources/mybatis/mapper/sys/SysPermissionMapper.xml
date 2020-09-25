@@ -9,19 +9,61 @@
         <result property="available"  column="available"   jdbcType="BIT" />
         <result property="permissionName"  column="permission_name"   jdbcType="VARCHAR" />
         <result property="parentId"  column="parent_id"   jdbcType="INTEGER" />
+        <result property="parentIds"  column="parent_ids"   jdbcType="VARCHAR" />
         <result property="permission" column="permission"  jdbcType="VARCHAR" />
         <result property="resourceType" column="resource_type"  jdbcType="VARCHAR" />
         <result property="url"  column="url"   jdbcType="VARCHAR" />
         <result property="level"  column="level"   jdbcType="INTEGER" />
     </resultMap>
 
-    <insert id="insert" parameterType="com.dyp.dashboard.module.sys.entity.ImageData">
-        INSERT INTO sys_image(id, type, name, create_date, data)
-        VALUES(#{id}, #{type}, #{name}, #{createDate}, #{data})
+    <insert id="insert">
+        INSERT INTO sys_permission(available, permission_name, parent_id, parent_ids, permission, resource_type,url,level)
+        VALUES(#{available}, #{permissionName}, #{parentId}, #{parentIds}, #{permission}, #{resourceType}, #{url}, #{level})
     </insert>
 
     <select id="selectAll" resultMap="sysPermissionMap">
         SELECT  *
         FROM sys_permission
     </select>
+
+    <select id="selectById" resultMap="sysPermissionMap">
+        SELECT *
+        FROM sys_permission WHERE permission_id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        DELETE FROM sys_permission WHERE permission_id = #{id}
+    </delete>
+
+    <update id="update">
+        UPDATE sys_permission
+        <set>
+            <if test="available != null ">
+                available = #{available},
+            </if>
+            <if test="permissionName != null" >
+                permission_name = #{permissionName},
+            </if>
+            <if test="projectId != null" >
+                parent_id = #{projectId},
+            </if>
+            <if test="parentIds != null ">
+                parent_ids = #{parentIds},
+            </if>
+            <if test="permission != null" >
+                permission = #{permission},
+            </if>
+            <if test="resourceType != null" >
+                resource_type = #{resourceType},
+            </if>
+            <if test="url != null" >
+                url = #{url},
+            </if>
+            <if test="gameConfigId != null" >
+                level = #{level},
+            </if>
+        </set>
+
+        WHERE permission_id = #{id}
+    </update>
 </mapper>

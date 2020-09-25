@@ -18,4 +18,48 @@ public class SysPermissionServiceImpl implements SysPermissionService {
     public List<SysPermission> getAllPermission() {
         return sysPermissionDao.selectAll();
     }
+
+    @Override
+    public void createSysPermission(SysPermission record) {
+        int parentId = record.getParentId();
+        SysPermission parentsSysPermission = sysPermissionDao.selectById(parentId);
+        String parentIds="";
+        if(parentsSysPermission != null)
+        {
+            parentIds = parentsSysPermission.getParentIds();
+            if(null !=  parentIds)
+            {
+                parentIds = parentIds.concat("/").concat(String.valueOf(parentId));
+            }
+            else
+            {
+                parentIds = String.valueOf(parentId);
+            }
+
+            record.setParentIds(parentIds);
+        }
+        sysPermissionDao.insert(record);
+    }
+
+    /**
+     *
+     * @param id
+     * @return null if nothing can be found
+     */
+    @Override
+    public SysPermission selectById(int id) {
+        return sysPermissionDao.selectById(id);
+    }
+
+    @Override
+    public int deleteById(int id) {
+        return sysPermissionDao.deleteById(id);
+    }
+
+    @Override
+    public int updateById(SysPermission record) {
+        return sysPermissionDao.updateById(record);
+    }
+
+
 }
