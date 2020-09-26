@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dyp.dashboard.module.cms.repository.CmsArticleDataMapper">
-    <resultMap id="CmsArticleDataMap" type="com.dyp.dashboard.module.cms.entity.CmsArticleData">
+    <resultMap id="cmsArticleDataMap" type="com.dyp.dashboard.module.cms.entity.CmsArticleData">
         <result column="id" jdbcType="VARCHAR" property="id" />
         <result column="title" jdbcType="VARCHAR" property="title" />
         <result column="description" jdbcType="VARCHAR" property="description" />
@@ -18,7 +18,7 @@
         values (#{id}, #{title}, #{description}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate}, #{content}, #{copyFrom})
     </insert>
 
-    <select id="selectById" resultMap="CmsArticleDataMap">
+    <select id="selectById" resultMap="cmsArticleDataMap">
         select * from cms_article_data where id = #{id}
     </select>
 

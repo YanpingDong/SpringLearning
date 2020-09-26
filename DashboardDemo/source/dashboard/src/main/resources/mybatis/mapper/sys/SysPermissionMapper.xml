@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 唯一命名空间，必须定义为：所在包名+接口文件名 -->
 <mapper namespace="com.dyp.dashboard.module.sys.repository.SysPermissionMapper">
-    <cache eviction="FIFO" size="512" flushInterval="60000" readOnly="false"></cache>
+<!--    <cache eviction="FIFO" size="512" flushInterval="60000" readOnly="false"></cache>-->
 
     <resultMap type="com.dyp.dashboard.module.sys.entity.SysPermission" id="sysPermissionMap">
         <id property="permissionId"           column="permission_id"   jdbcType="VARCHAR" />

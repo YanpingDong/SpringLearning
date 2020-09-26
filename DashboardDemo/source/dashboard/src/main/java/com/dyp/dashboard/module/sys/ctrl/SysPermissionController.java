@@ -56,11 +56,11 @@ public class SysPermissionController {
         return "/sys/permissionAdd";
     }
 
-    @GetMapping("/{id}/update")
-    public String toPermissionUpdatePage(Map<String, Object> map, @PathVariable int id){
-        SysPermission sysPermission = sysPermissionService.selectById(id);
-        map.put("putAddr", "/permission/"+id);
-        map.put("id",id);
+    @GetMapping("/{permissionId}/update")
+    public String toPermissionUpdatePage(Map<String, Object> map, @PathVariable int permissionId){
+        SysPermission sysPermission = sysPermissionService.selectById(permissionId);
+        map.put("permissionId",permissionId);
+        map.put("permissionName",sysPermission.getPermissionName());
         map.put("url", sysPermission.getUrl());
         return "/sys/permissionUpdate";
     }
@@ -74,11 +74,11 @@ public class SysPermissionController {
         return createActionResultResponseWhenSuccess();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{permissionId}")
     @ResponseBody
-    public ActionResultResponse updatePermission(@PathVariable(value = "id") int id,
+    public ActionResultResponse updatePermission(@PathVariable(value = "permissionId") int permissionId,
                                                  SysPermission sysPermission){
-        sysPermission.setPermissionId(id);
+        sysPermission.setPermissionId(permissionId);
         sysPermissionService.updateById(sysPermission);
         return createActionResultResponseWhenSuccess();
     }
