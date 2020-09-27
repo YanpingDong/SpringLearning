@@ -5,9 +5,11 @@ import com.dyp.dashboard.module.sys.entity.SysPermission;
 import com.dyp.dashboard.module.sys.entity.SysUserRole;
 import com.dyp.dashboard.module.sys.entity.User;
 import com.dyp.dashboard.module.sys.model.Pageable;
+import com.dyp.dashboard.module.sys.repository.UserMapper;
 import com.dyp.dashboard.module.sys.repository.UserRepository;
 import com.dyp.dashboard.module.sys.service.CacheService;
 import com.dyp.dashboard.module.sys.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,12 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * @Author: xu.dm
- * @Date: 2018/8/11 16:47
- * @Description:
- * 缓存设计ps：
- */
 @Service
 public class UserServiceImpl implements UserService {
     //key命名规则：前缀+":"+"实体ID或者实体name（userName）"+":业务（可选）"
@@ -28,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserRepository userRepository;
+
+    @Autowired
+    private UserMapper userDao;
 
     @Resource(name = "yourCacheServiceImpl")
     private CacheService cacheService;
@@ -172,6 +171,11 @@ public class UserServiceImpl implements UserService {
             }
         }
         return u;
+    }
+
+    @Override
+    public List<User> selectAll() {
+        return userDao.selectAll();
     }
 
     @Override

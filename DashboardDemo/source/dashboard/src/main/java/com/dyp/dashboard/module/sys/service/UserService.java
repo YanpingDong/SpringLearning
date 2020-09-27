@@ -17,6 +17,8 @@ public interface UserService {
 
     User save(User user);
 
+    List<User> selectAll();
+
     //新增用户判断是否有重名的
     boolean checkUserExists(String userName);
     //修改用户判断是否有重名的，不包括即将被修改的原名

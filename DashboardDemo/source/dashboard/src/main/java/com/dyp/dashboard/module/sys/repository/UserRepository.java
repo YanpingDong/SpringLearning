@@ -108,7 +108,6 @@ public class UserRepository {
         User user2 = new User();
         user2.setUserName(userName);
         user2.setCreateTime(LocalDateTime.now());
-        user2.setCredentialsSalt("salt");
         user2.setEmail("email");
         user2.setExpiredDate(LocalDate.now());
         user2.setName(userName);

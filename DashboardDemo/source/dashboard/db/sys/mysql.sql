@@ -16,7 +16,9 @@ CREATE TABLE sys_user
     name varchar(255) COMMENT '系统身份身份，比如：管理员',
     password varchar(64) COMMENT '创建者',
     salt varchar(64) COMMENT '创建时间',
-    state varchar(64) COMMENT '更新者',
+    email varchar(64) COMMENT '邮箱',
+    tel varchar(64) COMMENT '电话',
+    state  bit(1)  COMMENT '可用状态',
     create_time datetime COMMENT '创建时间',
     PRIMARY KEY (user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '用户信息表';
@@ -71,10 +73,10 @@ CREATE TABLE sys_image (
 
 /* Insert Data */
 /* write sys_user */
-INSERT INTO `sys_user` (`user_id`,`user_name`,`name`,`password`,`salt`,`state`,create_time)
-VALUES ('1', 'admin', '管理员', 'd3c59d25033dbf980d29554025c23a75', '8d78869f470951332959580424d4bf4f', 1,sysdate());
-INSERT INTO `sys_user` (`user_id`,`user_name`,`name`,`password`,`salt`,`state`,create_time)
-VALUES ('2', 'xu.dm', '管理员', 'd3c59d25033dbf980d29554025c23a75', '8d78869f470951332959580424d4bf4f', 1,sysdate());
+INSERT INTO `sys_user` (`user_id`,`user_name`,`name`,`password`,`salt`,`state`,email, tel,create_time)
+VALUES ('1', 'admin', '管理员', 'd3c59d25033dbf980d29554025c23a75', '8d78869f470951332959580424d4bf4f', 1,"lear521@163.com","12345678900",sysdate());
+INSERT INTO `sys_user` (`user_id`,`user_name`,`name`,`password`,`salt`,`state`,email, tel,create_time)
+VALUES ('2', 'test', '管理员', 'd3c59d25033dbf980d29554025c23a75', '8d78869f470951332959580424d4bf4f', 1,"lear521@163.com","12345678900",sysdate());
 
 /* write sys_role */
 INSERT INTO `sys_role` (`role_id`,`available`,`description`,`role`) VALUES (1,1,'超级管理员','admin');

@@ -49,74 +49,36 @@ public class UserController {
         return "/sys/userList";
     }
 
-    @RequestMapping(value = "/getUserList1")
+    @RequestMapping(value = "/getUserList")
+    @RequiresPermissions("user:view")//权限管理;
     @ResponseBody
-    public ListTableData getUserList1(HttpServletRequest request)
+    public ListTableData getUserList(HttpServletRequest request)
     {
+        List<User> users = userService.selectAll();
+
         ListTableData  ajaxData = new ListTableData();
         List<List<String>> data = new ArrayList<>();
-        List<String> column1 = new ArrayList<>();
-        column1.add("admin");
-        column1.add("管理员");
-        column1.add("");
-        column1.add("");
-        column1.add(LocalDateTime.now().toString());
-        column1.add(LocalDateTime.now().toString());
-        column1.add("锁定");
 
+        if(users != null)
+        {
+            for (User user : users)
+            {
+                List<String> column = new ArrayList<>();
+                column.add(user.getUserName());
+                column.add(user.getName());
+                column.add(user.getTel());
+                column.add(user.getEmail());
+                column.add(user.getCreateTime().toString());
+                column.add("");
+                column.add(user.getState() == 1 ? "正常" : "锁定");
+                data.add(column);
+            }
+        }
 
-        data.add(column1);
-        List<String> column2= new ArrayList<>();
-        column2.add("other");
-        column2.add("管理员");
-        column2.add("13772199865");
-        column2.add("lear521@163.com");
-        column2.add(LocalDateTime.now().toString());
-        column2.add(LocalDateTime.now().toString());
-        column2.add("正常");
-        data.add(column2);
         ajaxData.setData(data);
         return ajaxData;
     }
 
-    @RequestMapping(value="/getUserList")
-    @RequiresPermissions("user:view")//权限管理;
-    @ResponseBody
-    public Object getUserList(HttpServletRequest request, HttpServletResponse response)
-    {
-        int pageSize = 10;
-        try {
-            pageSize =  Integer.parseInt(request.getParameter("pageSize"));
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        int pageNumber=0 ;
-        try {
-            pageNumber =  Integer.parseInt(request.getParameter("pageNumber"))-1;
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        Map<String, Object> map = new HashMap<>();
-
-        String strUserName=request.getParameter("searchText")==null ? "": request.getParameter("searchText");
-
-        String sortName=request.getParameter("sortName")==null ? "roleId": request.getParameter("sortName");
-        String sortOrder=request.getParameter("sortOrder")==null ? "asc": request.getParameter("sortOrder");
-
-        Pageable pageable = new Pageable(pageNumber,pageSize,sortOrder.equalsIgnoreCase("asc")?"asc":"desc");
-        List<User> userPage = userService.findAllByUserNameContains(strUserName,pageable);
-
-        map.put("total",userPage.size());
-        map.put("rows",userPage);
-
-        return map;
-
-
-    }
 
     @RequestMapping(value = "/add",method = RequestMethod.GET)
     @RequiresPermissions("user:add")//权限管理;
