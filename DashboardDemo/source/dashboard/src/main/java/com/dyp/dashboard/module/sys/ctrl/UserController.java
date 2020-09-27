@@ -44,7 +44,7 @@ public class UserController {
      * 用户查询.
      * @return
      */
-    @RequestMapping("/ulist")
+    @GetMapping("/ulist")
     public String userList(){
         return "/sys/userList";
     }
@@ -80,6 +80,12 @@ public class UserController {
         return ajaxData;
     }
 
+    @DeleteMapping(value = "/{userId}")
+    @RequiresPermissions("user:delete")//权限管理;
+    @ResponseBody
+    public void deleteById(@PathVariable("userId")Integer userId){
+        userService.deleteById(userId);
+    }
 
     @RequestMapping(value = "/update",method = RequestMethod.GET)
     @RequiresPermissions("user:update")//权限管理;
@@ -87,7 +93,7 @@ public class UserController {
         return "/sys/userUpdate";
     }
 
-    @RequestMapping(value = "/add",method = RequestMethod.GET)
+    @GetMapping(value = "/add")
     @RequiresPermissions("user:add")//权限管理;
     public String toUserAdd(User user){
         return "/sys/userAdd";

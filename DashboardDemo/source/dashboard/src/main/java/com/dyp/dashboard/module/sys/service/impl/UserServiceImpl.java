@@ -179,6 +179,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int deleteById(int id) {
+        return userDao.deleteById(id);
+    }
+
+    @Override
     public boolean checkUserExists(String userName) {
         User user = this.findByUserName(userName);
         if (user != null)

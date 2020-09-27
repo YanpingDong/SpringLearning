@@ -19,6 +19,8 @@ public interface UserService {
 
     List<User> selectAll();
 
+    int deleteById(int id);
+
     //新增用户判断是否有重名的
     boolean checkUserExists(String userName);
     //修改用户判断是否有重名的，不包括即将被修改的原名

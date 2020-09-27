@@ -22,6 +22,7 @@
 <!--<body class="hold-transition sidebar-mini">-->
 <body >
 <div class="wrapper">
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content">
         <!-- Content Header (Page header) -->
@@ -30,7 +31,11 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <h1>用户管理</h1>
+                        <button id="addUser" type="button" class="btn btn-info btn-sm" onclick="show_add_user_page()">
+                            <i class="fa fa-plus" ></i>新增
+                        </button>
                     </div>
+
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a id="back_to_home" href="#" name="home">主页</a></li>
@@ -63,6 +68,7 @@
             <!-- /.container-fluid -->
         </section>
         <!-- /.content -->
+
     </div>
     <!-- /.content-wrapper -->
 </div>
@@ -82,14 +88,28 @@
 <!--<script src="../../js/logList.js" th:src="@{/js/logList.js}"></script>-->
 <!-- page script -->
 <script>
-function display_alert(info)
+
+function show_delete(id)
   {
-    alert(info);
+    $.ajax({
+        async: true,
+        type: "delete",
+        url:'/user/'+ id,
+        async: true,        //异步
+        processData: false,  //很重要，告诉jquery不要对form进行处理
+        contentType: false,  //很重要，指定为false才能形成正确的Content-Type
+        success: function () {
+            var url = "/user/ulist";
+            $('#container').load(url);
+          },
+        error: function () {
+            alert("error");
+        }
+    })
   }
 
-function show_add_user_page(info)
+function show_add_user_page()
 {
-  alert(info);
   var url = "/user/add";
   $('#container').load(url);
 }
@@ -122,7 +142,7 @@ $(function () {
               title:"Operation",
               data: function (obj) {
                  return '<button type="button" class="btn btn-primary btn-sm" style="margin-right:15px; href="#" onclick=show_update_page("'+ obj[0] +'")> <i class="fas fa-pencil-alt"> </i> 修改 </button>'+
-                 '<button type="button" class="btn btn-danger btn-sm" style="margin-right:15px; href="#" onclick=show_update_page("'+ obj[0] +'")> <i class="fas fa-trash"> </i> 删除 </button>';
+                 '<button type="button" class="btn btn-danger btn-sm" style="margin-right:15px; href="#" onclick=show_delete("'+ obj[0] +'")> <i class="fas fa-trash"> </i> 删除 </button>';
               }
             }
         ]
