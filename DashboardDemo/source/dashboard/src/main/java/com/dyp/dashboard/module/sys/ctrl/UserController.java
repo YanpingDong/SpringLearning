@@ -64,6 +64,7 @@ public class UserController {
             for (User user : users)
             {
                 List<String> column = new ArrayList<>();
+                column.add(user.getUserId().toString());
                 column.add(user.getUserName());
                 column.add(user.getName());
                 column.add(user.getTel());
@@ -79,6 +80,12 @@ public class UserController {
         return ajaxData;
     }
 
+
+    @RequestMapping(value = "/update",method = RequestMethod.GET)
+    @RequiresPermissions("user:update")//权限管理;
+    public String toUserUpdate(User user){
+        return "/sys/userUpdate";
+    }
 
     @RequestMapping(value = "/add",method = RequestMethod.GET)
     @RequiresPermissions("user:add")//权限管理;
