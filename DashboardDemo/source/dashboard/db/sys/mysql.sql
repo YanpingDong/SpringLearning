@@ -90,7 +90,7 @@ INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`par
 VALUES (1,1,'系统管理',0,'0','system:view','menu','#',1);
 
 INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`parent_id`,`parent_ids`,`permission`,`resource_type`,`url`,level)
-VALUES (2,1,'用户管理',1,'1','user:view','menu','user/rList',2);
+VALUES (2,1,'用户管理',1,'1','user:view','menu','user/ulist',2);
 INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`parent_id`,`parent_ids`,`permission`,`resource_type`,`url`,level)
 VALUES (3,1,'用户添加',2,'1/2','user:add','button','user/userAdd',3);
 INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`parent_id`,`parent_ids`,`permission`,`resource_type`,`url`,level)
@@ -99,7 +99,7 @@ INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`par
 VALUES (5,1,'用户删除',2,'1/2','user:del','button','user/userDel',3);
 
 INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`parent_id`,`parent_ids`,`permission`,`resource_type`,`url`,level)
-VALUES (6,1,'角色管理',1,'1','role:view','menu','user/rList',2);
+VALUES (6,1,'角色管理',1,'1','role:view','menu','user/rlist',2);
 INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`parent_id`,`parent_ids`,`permission`,`resource_type`,`url`,level)
 VALUES (7,1,'角色添加',6,'1/6','role:add','button','user/roleAdd',3);
 INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`parent_id`,`parent_ids`,`permission`,`resource_type`,`url`,level)
@@ -108,12 +108,23 @@ INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`par
 VALUES (9,1,'角色删除',6,'1/6','role:del','button','user/roleDel',3);
 INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`parent_id`,`parent_ids`,`permission`,`resource_type`,`url`,level)
 VALUES (10,1,'角色授权',6,'1/6','role:authorize','button','user/authorize',3);
+INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`parent_id`,`parent_ids`,`permission`,`resource_type`,`url`,level)
+VALUES (11,1,'权限管理',1,'1','user:view','menu','permission/plist',2);
+INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`parent_id`,`parent_ids`,`permission`,`resource_type`,`url`,level)
+VALUES (12,1,'修改密码',1,'1','user:view','menu','/user/toChangePassword',2);
 
 /* 日志管理菜单 */
 INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`parent_id`,`parent_ids`,`permission`,`resource_type`,`url`,level)
-VALUES (11,1,'日志管理',0,'0','log:view','menu','#',1);
+VALUES (13,1,'日志管理',0,'0','log:view','menu','#',1);
 INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`parent_id`,`parent_ids`,`permission`,`resource_type`,`url`,level)
-VALUES (12,1,'日志管理',11,'11','log:view','menu','/log/list',2);
+VALUES (14,1,'日志管理',13,'13','log:view','menu','/log/list',2);
+
+/* 内容管理菜单 */
+INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`parent_id`,`parent_ids`,`permission`,`resource_type`,`url`,level)
+VALUES (15,1,'内容管理',0,'0','cms:view','menu','#',1);
+INSERT INTO `sys_permission` (`permission_id`,`available`,`permission_name`,`parent_id`,`parent_ids`,`permission`,`resource_type`,`url`,level)
+VALUES (16,1,'内容编辑',15,'15','cms:edit','menu','/cms/editor',2);
+
 
 /* write sys_role_permission */
 INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (1,1);
@@ -127,6 +138,12 @@ INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (8,1);
 INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (9,1);
 INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (10,1);
 INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (11,1);
+INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (12,1);
+INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (13,1);
+INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (14,1);
+INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (15,1);
+INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (16,1);
+
 
 INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (1,2);
 INSERT INTO `sys_role_permission` (`permission_id`,`role_id`) VALUES (2,2);

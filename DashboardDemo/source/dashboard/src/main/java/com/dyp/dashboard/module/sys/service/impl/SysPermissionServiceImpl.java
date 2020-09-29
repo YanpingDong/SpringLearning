@@ -19,24 +19,49 @@ public class SysPermissionServiceImpl implements SysPermissionService {
         return sysPermissionDao.selectAll();
     }
 
+    public int countSpecifiedCharacter(String searchStr, String keyStr){
+        int count=0;
+        int i=0;
+        while(searchStr.indexOf(keyStr,i)>=0){
+            count++;
+            i=searchStr.indexOf(keyStr,i) + keyStr.length();
+        }
+
+        return count;
+    }
+
     @Override
     public void createSysPermission(SysPermission record) {
         int parentId = record.getParentId();
         SysPermission parentsSysPermission = sysPermissionDao.selectById(parentId);
         String parentIds="";
+        int level = 0;
         if(parentsSysPermission != null)
         {
-            parentIds = parentsSysPermission.getParentIds();
-            if(null !=  parentIds)
+            int parentLevel =  parentsSysPermission.getLevel();
+            if(parentLevel > 1)
             {
-                parentIds = parentIds.concat("/").concat(String.valueOf(parentId));
+                parentIds = parentsSysPermission.getParentIds();
+                if(null !=  parentIds)
+                {
+                    parentIds = parentIds.concat("/").concat(String.valueOf(parentId));
+                }
             }
             else
             {
                 parentIds = String.valueOf(parentId);
             }
+            level = parentLevel + 1;
 
             record.setParentIds(parentIds);
+            record.setLevel(level);
+        }
+        else
+        {
+            record.setParentIds("0");
+            record.setParentId(0);
+            record.setUrl("#");
+            record.setLevel(1);
         }
         sysPermissionDao.insert(record);
     }

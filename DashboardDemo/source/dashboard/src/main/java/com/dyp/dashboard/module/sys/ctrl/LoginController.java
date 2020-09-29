@@ -1,7 +1,10 @@
 package com.dyp.dashboard.module.sys.ctrl;
 
+import com.dyp.dashboard.module.sys.entity.SysPermission;
+import com.dyp.dashboard.module.sys.service.UserService;
 import com.dyp.dashboard.util.RandomUtils;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +27,8 @@ import java.util.Map;
 @Controller
 public class LoginController {
     private long verifyTTL = 60;//验证码过期时间60秒
+    @Autowired
+    UserService userService;
 
     @Resource
     DefaultKaptcha defaultKaptcha;
@@ -95,56 +100,37 @@ public class LoginController {
     @RequestMapping({"/", "/index"})
     public String index(HttpServletRequest request, Model model) {
        // List<SysPermission> sysPermissions = userRepository.findUserRolePermissionByUserName("admin");
-
+        List<SysPermission> sysPermissions = userService.findUserRolePermissionByUserName("admin");
         String userName = request.getParameter("userName");
 
         Map<String, List<menue>> menues = new HashMap<>();
-        List<menue> subMenues = new ArrayList<>();
-        menue ulistMenue = new menue();
-        ulistMenue.setName("用户管理");
-        ulistMenue.setUrl("/user/ulist");
-
-        menue rlistMenue = new menue();
-        rlistMenue.setName("角色管理");
-        rlistMenue.setUrl("/user/rlist");
-
-        menue mlistMenue = new menue();
-        mlistMenue.setName("权限管理");
-        mlistMenue.setUrl("/permission/plist");
-
-        menue pwdChgMenue = new menue();
-        pwdChgMenue.setName("修改密码");
-        pwdChgMenue.setUrl("/user/toChangePassword");
-        subMenues.add(ulistMenue);
-        subMenues.add(rlistMenue);
-        subMenues.add(pwdChgMenue);
-        subMenues.add(mlistMenue);
-
-        List<menue> subMenues1 = new ArrayList<>();
-        menue loglistMenue = new menue();
-        loglistMenue.setName("日志查看");
-        loglistMenue.setUrl("/log/list");
-        subMenues1.add(loglistMenue);
-
-        //editor
-
-        List<menue> subMenues2 = new ArrayList<>();
-        menue editorlistMenue = new menue();
-        editorlistMenue.setName("新闻编辑");
-        editorlistMenue.setUrl("/cms/editor");
-        subMenues2.add(editorlistMenue);
-
-
-        if("admin".equalsIgnoreCase("admin"))
+        Map<Integer, String> parentMenueInfo = new HashMap<>();
+        if(sysPermissions != null)
         {
-            menues.put("系统管理",subMenues);
-            menues.put("日志管理",subMenues1);
-            menues.put("新闻管理",subMenues2);
-        }
-        else
-        {
-            menues.put("日志管理",subMenues1);
-            menues.put("新闻管理",subMenues2);
+            for(SysPermission sysPermission : sysPermissions)
+            {
+                if(sysPermission.getLevel() == 1)
+                {
+                    String permissionName = sysPermission.getPermissionName();
+                    int parentId = sysPermission.getPermissionId();
+                    parentMenueInfo.put(parentId, permissionName);
+                    if(!menues.containsKey(permissionName))
+                    {
+                        List<menue> submenue = new ArrayList<>();
+                        menues.put(permissionName,submenue);
+                    }
+                }
+                else if(sysPermission.getLevel() != 3)
+                {
+                    String parentPermissionName = parentMenueInfo.get(sysPermission.getParentId());
+                    List<menue> submenues = menues.get(parentPermissionName);
+                    menue subMenue = new menue();
+                    subMenue.setName(sysPermission.getPermissionName());
+                    subMenue.setUrl(sysPermission.getUrl());
+                    submenues.add(subMenue);
+                }
+
+            }
         }
 
         model.addAttribute("menues", menues);

@@ -13,6 +13,11 @@ function getTree() {
   return tree;
 }
 
+function show_create_permission_page()
+{
+    add(0);
+}
+
 $(function() {
     $table.bootstrapTable({
         data:getTree(),

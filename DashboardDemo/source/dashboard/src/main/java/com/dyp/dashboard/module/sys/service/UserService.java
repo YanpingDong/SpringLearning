@@ -31,6 +31,7 @@ public interface UserService {
     List<SysUserRole> findAllUserRoleByUserId(Integer userId);
 
     List<SysPermission> findUserRolePermissionByUserName(String userName);
+    List<SysPermission> findUserRolePermissionByUserId(int id);
 
     List<User> findAllByUserNameContains(String userName, Pageable pageable);
 

@@ -90,12 +90,24 @@ public class UserServiceImpl implements UserService {
         return sysPermissions;
     }
 
+
     @Override
     public List<SysPermission> findUserRolePermissionByUserName(String userName) {
         //反序列化有问题，先注销
 //        if (cacheConfig.isCacheEnable())
 //            return findUserRolePermissionInCache(userName);
-        return userRepository.findUserRolePermissionByUserName(userName);
+        List<SysPermission> sysPermissions  = null;
+        User user = userDao.selectByUerName(userName);
+        if(user  != null)
+        {
+            sysPermissions = findUserRolePermissionByUserId(user.getUserId());
+        }
+        return sysPermissions;
+    }
+
+    @Override
+    public List<SysPermission> findUserRolePermissionByUserId(int id) {
+        return userDao.selectPermissionByUserId(id);
     }
 
     private User findUserInCatch(Integer userId)

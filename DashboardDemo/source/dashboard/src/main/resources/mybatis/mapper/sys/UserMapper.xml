@@ -31,6 +31,16 @@
         FROM sys_user WHERE user_id = #{id}
     </select>
 
+    <select id="selectByUerName" resultMap="userMap">
+        SELECT *
+        FROM sys_user WHERE user_name = #{name}
+    </select>
+
+    <select id="selectPermissionByUserId" resultMap="com.dyp.dashboard.module.sys.repository.SysPermissionMapper.sysPermissionMap">
+        SELECT * FROM dashboard.sys_permission WHERE permission_id in
+        (SELECT permission_id FROM dashboard.sys_role_permission rp LEFT JOIN dashboard.sys_user_role ur on rp.role_id = ur.role_id WHERE  ur.user_id = #{id});
+    </select>
+
     <delete id="deleteById">
         DELETE FROM sys_user WHERE user_id = #{id}
     </delete>
