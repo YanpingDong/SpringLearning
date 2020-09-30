@@ -116,9 +116,46 @@
 <!-- Page script -->
 <script>
   $(function () {
+  var selectedDataStr = "1,2,4";//选中的option（用过英文逗号隔开；新增时，无选中option）
+  $.ajax({
+	type: 'GET',//请求方式
+	url: '/role/data',//地址，就是json文件的请求路径
+	//data: reqeustParams,//请求参数
+	async: true,//是否异步
+	success: function (data) {
+	  var objs = $.parseJSON(data);
+	  var selector = $('.duallistbox')[0];
+	  $(objs).each(function () {
+		var o = document.createElement("option");
+		o.value = this['roleId'];
+		o.text = this['roleName'];
+		if ("undefined" != typeof (selectedDataStr) && selectedDataStr != "") {
+		  var selectedDataArray = selectedDataStr.split(',');
+		  $.each(selectedDataArray, function (i, val) {
+			if (o.value == val) {
+			  o.selected = 'selected';
+			  return false;
+			}
+		  });
+		}
+		if(typeof(selector) != "undefined") {
+			selector.options.add(o);
+		}
+	  });
 
-    //Bootstrap Duallistbox
-    $('.duallistbox').bootstrapDualListbox()
+	  //Bootstrap Duallistbox
+	  $('.duallistbox').bootstrapDualListbox({
+		moveOnSelect: false,
+		preserveSelectionOnMove: 'all',
+		nonSelectedListLabel: 'Non-selected',
+		selectedListLabel: 'Selected',
+		selectorMinimalHeight: 200,
+	  });
+	},
+	error: function (e) {
+	  alert(e.msg);
+	}
+  });
 
   })
 </script>

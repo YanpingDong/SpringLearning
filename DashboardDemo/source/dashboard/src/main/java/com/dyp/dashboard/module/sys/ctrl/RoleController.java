@@ -10,7 +10,10 @@ import com.dyp.dashboard.module.sys.entity.User;
 import com.dyp.dashboard.module.sys.model.Pageable;
 import com.dyp.dashboard.module.sys.service.LogService;
 import com.dyp.dashboard.module.sys.service.RoleService;
+import com.dyp.dashboard.util.IOUtils;
+import com.dyp.dashboard.util.JsonUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +38,16 @@ public class RoleController {
     @Resource
     LogService logService;
 
-    //,produces="application/json;charset=UTF-8"
+    @Value("classpath:role.json")
+    org.springframework.core.io.Resource roleData;
+
+    @RequestMapping(value="/data")
+    @ResponseBody
+    public String data() throws IOException {
+        String json = IOUtils.convertStreamToString(roleData.getInputStream());
+        return json;
+    }
+
     @RequestMapping(value="/role")
     @ResponseBody
     @RequiresPermissions("role:view")
