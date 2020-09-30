@@ -49,6 +49,11 @@ public class UserController {
         return "/sys/userList";
     }
 
+    @GetMapping("role/setting")
+    public String userRoleSetting(){
+        return "/sys/userRoleSetting";
+    }
+
     @RequestMapping(value = "/getUserList")
     @RequiresPermissions("user:view")//权限管理;
     @ResponseBody
