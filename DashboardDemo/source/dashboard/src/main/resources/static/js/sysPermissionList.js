@@ -18,7 +18,9 @@ function show_create_permission_page()
 }
 
 $(function() {
+
     var $table = $('#table');
+
     $table.bootstrapTable({
         data:getTree(),
         idField: 'id',
@@ -46,8 +48,8 @@ $(function() {
         parentIdField: 'pid',
         onResetView: function(data) {
             $table.treegrid({
-                initialState: 'collapsed',// 所有节点都折叠
-                // initialState: 'expanded',// 所有节点都展开，默认展开
+                //initialState: 'collapsed',// 所有节点都折叠
+                initialState: 'expanded',// 所有节点都展开，默认展开
                 treeColumn: 1,
                 // expanderExpandedClass: 'glyphicon glyphicon-minus',  //图标样式
                 // expanderCollapsedClass: 'glyphicon glyphicon-plus',
@@ -78,6 +80,27 @@ $(function() {
             $table.bootstrapTable('load', datas);
         },
         // bootstrap-table-treetreegrid.js 插件配置 -- end
+    });
+
+    function test() {
+        var selRows = $table.bootstrapTable("getSelections");
+        console.log(selRows);
+        if(selRows.length == 0){
+            alert("请至少选择一行");
+            return;
+        }
+        var postData = "";
+        $.each(selRows,function(i) {
+            postData +=  this.id;
+            if (i < selRows.length - 1) {
+                postData += "， ";
+            }
+        });
+        alert("你选中行的 id 为："+postData);
+    }
+
+    $("#test").click(function(){
+        test();
     });
 });
 
@@ -135,6 +158,7 @@ function selectChilds(datas,row,id,pid,checked) {
 }
 
 function selectParentChecked(datas,row,id,pid){
+    console.log(datas);
     for(var i in datas){
         if(datas[i][id] == row[pid]){
             datas[i].check=true;
@@ -143,26 +167,7 @@ function selectParentChecked(datas,row,id,pid){
     }
 }
 
-function test() {
 
-    var selRows = $table.bootstrapTable("getSelections");
-    console.log(selRows);
-
-    if(selRows.length == 0){
-        alert("请至少选择一行");
-        return;
-    }
-
-    var postData = "";
-    $.each(selRows,function(i) {
-        postData +=  this.idField;
-        if (i < selRows.length - 1) {
-            postData += "， ";
-        }
-    });
-    alert("你选中行的 id 为："+postData);
-
-}
 
 function add(id) {
     alert("add 方法 , id = " + id);

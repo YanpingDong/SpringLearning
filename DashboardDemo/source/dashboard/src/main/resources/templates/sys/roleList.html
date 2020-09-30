@@ -138,7 +138,8 @@ $(function () {
               title:"Operation",
               data: function (obj) {
                  return '<button type="button" class="btn btn-primary btn-sm" style="margin-right:15px; href="#" onclick=show_update_page("'+ obj[0] +'")> <i class="fas fa-pencil-alt"> </i> 修改 </button>'+
-                 '<button type="button" class="btn btn-danger btn-sm" style="margin-right:15px; href="#" onclick=show_delete("'+ obj[0] +'")> <i class="fas fa-trash"> </i> 删除 </button>';
+                 '<button type="button" class="btn btn-danger btn-sm" style="margin-right:15px; href="#" onclick=show_delete("'+ obj[0] +'")> <i class="fas fa-trash"> </i> 删除 </button>'+
+                 '<button type="button" class="btn btn-warning btn-sm" style="margin-right:15px; href="#" onclick=show_delete("'+ obj[0] +'")> <i class="fa fa-users"> </i> 权限分配 </button>';
               }
             }
         ]

@@ -43,6 +43,7 @@ public class SysPermissionController {
                 permissionResponse.setPid(sysPermission.getParentId());
                 permissionResponse.setStatus(sysPermission.getAvailable() == true ? 1 : 0);
                 permissionResponse.setUrl(sysPermission.getUrl());
+                permissionResponse.setCheck(false);
                 permissionResponses.add(permissionResponse);
             }
         }

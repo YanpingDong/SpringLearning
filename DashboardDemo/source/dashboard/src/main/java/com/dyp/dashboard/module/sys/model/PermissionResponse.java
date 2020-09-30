@@ -16,4 +16,5 @@ public class PermissionResponse {
     private String name;
     private String permissionValue;
     private String url;
+    private  Boolean check;
 }
