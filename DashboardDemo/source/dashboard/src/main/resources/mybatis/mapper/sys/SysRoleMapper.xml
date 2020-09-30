@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 唯一命名空间，必须定义为：所在包名+接口文件名 -->
+<mapper namespace="com.dyp.dashboard.module.sys.repository.SysRoleMapper">
+    <!--    <cache eviction="FIFO" size="512" flushInterval="60000" readOnly="false"></cache>-->
+
+    <resultMap type="com.dyp.dashboard.module.sys.entity.SysRole" id="sysRoleMap">
+        <id property="roleId"           column="role_id"   jdbcType="INTEGER" />
+        <result property="available"  column="available"   jdbcType="BIT" />
+        <result property="name"  column="name"   jdbcType="VARCHAR" />
+        <result property="description"  column="description"   jdbcType="VARCHAR" />
+        <result property="role"  column="role"   jdbcType="VARCHAR" />
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO sys_role(role_id, available, name, description, role)
+        VALUES(#{roleId}, #{available}, #{name}, #{description}, #{role})
+    </insert>
+
+    <select id="selectAll" resultMap="sysRoleMap">
+        SELECT  *
+        FROM sys_role
+    </select>
+
+    <select id="selectById" resultMap="sysRoleMap">
+        SELECT *
+        FROM sys_role WHERE role_id = #{id}
+    </select>
+
+
+<!--    <select id="selectPermissionByUserId" resultMap="com.dyp.dashboard.module.sys.repository.SysPermissionMapper.sysPermissionMap">-->
+<!--        SELECT * FROM dashboard.sys_permission WHERE permission_id in-->
+<!--        (SELECT permission_id FROM dashboard.sys_role_permission rp LEFT JOIN dashboard.sys_user_role ur on rp.role_id = ur.role_id WHERE  ur.user_id = #{id});-->
+<!--    </select>-->
+
+    <delete id="deleteById">
+        DELETE FROM sys_role WHERE role_id = #{id}
+    </delete>
+
+    <update id="update">
+        UPDATE sys_role
+        <set>
+            <if test="available != null" >
+                available = #{available},
+            </if>
+            <if test="name != null" >
+                name = #{name},
+            </if>
+            <if test="description != null ">
+                description = #{description},
+            </if>
+            <if test="role != null" >
+                role = #{role}
+            </if>
+        </set>
+
+        WHERE role_id = #{roleId}
+    </update>
+</mapper>

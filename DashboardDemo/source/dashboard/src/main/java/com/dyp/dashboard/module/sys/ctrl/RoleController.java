@@ -2,9 +2,11 @@ package com.dyp.dashboard.module.sys.ctrl;
 
 
 import com.dyp.dashboard.factory.LogFactory;
+import com.dyp.dashboard.model.ListTableData;
 import com.dyp.dashboard.module.sys.entity.SysLog;
 import com.dyp.dashboard.module.sys.entity.SysPermission;
 import com.dyp.dashboard.module.sys.entity.SysRole;
+import com.dyp.dashboard.module.sys.entity.User;
 import com.dyp.dashboard.module.sys.model.Pageable;
 import com.dyp.dashboard.module.sys.service.LogService;
 import com.dyp.dashboard.module.sys.service.RoleService;
@@ -25,7 +27,7 @@ import java.util.Map;
 
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/role")
 public class RoleController {
     @Resource
     RoleService roleService;
@@ -79,6 +81,32 @@ public class RoleController {
         return "/sys/roleList";
     }
 
+    @GetMapping("/all")
+    @ResponseBody
+    public ListTableData getAllRole()
+    {
+        List<SysRole> sysRoles = roleService.findAll();
+
+        ListTableData ajaxData = new ListTableData();
+        List<List<String>> data = new ArrayList<>();
+
+        if(sysRoles != null)
+        {
+            for (SysRole sysRole : sysRoles)
+            {
+                List<String> column = new ArrayList<>();
+                column.add(sysRole.getRoleId().toString());
+                column.add(sysRole.getRole());
+                column.add(sysRole.getAvailable() == true ? "正常" : "锁定");
+                column.add(sysRole.getDescription());
+
+                data.add(column);
+            }
+        }
+
+        ajaxData.setData(data);
+        return ajaxData;
+    }
 
     @RequestMapping(value="/roleAdd", method= RequestMethod.GET)
     @RequiresPermissions("role:add")

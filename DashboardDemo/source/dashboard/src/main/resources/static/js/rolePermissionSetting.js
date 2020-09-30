@@ -1,3 +1,4 @@
+var $table = $('#table');
 function getTree() {
   var tree = null;
   $.ajax({
@@ -18,7 +19,6 @@ function show_create_permission_page()
 }
 
 $(function() {
-    var $table = $('#table');
     $table.bootstrapTable({
         data:getTree(),
         idField: 'id',
@@ -36,7 +36,7 @@ $(function() {
             { field: 'status',  title: '状态', sortable: true,  align: 'center', formatter: 'statusFormatter'  },
             { field: 'permissionValue', title: '权限值'  },
             { field: 'url', title: 'url'  },
-            { field: 'operate', title: '操作', align: 'center', events: operateEvents, formatter: 'operateFormatter' },
+            { field: 'operate', title: '操作', align: 'center', events : operateEvents, formatter: 'operateFormatter' },
         ],
 
         // bootstrap-table-treegrid.js 插件配置 -- start
@@ -69,7 +69,7 @@ $(function() {
             selectParentChecked(datas,row,"id","pid")
 
             // 刷新数据
-            $table.bootstrapTable('load', datas);
+<!--                $table.bootstrapTable('load', datas);-->
         },
 
         onUncheck:function(row){
@@ -169,7 +169,6 @@ function add(id) {
     var addUrl="permission/" + id
     $('#container').load(addUrl);
 }
-
 function del(id) {
     $.ajax({
         type: "delete",
@@ -189,7 +188,6 @@ function del(id) {
       });
     alert("del 方法 , id = " + id);
 }
-
 function update(id) {
     var addUrl="permission/" + id + "/update"
     $('#container').load(addUrl);

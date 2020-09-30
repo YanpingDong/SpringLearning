@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RoleService {
+    List<SysRole> findAll();
     List<SysRole> findAll(Pageable pageable);
 
     List<SysRole> findAllByRoleContains(String role, Pageable pageable);

@@ -4,7 +4,9 @@ import com.dyp.dashboard.module.sys.entity.SysRole;
 import com.dyp.dashboard.module.sys.entity.SysRolePermission;
 import com.dyp.dashboard.module.sys.model.Pageable;
 import com.dyp.dashboard.module.sys.repository.RoleRepository;
+import com.dyp.dashboard.module.sys.repository.SysRoleMapper;
 import com.dyp.dashboard.module.sys.service.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,6 +22,14 @@ import java.util.Optional;
 public class RoleServiceImpl implements RoleService {
     @Resource
     RoleRepository roleRepository;
+
+    @Autowired
+    SysRoleMapper sysRoleDao;
+
+    @Override
+    public List<SysRole> findAll() {
+        return sysRoleDao.selectAll();
+    }
 
     @Override
     public List<SysRole> findAll(Pageable pageable) {
