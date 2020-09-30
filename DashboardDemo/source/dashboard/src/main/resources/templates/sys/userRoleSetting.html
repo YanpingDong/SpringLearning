@@ -29,6 +29,9 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1>Advanced Form</h1>
+            <button id="addUser" type="button" class="btn btn-info btn-sm" onclick="show_add_user_page()">
+              <i class="fa fa-plus" ></i>新增
+            </button>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -115,6 +118,18 @@
 <script src="../../js/demo.js"></script>
 <!-- Page script -->
 <script>
+
+function show_add_user_page()
+{
+  var isselected = $("#bootstrap-duallistbox-selected-list_ option").map(
+        function(){
+            return $(this).val();
+        }
+       ).get().join(",");
+
+  console.log(isselected);
+}
+
   $(function () {
   var selectedDataStr = "1,2,4";//选中的option（用过英文逗号隔开；新增时，无选中option）
   $.ajax({
@@ -156,7 +171,6 @@
 	  alert(e.msg);
 	}
   });
-
   })
 </script>
 </body>
