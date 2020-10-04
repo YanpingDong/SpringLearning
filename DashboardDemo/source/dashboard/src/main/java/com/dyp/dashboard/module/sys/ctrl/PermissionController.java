@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/permission")
-public class SysPermissionController {
+public class PermissionController {
     @Autowired
     private SysPermissionService sysPermissionService;
 
@@ -23,6 +23,12 @@ public class SysPermissionController {
     public String toPermission()
     {
         return "/sys/permissionList";
+    }
+
+    @GetMapping(value="/role/setting")
+    public String toRolePermissionSetting()
+    {
+        return "/sys/rolePermissionSetting";
     }
 
     @GetMapping(value="/all")

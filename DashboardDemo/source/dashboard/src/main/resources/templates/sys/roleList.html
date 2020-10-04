@@ -76,7 +76,6 @@
 <!--<script src="../../jquery/jquery.min.js" th:src="@{/jquery/jquery.min.js}"></script>-->
 <!-- Bootstrap 4 -->
 <!--<script src="../../bootstrap/js/bootstrap.bundle.min.js" th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>-->
-
 <!-- DataTables -->
 <script src="../../datatables/jquery.dataTables.min.js" th:src="@{/datatables/jquery.dataTables.min.js}"></script>
 <script src="../../datatables-bs4/js/dataTables.bootstrap4.min.js" th:src="@{/datatables-bs4/js/dataTables.bootstrap4.min.js}"></script>
@@ -88,6 +87,13 @@
 <!--<script src="../../js/logList.js" th:src="@{/js/logList.js}"></script>-->
 <!-- page script -->
 <script>
+
+function show_role_permission_setting(id)
+{
+  var url = "/permission/role/setting";
+  $('#container').load(url);
+}
+
 
 function show_delete(id)
   {
@@ -139,7 +145,7 @@ $(function () {
               data: function (obj) {
                  return '<button type="button" class="btn btn-primary btn-sm" style="margin-right:15px; href="#" onclick=show_update_page("'+ obj[0] +'")> <i class="fas fa-pencil-alt"> </i> 修改 </button>'+
                  '<button type="button" class="btn btn-danger btn-sm" style="margin-right:15px; href="#" onclick=show_delete("'+ obj[0] +'")> <i class="fas fa-trash"> </i> 删除 </button>'+
-                 '<button type="button" class="btn btn-warning btn-sm" style="margin-right:15px; href="#" onclick=show_delete("'+ obj[0] +'")> <i class="fa fa-users"> </i> 权限分配 </button>';
+                 '<button type="button" class="btn btn-warning btn-sm" style="margin-right:15px; href="#" onclick=show_role_permission_setting("'+ obj[0] +'")> <i class="fa fa-users"> </i> 权限分配 </button>';
               }
             }
         ]
