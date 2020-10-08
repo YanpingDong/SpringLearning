@@ -3,22 +3,20 @@ $(document).ready(function () {
   $('button[name="submit"]').click(function(e){
     //构造一个表单，FormData是HTML5新增的
     var form = new FormData();
-    var permissionId = $('input[name="permissionId"]').val();
-    var permissionName = $('input[name="permissionName"]').val();
-    var permission = $('input[name="permission"]').val();
-    var url = $('input[name="url"]').val();
-    var available = $('input[name="available"]').val();
-
-    form.append("permissionId", permissionId);
-    form.append("permissionName", permissionName);
-    form.append("permission", permission);
-    form.append("url", url);
-    form.append("available", available);
-
+    var name = $('input[name="name"]').val();
+    var tel = $('input[name="tel"]').val();
+    var email = $('input[name="email"]').val();
+    var state = $('input[name="state"]').val();
+    var password = $('input[name="password"]').val();
+    form.append("name", name);
+    form.append("tel", tel);
+    form.append("email", email);
+    form.append("state", state);
+    form.append("password", password);
     $.ajax({
         async: false,
-        type: "put",
-        url:'/permission/'+ permissionId,
+        type: "post",
+        url:'/user',
         data: form,
         async: true,        //异步
         processData: false,  //很重要，告诉jquery不要对form进行处理

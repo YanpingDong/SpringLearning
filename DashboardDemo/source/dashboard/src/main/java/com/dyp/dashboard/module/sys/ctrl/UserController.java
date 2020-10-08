@@ -109,10 +109,10 @@ public class UserController {
      * 用户添加;
      * @return
      */
-    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    @RequestMapping(value = "",method = RequestMethod.POST)
     @RequiresPermissions("user:add")//权限管理;
     @ResponseBody
-    public String save(User user, BindingResult bindingResult, String password2){
+    public String save( User user, BindingResult bindingResult, String password2){
         if(bindingResult.hasErrors())
         {
             return "0";
