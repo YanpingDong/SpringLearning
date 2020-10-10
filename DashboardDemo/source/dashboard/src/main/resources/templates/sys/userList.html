@@ -121,8 +121,9 @@ function show_update_page(info)
   $('#container').load(url);
 }
 
-function show_role_setting_page()
+function show_role_setting_page(userId)
 {
+    window.currentUserId = userId;
     var url = "/user/role/setting";
     $('#container').load(url);
 }

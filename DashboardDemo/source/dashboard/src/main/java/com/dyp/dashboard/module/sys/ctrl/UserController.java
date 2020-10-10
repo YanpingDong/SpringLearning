@@ -5,6 +5,7 @@ import com.dyp.dashboard.model.ListTableData;
 import com.dyp.dashboard.module.sys.entity.SysUserRole;
 import com.dyp.dashboard.module.sys.entity.User;
 import com.dyp.dashboard.module.sys.model.Pageable;
+import com.dyp.dashboard.module.sys.model.RoleSettingRequest;
 import com.dyp.dashboard.module.sys.service.LogService;
 import com.dyp.dashboard.module.sys.service.LoginService;
 import com.dyp.dashboard.module.sys.service.UserService;
@@ -52,6 +53,26 @@ public class UserController {
     @GetMapping("role/setting")
     public String userRoleSetting(){
         return "/sys/userRoleSetting";
+    }
+
+    @PostMapping("role/setting")
+    @ResponseBody
+    public void userRoleSetting(RoleSettingRequest roleSettingRequest){
+        String roles = roleSettingRequest.getRoles();
+        if(roles != null)
+        {
+            String[] roleIds = roleSettingRequest.getRoles().split(",");
+            List<SysUserRole> sysUserRoles = new ArrayList<>();
+            for(String roleId : roleIds)
+            {
+                SysUserRole sysUserRole = new SysUserRole();
+                sysUserRole.setRoleId(Integer.valueOf(roleId));
+                sysUserRole.setUserId(roleSettingRequest.getUserId());
+                sysUserRoles.add(sysUserRole);
+            }
+
+            userService.saveUserRoles(sysUserRoles);
+        }
     }
 
     @RequestMapping(value = "/getUserList")

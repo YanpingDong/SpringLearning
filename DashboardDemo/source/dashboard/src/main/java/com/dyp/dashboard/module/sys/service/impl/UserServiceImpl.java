@@ -5,12 +5,15 @@ import com.dyp.dashboard.module.sys.entity.SysPermission;
 import com.dyp.dashboard.module.sys.entity.SysUserRole;
 import com.dyp.dashboard.module.sys.entity.User;
 import com.dyp.dashboard.module.sys.model.Pageable;
+import com.dyp.dashboard.module.sys.repository.SysRoleMapper;
+import com.dyp.dashboard.module.sys.repository.SysUserRoleMapper;
 import com.dyp.dashboard.module.sys.repository.UserMapper;
 import com.dyp.dashboard.module.sys.repository.UserRepository;
 import com.dyp.dashboard.module.sys.service.CacheService;
 import com.dyp.dashboard.module.sys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -28,6 +31,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userDao;
 
+    @Autowired
+    private SysUserRoleMapper sysUserRoleDao;
+
     @Resource(name = "yourCacheServiceImpl")
     private CacheService cacheService;
 
@@ -37,6 +43,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getDbVersion() {
         return userRepository.getDbVersion();
+    }
+
+
+    @Override
+    @Transactional
+    public int saveUserRoles(List<SysUserRole> sysUserRoles) {
+
+        if(null != sysUserRoles)
+        {
+            Integer userId = sysUserRoles.get(0).getUserId();
+            sysUserRoleDao.deleteByUserId(userId);//clean old data
+            for(SysUserRole sysUserRole : sysUserRoles)
+            {
+                sysUserRoleDao.insert(sysUserRole);
+            }
+
+            return sysUserRoles.size();
+        }
+        return 0;
     }
 
     private User findByUserNameInCache(String userName) {

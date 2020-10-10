@@ -11,6 +11,8 @@ public interface UserService {
 
     String getDbVersion();
 
+    int saveUserRoles(List<SysUserRole> sysUserRole);
+
     User findByUserName(String userName);
 
     User findUserById(Integer userId);
