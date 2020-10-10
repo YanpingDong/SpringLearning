@@ -33,7 +33,7 @@ public class UserRepository {
         user.setName("管理员");
         user.setPassword("123");
         user.setSalt("8d78869f470951332959580424d4bf4f");
-        user.setState((byte)1);
+        user.setState(true);
         user.setCreateTime(LocalDateTime.now());
 
         User user1 = new User();
@@ -42,7 +42,7 @@ public class UserRepository {
         user1.setName("管理员");
         user1.setPassword("123");
         user1.setSalt("8d78869f470951332959580424d4bf4f");
-        user1.setState((byte)1);
+        user1.setState(false);
         user1.setCreateTime(LocalDateTime.now());
 
         if(1 == userId)
@@ -61,7 +61,7 @@ public class UserRepository {
         user.setName("管理员");
         user.setPassword("123");
         user.setSalt("8d78869f470951332959580424d4bf4f");
-        user.setState((byte)1);
+        user.setState(true);
         user.setCreateTime(LocalDateTime.now());
 
         User user1 = new User();
@@ -70,7 +70,7 @@ public class UserRepository {
         user1.setName("管理员");
         user1.setPassword("123");
         user1.setSalt("8d78869f470951332959580424d4bf4f");
-        user1.setState((byte)1);
+        user1.setState(true);
         user1.setCreateTime(LocalDateTime.now());
 
         if("admin".equalsIgnoreCase(userName))
@@ -93,7 +93,7 @@ public class UserRepository {
         user.setName("管理员");
         user.setPassword("123");
         user.setSalt("8d78869f470951332959580424d4bf4f");
-        user.setState((byte)1);
+        user.setState(true);
         user.setCreateTime(LocalDateTime.now());
 
         User user1 = new User();
@@ -102,7 +102,7 @@ public class UserRepository {
         user1.setName("管理员");
         user1.setPassword("123");
         user1.setSalt("8d78869f470951332959580424d4bf4f");
-        user1.setState((byte)1);
+        user1.setState(true);
         user1.setCreateTime(LocalDateTime.now());
 
         User user2 = new User();
@@ -133,7 +133,7 @@ public class UserRepository {
         user.setName("管理员");
         user.setPassword("123");
         user.setSalt("8d78869f470951332959580424d4bf4f");
-        user.setState((byte)1);
+        user.setState(true);
         user.setCreateTime(LocalDateTime.now());
 
 

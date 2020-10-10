@@ -155,9 +155,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserById(Integer userId) {
-        if(cacheConfig.isCacheEnable())
-            return findUserInCatch(userId);
-        return userRepository.findById(userId);
+//        if(cacheConfig.isCacheEnable())
+//            return findUserInCatch(userId);
+        return userDao.selectById(userId);
     }
 
     //保存和修改user对象的时候删除对应user的缓存

@@ -90,23 +90,23 @@
 <script>
 
 function show_delete(id)
-  {
-    $.ajax({
-        async: true,
-        type: "delete",
-        url:'/user/'+ id,
-        async: true,        //异步
-        processData: false,  //很重要，告诉jquery不要对form进行处理
-        contentType: false,  //很重要，指定为false才能形成正确的Content-Type
-        success: function () {
-            var url = "/user/ulist";
-            $('#container').load(url);
-          },
-        error: function () {
-            alert("error");
-        }
-    })
-  }
+{
+  $.ajax({
+     async: true,
+     type: "delete",
+     url:'/user/'+ id,
+     async: true,
+     processData: false,
+     contentType: false,
+     success: function () {
+        var url = "/user/ulist";
+        $('#container').load(url);
+     },
+     error: function () {
+        alert("error");
+     }
+  })
+}
 
 function show_add_user_page()
 {
@@ -114,10 +114,10 @@ function show_add_user_page()
   $('#container').load(url);
 }
 
-function show_update_page(info)
+function show_update_page(userId)
 {
-  alert(info);
-  var url = "/user/update";
+  alert(userId);
+  var url = "/user/update/" + userId;
   $('#container').load(url);
 }
 
@@ -130,7 +130,7 @@ function show_role_setting_page(userId)
 
 $(function () {
   $('#example').DataTable( {
-      "ajax": "/user/getUserList",
+      "ajax": "/user/all",
       "paging": true,
       "lengthChange": true,
       "ordering": true,

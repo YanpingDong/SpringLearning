@@ -11,6 +11,7 @@ import com.dyp.dashboard.module.sys.service.LoginService;
 import com.dyp.dashboard.module.sys.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -75,7 +76,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/getUserList")
+    @RequestMapping(value = "/all")
     @RequiresPermissions("user:view")//权限管理;
     @ResponseBody
     public ListTableData getUserList(HttpServletRequest request)
@@ -97,7 +98,7 @@ public class UserController {
                 column.add(user.getEmail());
                 column.add(user.getCreateTime().toString());
                 column.add("");
-                column.add(user.getState() == 1 ? "正常" : "锁定");
+                column.add(user.getState() == true ? "正常" : "锁定");
                 data.add(column);
             }
         }
@@ -113,9 +114,16 @@ public class UserController {
         userService.deleteById(userId);
     }
 
-    @RequestMapping(value = "/update",method = RequestMethod.GET)
+    @RequestMapping(value = "/update/{userId}",method = RequestMethod.GET)
     @RequiresPermissions("user:update")//权限管理;
-    public String toUserUpdate(User user){
+    public String toUserUpdate(@PathVariable int userId, Model model)
+    {
+        User user = userService.findUserById(userId);
+        model.addAttribute("email", user.getEmail());
+        model.addAttribute("name", user.getName());
+        model.addAttribute("tel", user.getTel());
+        model.addAttribute("userName", user.getUserName());
+        model.addAttribute("state",user.getState());
         return "/sys/userUpdate";
     }
 
