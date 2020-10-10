@@ -67,6 +67,11 @@
             <!-- /.row -->
           </div>
         </div>
+        <div class="card-footer">
+          <div class="float-right">
+            <button type="submit" class="btn btn-primary" style="margin-right:15px;">保存</button> <button type="button" class="btn btn-primary" style="margin-right:15px;">返回</button>
+          </div>
+        </div>
         <!-- /.card -->
       </div><!-- /.container-fluid -->
     </section>
@@ -107,14 +112,15 @@
   }
 
   $(function () {
-    var selectedDataStr = "1,2,4";//选中的option（用过英文逗号隔开；新增时，无选中option）
+
     $.ajax({
       type: 'GET',//请求方式
-      url: '/role/data',//地址，就是json文件的请求路径
+      url: '/role/setting/info',//地址，就是json文件的请求路径
       //data: reqeustParams,//请求参数
       async: true,//是否异步
       success: function (data) {
-        var objs = $.parseJSON(data);
+        var objs = data['roleInfos'];
+        var selectedDataStr = data['defaultSelectedRole'];//选中的option（用过英文逗号隔开；新增时，无选中option）
         var selector = $('.duallistbox')[0];
         $(objs).each(function () {
           var o = document.createElement("option");

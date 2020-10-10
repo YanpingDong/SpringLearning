@@ -8,10 +8,13 @@ import com.dyp.dashboard.module.sys.entity.SysPermission;
 import com.dyp.dashboard.module.sys.entity.SysRole;
 import com.dyp.dashboard.module.sys.entity.User;
 import com.dyp.dashboard.module.sys.model.Pageable;
+import com.dyp.dashboard.module.sys.model.RoleInfo;
+import com.dyp.dashboard.module.sys.model.RoleSettingInfo;
 import com.dyp.dashboard.module.sys.service.LogService;
 import com.dyp.dashboard.module.sys.service.RoleService;
 import com.dyp.dashboard.util.IOUtils;
 import com.dyp.dashboard.util.JsonUtils;
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -38,14 +41,25 @@ public class RoleController {
     @Resource
     LogService logService;
 
-    @Value("classpath:role.json")
-    org.springframework.core.io.Resource roleData;
-
-    @RequestMapping(value="/data")
+    @GetMapping(value="/setting/info")
     @ResponseBody
-    public String data() throws IOException {
-        String json = IOUtils.convertStreamToString(roleData.getInputStream());
-        return json;
+    public RoleSettingInfo data() {
+        RoleSettingInfo roleSettingInfo = new RoleSettingInfo();
+        List<RoleInfo> roleInfos = new ArrayList<>();
+        List<SysRole>  sysRoles = roleService.findAll();
+        if (sysRoles != null)
+        {
+            for(SysRole sysRole : sysRoles)
+            {
+                RoleInfo roleInfo = new RoleInfo();
+                roleInfo.setRoleId(sysRole.getRoleId());
+                roleInfo.setRoleName(sysRole.getRole());
+                roleInfos.add(roleInfo);
+            }
+        }
+        roleSettingInfo.setRoleInfos(roleInfos);
+        roleSettingInfo.setDefaultSelectedRole("3,4");
+        return roleSettingInfo;
     }
 
     @RequestMapping(value="/role")
